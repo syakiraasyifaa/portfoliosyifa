@@ -106,20 +106,20 @@
 
         .mark-highlight { background-color: #FFE900; color: #046865; padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-weight: bold; display: inline-block; line-height: 1.2;}
 
-        /* Polaroid Modal Slider - WIDE LANDSCAPE 16:9 */
+        /* Polaroid Modal Slider - WIDE LANDSCAPE 1920x1080 */
         .polaroid {
             position: absolute; background: white; padding: 12px 12px 45px 12px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.3); border: 1px solid #eaeaea;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; 
             transform: scale(0.8) translateY(20px) rotate(0deg);
-            width: 90%; max-width: 1100px; /* Melebarkan ukuran maksimal polaroid */
+            width: 95%; max-width: 1200px; /* Diperlebar agar bisa menampung 1920x1080 */
             display: flex; flex-direction: column;
         }
         .polaroid-img-wrapper {
             width: 100%; 
-            aspect-ratio: 16 / 9; /* MEMAKSA BINGKAI SELALU LANDSCAPE 1920x1080 */
-            max-height: 65vh; /* Mencegah kepanjangan vertikal di layar laptop pendek */
-            display: flex; justify-content: center; align-items: center; background: #e5e7eb;
+            aspect-ratio: 1920 / 1080; /* MEMAKSA BINGKAI SELALU 1920x1080 */
+            max-height: none; /* Dihapus agar rasio kaku 1920x1080 tercapai utuh */
+            display: flex; justify-content: center; align-items: center; background: #111; /* Latar gelap agar media menonjol */
         }
         /* Mencegah gambar overflow dan otomatis scale seragam di tengah */
         .polaroid img, .polaroid video { 
@@ -157,6 +157,36 @@
         .modal-nav-btn:hover { background: #FFE900; color: #046865; transform: scale(1.1) translateY(-50%); border-color: #FFE900; }
         .modal-prev { left: 2%; }
         .modal-next { right: 2%; }
+
+        /* Infinite Marquee for Biodiversity Gallery */
+        .marquee-container {
+            display: flex; overflow: hidden; width: 100%; gap: 1rem; position: relative;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        .marquee-track {
+            display: flex; gap: 1rem; min-width: 200%; align-items: center;
+        }
+        .marquee-track.left { animation: scroll-left 40s linear infinite; }
+        .marquee-track.right { animation: scroll-right 35s linear infinite; }
+        
+        .marquee-track:hover { animation-play-state: paused; }
+        
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes scroll-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        
+        .bio-img {
+            width: 280px; height: 180px; object-fit: cover; border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: 2px solid rgba(33, 160, 160, 0.2);
+            transition: all 0.3s ease; flex-shrink: 0; cursor: crosshair;
+        }
+        .bio-img:hover { transform: scale(1.05) translateY(-5px); border-color: #FFE900; z-index: 10; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -203,13 +233,13 @@
             FORESTRY ENGINEER
         </div>
         
-        <!-- Central Tall Portrait (Full Body) -->
-        <div class="hidden lg:block absolute bottom-[-10vh] left-[45%] -translate-x-1/2 h-[100vh] z-20 pointer-events-none scale-[1.8] origin-bottom">
+        <!-- Central Tall Portrait (Full Body) - Diangkat lebih tinggi (dari -10vh ke -3vh) -->
+        <div class="hidden lg:block absolute bottom-[-3vh] left-[45%] -translate-x-1/2 h-[100vh] z-20 pointer-events-none scale-[1.8] origin-bottom">
             <img src="2.png" alt="Syifa Syakira" class="h-full object-contain filter drop-shadow-[-20px_20px_0px_rgba(33,160,160,0.15)] mask-bottom" onerror="this.src='https://placehold.co/500x900/transparent/046865?text=2.png'">
         </div>
 
         <!-- Secondary Overlapping Frameless Photo (Half Body) -->
-        <div class="hidden lg:block absolute bottom-[5vh] left-[40%] z-30 w-[420px] pointer-events-none transform hover:scale-105 transition-transform duration-500">
+        <div class="hidden lg:block absolute bottom-[10vh] left-[40%] z-30 w-[420px] pointer-events-none transform hover:scale-105 transition-transform duration-500">
             <img src="5.png" alt="Syifa Action" class="w-full h-auto object-contain mask-bottom drop-shadow-2xl" onerror="this.src='https://placehold.co/450x600/transparent/21A0A0?text=5.png'">
         </div>
 
@@ -439,7 +469,7 @@
                 <div class="carousel-card" data-proj-id="proj1">
                     <img src="kphp4.png" alt="FMU Mapping" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=KPHP'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">01/14 • Spatial Planning</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">01/15 • Spatial Planning</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">FMU Mapping</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Mapping of Forest Management Units for Production Forests (KPHP) in Kalimantan.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -448,7 +478,7 @@
                 <div class="carousel-card" data-proj-id="proj2">
                     <img src="gugel4.png" alt="Post-Mining" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=Gunung+Geulis'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">02/14 • Reclamation Design</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">02/15 • Reclamation Design</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">Post-Mining Land</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Reclamation Design of Post-Mining Land and Spring Protection.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -457,7 +487,7 @@
                 <div class="carousel-card" data-proj-id="proj3">
                     <img src="3d3.png" alt="Integrated Forest System" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=Integrated+Forest'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">03/14 • Agroforestry</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">03/15 • Agroforestry</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">Integrated Forest System</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Design of an Integrated Forest System for Degraded Land Rehabilitation.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -466,7 +496,7 @@
                 <div class="carousel-card" data-proj-id="proj4">
                     <img src="m8.png" alt="Habitat Suitability" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=Peafowl+Habitat'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">04/14 • MaxEnt & GIS</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">04/15 • MaxEnt & GIS</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">Habitat Suitability</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Spatial Modeling of Javan Green Peafowl Habitat Suitability.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -475,7 +505,7 @@
                 <div class="carousel-card" data-proj-id="proj5">
                     <img src="das9.png" alt="Land Cover Impacts" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=Watershed'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">05/14 • Time-Series Spatial</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">05/15 • Time-Series Spatial</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">Land Cover Impacts</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Assessment of Land Cover Change Impacts in the Sub-Citarik Watershed.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -484,7 +514,7 @@
                 <div class="carousel-card" data-proj-id="proj6">
                     <img src="eko13.png" alt="Ecological Analysis" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=Ecological+Analysis'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">06/14 • Biodiversity</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">06/15 • Biodiversity</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">Ecological Analysis</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Ecological Analysis of the Mount Papandayan Nature Reserve.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -493,7 +523,7 @@
                 <div class="carousel-card" data-proj-id="proj7">
                     <img src="agi1.png" alt="Drone Photogrammetry" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=Drone+Mapping'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">07/14 • Agisoft Metashape</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">07/15 • Agisoft Metashape</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">Drone Photogrammetry</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">High-Resolution Spatial Mapping and 3D Modeling at ITB.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -502,7 +532,7 @@
                 <div class="carousel-card" data-proj-id="proj8">
                     <img src="bam6.png" alt="Bamboo Cultivation" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=Bamboo'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">08/14 • Silviculture</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">08/15 • Silviculture</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">Bamboo Cultivation</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Success Evaluation of Bamboo Cultivation on Post-Mining Land.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -511,7 +541,7 @@
                 <div class="carousel-card" data-proj-id="proj9">
                     <img src="web7.jpg" alt="Orchid Inventory" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=Orchid+Inventory'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">09/14 • Database & Web</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">09/15 • Database & Web</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">Orchid Inventory</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Digitizing Orchid Inventory Data at Sawerigading Nature Park.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -520,7 +550,7 @@
                 <div class="carousel-card" data-proj-id="proj10">
                     <img src="spth7.png" alt="Critical Land Assessment" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=Critical+Land'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">10/14 • USLE Modeling</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">10/15 • USLE Modeling</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">Critical Land Assessment</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Critical Land Assessment and MPTS Species Recommendations.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -529,7 +559,7 @@
                 <div class="carousel-card" data-proj-id="proj11">
                     <img src="covpsuk1.png" alt="AGB Estimation" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=AGB+Estimation'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">11/14 • Linear Regression & R</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">11/15 • Linear Regression & R</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">AGB Estimation Modeling</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Spatial modeling of Above Ground Biomass in Ruvu North Forest Reserve.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -538,7 +568,7 @@
                 <div class="carousel-card" data-proj-id="proj12">
                     <img src="covpsuk2.png" alt="Predictive Spatial Modeling" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=Logistic+Regression'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">12/14 • Logistic Regression</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">12/15 • Logistic Regression</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">Predictive Spatial Modeling</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Modeling Acer cappadocicum presence using Logistic Regression in Italy.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -547,7 +577,7 @@
                 <div class="carousel-card" data-proj-id="proj13">
                     <img src="covpsuk3.png" alt="MaxEnt Habitat Modeling" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=MaxEnt+Modeling'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">13/14 • MaxEnt & QGIS</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">13/15 • MaxEnt & QGIS</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">MaxEnt Habitat Modeling</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Habitat suitability modeling using Maximum Entropy in Majella National Park.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
@@ -556,9 +586,18 @@
                 <div class="carousel-card" data-proj-id="proj14">
                     <img src="covpsuk4.png" alt="Geostatistical Interpolation" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=Kriging+Interpolation'">
                     <div class="project-overlay pointer-events-none">
-                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">14/14 • Geostatistics & Kriging</span>
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">14/15 • Geostatistics & Kriging</span>
                         <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">Geostatistical Interpolation</h4>
                         <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Kriging interpolation and hydrological forecasting for Mangrove rehabilitation.</p>
+                        <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
+                    </div>
+                </div>
+                <div class="carousel-card" data-proj-id="proj15">
+                    <img src="tor5.jpg" alt="Wildlife Monitoring" loading="lazy" onerror="this.src='https://placehold.co/800x600/046865/ffffff?text=Camera+Traps'">
+                    <div class="project-overlay pointer-events-none">
+                        <span class="mark-highlight text-[10px] uppercase tracking-widest mb-1 self-start">15/15 • Wildlife Conservation</span>
+                        <h4 class="font-display text-2xl font-bold text-pure_snow mb-2 leading-tight">Wildlife Monitoring</h4>
+                        <p class="text-sm text-pure_snow/90 mb-4 line-clamp-3">Wildlife Monitoring and Biodiversity Assessment via Camera Traps.</p>
                         <span class="text-bright_sun text-xs font-bold mt-2"><i class="fa-solid fa-hand-pointer animate-bounce"></i> Click for Details</span>
                     </div>
                 </div>
@@ -580,6 +619,63 @@
             <div class="w-2 h-2 rounded-full bg-tech_teal transition-all duration-300" id="carousel-dot-11"></div>
             <div class="w-2 h-2 rounded-full bg-tech_teal transition-all duration-300" id="carousel-dot-12"></div>
             <div class="w-2 h-2 rounded-full bg-tech_teal transition-all duration-300" id="carousel-dot-13"></div>
+            <div class="w-2 h-2 rounded-full bg-tech_teal transition-all duration-300" id="carousel-dot-14"></div>
+        </div>
+    </section>
+
+    <!-- NEW BIODIVERSITY MARQUEE GALLERY SECTION -->
+    <section class="py-16 relative z-10 bg-pure_snow overflow-hidden border-t border-tech_teal/10">
+        <div class="max-w-7xl mx-auto px-4 mb-8 text-center">
+            <h3 class="font-display text-2xl font-extrabold text-deep_forest mb-2">
+                Field Observations & Biodiversity
+            </h3>
+            <p class="text-sm text-deep_forest/70"><i class="fa-solid fa-leaf text-tech_teal mr-2"></i>Capturing the intricate beauty of ecological systems.</p>
+        </div>
+
+        <div class="flex flex-col gap-6">
+            <!-- Row 1: Moves Left -->
+            <div class="marquee-container">
+                <div class="marquee-track left">
+                    <img src="bio1.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+1'">
+                    <img src="bio2.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+2'">
+                    <img src="bio3.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+3'">
+                    <img src="bio4.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+4'">
+                    <img src="bio5.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+5'">
+                    <img src="bio6.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+6'">
+                    <img src="bio7.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+7'">
+                    <img src="bio8.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+8'">
+                    <!-- Duplicate for seamless scroll -->
+                    <img src="bio1.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+1'">
+                    <img src="bio2.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+2'">
+                    <img src="bio3.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+3'">
+                    <img src="bio4.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+4'">
+                    <img src="bio5.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+5'">
+                    <img src="bio6.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+6'">
+                    <img src="bio7.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+7'">
+                    <img src="bio8.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/046865/ffffff?text=Bio+8'">
+                </div>
+            </div>
+
+            <!-- Row 2: Moves Right -->
+            <div class="marquee-container">
+                <div class="marquee-track right">
+                    <img src="bio9.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+9'">
+                    <img src="bio10.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+10'">
+                    <img src="bio11.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+11'">
+                    <img src="bio12.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+12'">
+                    <img src="bio13.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+13'">
+                    <img src="bio14.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+14'">
+                    <img src="bio15.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+15'">
+                    <!-- Duplicate for seamless scroll -->
+                    <img src="bio9.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+9'">
+                    <img src="bio10.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+10'">
+                    <img src="bio11.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+11'">
+                    <img src="bio12.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+12'">
+                    <img src="bio13.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+13'">
+                    <img src="bio14.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+14'">
+                    <img src="bio15.JPG" alt="Biodiversity" class="bio-img" onerror="this.src='https://placehold.co/300x200/21A0A0/ffffff?text=Bio+15'">
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1256,6 +1352,21 @@
                     { img: "psuk45.png", caption: "Estimated Water Depth Map" },
                     { img: "psuk46.png", caption: "10-Year Predicted Water Depth Map" }
                 ]
+            },
+            proj15: {
+                title: "Wildlife Monitoring and Biodiversity Assessment via Camera Traps", 
+                company: "Conservation Project", 
+                points: [
+                    "Processed and analyzed field data from deployed camera traps to precisely <span class='mark-highlight'>monitor wildlife populations</span> across targeted natural habitats.",
+                    "Successfully identified and cataloged <span class='mark-highlight'>over 40 distinct animal species</span>, significantly enriching the regional ecological database.",
+                    "Integrated the spatial and ecological data into an interactive web platform and compiled comprehensive biodiversity reports to aggressively support <span class='mark-highlight'>conservation management strategies</span>."
+                ],
+                slides: [
+                    { img: "tor1.mp4", caption: "Camera Trap Video Footage" },
+                    { img: "tor2.jpg", caption: "Wildlife Observation Data" },
+                    { img: "tor3.jpg", caption: "Species Identification Process" },
+                    { img: "tor4.jpg", caption: "Biodiversity Platform Dashboard" }
+                ]
             }
         };
 
@@ -1269,7 +1380,7 @@
         let currentSlides = [];
         
         const jobOrder = ['job1', 'job2', 'job3', 'job4', 'job5', 'job6'];
-        const projOrder = ['proj1', 'proj2', 'proj3', 'proj4', 'proj5', 'proj6', 'proj7', 'proj8', 'proj9', 'proj10', 'proj11', 'proj12', 'proj13', 'proj14'];
+        const projOrder = ['proj1', 'proj2', 'proj3', 'proj4', 'proj5', 'proj6', 'proj7', 'proj8', 'proj9', 'proj10', 'proj11', 'proj12', 'proj13', 'proj14', 'proj15'];
         let currentModalCategory = ''; 
         let currentModalId = '';
         let currentPdfUrl = '';
