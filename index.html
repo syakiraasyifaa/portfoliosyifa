@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syifa Syakira | Portfolio</title>
+    <title>Portfolio Syifa</title>
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <script>
         tailwind.config = {
             theme: {
@@ -13,9 +15,9 @@
                     colors: {
                         deep_forest: '#046865',
                         tech_teal: '#21A0A0',
+                        bright_sun: '#FFE900', 
+                        alert_fire: '#E53D00',
                         pure_snow: '#FCFFF7',
-                        bright_sun: '#FFE900',
-                        alert_fire: '#E03616',
                     },
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
@@ -26,6 +28,7 @@
         }
     </script>
 
+    <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -77,7 +80,7 @@
 
         .mark-highlight { background-color: #FFE900; color: #046865; padding: 0.1rem 0.3rem; border-radius: 0.25rem; font-weight: bold; display: inline-block; line-height: 1.2;}
 
-        /* BENTO GRID (Projects & Org) - Gambar 40%, Teks 60% */
+        /* BENTO GRID (Projects & Org) - Gambar 55%, Teks 45% agar foto lebih dominan */
         .projects-slider { display: flex; width: 200%; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); height: 66vh; min-height: 460px; }
         .projects-slide { width: 50%; height: 100%; }
         .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 0.75rem; height: 100%; }
@@ -89,17 +92,24 @@
         }
         .bento-card:hover { transform: translateY(-5px); border-color: #21A0A0; box-shadow: 0 10px 25px rgba(4,104,101,0.15); }
         
-        .bento-img-container { width: 100%; height: 40%; position: relative; overflow: hidden; background: #e5e7eb; display: flex; justify-content: center; align-items: center; }
+        .bento-img-container { width: 100%; height: 65%; position: relative; overflow: hidden; background: #e5e7eb; display: flex; justify-content: center; align-items: center; }
         .bento-img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .bento-card:hover .bento-img-container img { transform: scale(1.05); }
-        .bento-content { height: 60%; padding: 0.5rem 0.75rem; display: flex; flex-direction: column; justify-content: flex-start; }
+        .bento-content { height: 35%; padding: 0.4rem 0.6rem; display: flex; flex-direction: column; justify-content: flex-start; }
 
-        /* Unified Polaroid Modal Slider (16:9) dengan batas shrink */
+        /* Unified Polaroid Modal Slider (16:9) */
         .polaroid {
             position: absolute; background: white; padding: 10px 10px 40px 10px; box-shadow: 0 15px 40px rgba(0,0,0,0.3); border: 1px solid #eaeaea;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; transform: scale(0.8) translateY(20px) rotate(0deg); width: 100%; display: flex; flex-direction: column; max-height: 85%;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; transform: scale(0.8) translateY(20px) rotate(0deg); width: 100%; 
+            display: flex; flex-direction: column; max-height: 100%;
         }
-        .polaroid-img-wrapper { width: 100%; flex: 1; min-height: 0; aspect-ratio: 16 / 9; max-height: 50vh; display: flex; justify-content: center; align-items: center; background: #e5e7eb; overflow: hidden; }
+        .polaroid-img-wrapper { 
+            width: 100%; 
+            flex: 1; 
+            min-height: 0;
+            aspect-ratio: 16 / 9; 
+            display: flex; justify-content: center; align-items: center; background: #e5e7eb; overflow: hidden; 
+        }
         .polaroid img, .polaroid video { width: 100%; height: 100%; object-fit: contain; display: block; }
         .polaroid .caption { 
             position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center; 
@@ -117,7 +127,6 @@
         .modal-nav-btn:hover { background: #FFE900; color: #046865; transform: scale(1.1) translateY(-50%); border-color: #FFE900; }
         .modal-prev { left: 2%; } .modal-next { right: 2%; }
 
-        /* ROADMAP (Professional Journey) - Anti Tumpang Tindih */
         .roadmap-container { width: 100%; height: 50vh; min-height: 400px; position: relative; display: flex; align-items: center; justify-content: center; min-width: 1024px; }
         .roadmap-svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
         .roadmap-path { fill: none; stroke: #21A0A0; stroke-width: 0.3; stroke-dasharray: 1, 1.5; opacity: 0.7; }
@@ -143,7 +152,7 @@
         .roadmap-item:hover.up .roadmap-card { margin-bottom: 20px; }
         .roadmap-thumbnail { width: 100%; height: 70px; border-radius: 0.5rem; object-fit: cover; border: 1px solid #f3f4f6; }
 
-        /* INFINITE MARQUEE (Biodiversitas) - 2 Baris Kiri dan Kanan */
+        /* INFINITE MARQUEE (Biodiversitas) */
         .marquee-wrapper { width: 100vw; margin-left: calc(-50vw + 50%); overflow: hidden; display: flex; flex-direction: column; gap: 1rem; padding: 1rem 0; }
         .marquee-track { display: flex; gap: 1rem; width: max-content; }
         .marquee-track-left { animation: marquee 40s linear infinite; }
@@ -167,17 +176,18 @@
         <a href="https://www.linkedin.com/in/syakiraasyifaa/" target="_blank" class="floating-icon"><i class="fa-brands fa-linkedin-in"></i></a>
         <a href="https://instagram.com/_xsyakiraa" target="_blank" class="floating-icon"><i class="fa-brands fa-instagram"></i></a>
         <a href="mailto:syakiraasyifaa@gmail.com" class="floating-icon"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://wa.me/6282317069464" target="_blank" class="floating-icon"><i class="fa-brands fa-whatsapp"></i></a>
     </div>
 
     <!-- NAVBAR -->
     <nav class="fixed top-0 w-full z-50 transition-transform duration-500 backdrop-blur-md bg-pure_snow/95 border-b border-tech_teal/20" id="navbar">
         <div class="max-w-7xl mx-auto px-4 lg:px-8">
-            <div class="flex justify-between items-center h-10 md:h-12">
+            <div class="flex justify-between items-center h-10">
                 <a href="#about" class="flex-shrink-0 flex items-center cursor-pointer gap-2">
-                    <img src="folder.png" alt="Logo" class="h-5 md:h-6 object-contain hidden md:block" loading="lazy">
-                    <span class="font-display font-bold text-base tracking-wider text-deep_forest uppercase">SYIFA</span>
+                    <img src="folder.png" alt="Logo" class="h-5 object-contain hidden md:block" loading="lazy" onerror="this.outerHTML='<div class=\'w-5 h-5 bg-tech_teal rounded flex items-center justify-center text-white font-bold\'><i class=\'fa-solid fa-folder-open text-[10px]\'></i></div>'">
+                    <span class="font-display font-bold text-base md:text-lg tracking-wider text-deep_forest uppercase">SYIFA</span>
                 </a>
-                <div class="hidden lg:flex space-x-6 items-center text-[11px] font-bold tracking-wide text-deep_forest">
+                <div class="hidden lg:flex space-x-6 items-center text-[12px] font-bold tracking-wide text-deep_forest">
                     <a href="#about" class="hover:text-alert_fire transition-colors">About</a>
                     <a href="#experience" class="hover:text-alert_fire transition-colors">Experience</a>
                     <a href="#projects" class="hover:text-alert_fire transition-colors">Projects</a>
@@ -190,42 +200,41 @@
         </div>
     </nav>
 
-    <section id="about" class="snap-section flex items-center justify-center pt-[40px] pb-4">
+    <section id="about" class="snap-section flex items-center justify-center pt-[50px] pb-4">
         <!-- Floating Blobs Background -->
         <div class="absolute top-[10%] left-[5%] w-[400px] h-[400px] bg-tech_teal/20 rounded-full blur-[100px] pointer-events-none"></div>
         <div class="absolute bottom-[10%] right-[5%] w-[500px] h-[500px] bg-bright_sun/20 rounded-full blur-[120px] pointer-events-none"></div>
 
-        <!-- FOTO 2.PNG -->
-        <div class="hidden lg:block absolute bottom-[10vh] left-[45%] -translate-x-1/2 h-[85vh] z-10 pointer-events-none origin-bottom">
+        <div class="hidden lg:block absolute bottom-[8vh] left-[45%] -translate-x-1/2 h-[90vh] z-10 pointer-events-none origin-bottom">
             <img src="2.png" alt="Syifa Syakira" fetchpriority="high" class="h-full object-contain filter drop-shadow-[-15px_15px_0px_rgba(33,160,160,0.15)] mask-bottom">
         </div>
         
-        <!-- FOTO 5.PNG (Persis di tengah-tengah) -->
-        <div class="hidden lg:block absolute bottom-0 left-1/2 -translate-x-1/2 z-30 w-[350px] pointer-events-none">
+        <!-- FOTO 5.PNG (Digeser ke kanan) -->
+        <div class="hidden lg:block absolute bottom-0 left-[55%] -translate-x-1/2 z-30 w-[350px] pointer-events-none">
             <img src="5.png" alt="Syifa Action" fetchpriority="high" class="w-full h-auto object-contain mask-bottom drop-shadow-2xl">
         </div>
 
         <div class="w-full max-w-[1400px] mx-auto px-4 lg:px-8 flex flex-col lg:flex-row justify-between gap-4 xl:gap-8 relative z-40 items-center h-full">
             
-            <!-- KOLOM KIRI -->
+            <!-- KOLOM KIRI (Teks Asli Dipulihkan) -->
             <div class="w-full lg:w-[32%] flex flex-col space-y-3 justify-center">
-                <div class="bg-white/95 backdrop-blur-md border border-tech_teal/20 p-5 rounded-[2rem] shadow-xl reveal">
-                    <p class="text-alert_fire font-display font-bold mb-1 tracking-widest uppercase text-[9px]">Hello, I'm</p>
-                    <h1 class="font-display text-4xl xl:text-6xl font-extrabold leading-none text-deep_forest uppercase mb-2 tracking-tight">SYIFA <br>SYAKIRA</h1>
-                    <p class="text-[9px] text-deep_forest font-bold mb-3 bg-tech_teal/10 inline-block px-3 py-1 rounded-full"><i class="fa-solid fa-tree text-tech_teal mr-1"></i> Forestry Engineer</p>
+                <div class="bg-white/95 backdrop-blur-md border border-tech_teal/20 p-5 lg:p-6 rounded-[2rem] shadow-xl reveal">
+                    <p class="text-alert_fire font-display font-bold mb-1 tracking-widest uppercase text-[10px]">Hello, I'm</p>
+                    <h1 class="font-display text-4xl xl:text-5xl font-extrabold leading-tight text-deep_forest uppercase mb-2">SYIFA <br>SYAKIRA</h1>
+                    <p class="text-[10px] text-deep_forest font-bold mb-3 bg-tech_teal/10 inline-block px-3 py-1 rounded-full"><i class="fa-solid fa-tree text-tech_teal mr-1"></i> Forestry Engineer</p>
                     
-                    <p class="text-[11px] xl:text-[12px] text-deep_forest/90 leading-snug font-medium mb-2 text-justify">
-                        Hi, I'm <strong class="mark-highlight">Syifa Syakira</strong>, a Forestry Engineering graduate from <strong class="mark-highlight">Institut Teknologi Bandung (ITB)</strong> specializing in <strong class="mark-highlight">Reforestation Technology</strong>.
+                    <p class="text-[11px] xl:text-xs text-deep_forest/90 leading-relaxed font-medium mb-2 text-justify">
+                        Hi, I'm <strong class="mark-highlight">Syifa Syakira</strong>, a <strong class="mark-highlight">Forestry Engineering</strong> graduate from <strong class="mark-highlight">Bandung Institute of Technology (ITB)</strong> with a specialization in <strong class="mark-highlight">Reforestation Technology</strong>.
                     </p>
-                    <p class="text-[11px] xl:text-[12px] text-deep_forest/90 leading-snug font-medium text-justify">
-                        I am deeply passionate about bridging <strong class="mark-highlight">field-based ecological research</strong> with <strong class="mark-highlight">data-driven technology</strong>. I specialize in combining hands-on field measurements with digital spatial tools like ArcGIS and R Studio to turn complex environmental variables into actionable insights.
+                    <p class="text-[11px] xl:text-xs text-deep_forest/90 leading-relaxed font-medium text-justify">
+                        I am deeply passionate about bridging <strong class="mark-highlight">field-based ecological research</strong> with <strong class="mark-highlight">data-driven technology</strong> to solve complex environmental challenges. Throughout my academic and professional journey, I have actively engaged in diverse projects ranging from <strong class="mark-highlight">post-mining land reclamation</strong> and <strong class="mark-highlight">biodiversity monitoring</strong>, to <strong class="mark-highlight">watershed rehabilitation</strong> and <strong class="mark-highlight">sustainability assessments</strong>. I specialize in combining hands-on field measurements such as <strong class="mark-highlight">flora/fauna inventory</strong> and <strong class="mark-highlight">soil analysis</strong> with digital spatial tools like <strong class="mark-highlight">ArcGIS</strong> to turn complex environmental variables into actionable insights for decision making.
                     </p>
                 </div>
 
-                <div class="bg-deep_forest text-pure_snow p-4 lg:p-5 rounded-3xl shadow-xl reveal relative overflow-hidden">
+                <div class="bg-deep_forest text-pure_snow p-5 lg:p-6 rounded-3xl shadow-xl reveal relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-24 h-24 bg-tech_teal rounded-bl-full opacity-20 transform translate-x-5 -translate-y-5"></div>
-                    <h4 class="font-display font-bold text-sm mb-1.5 flex items-center gap-2"><i class="fa-solid fa-eye text-bright_sun"></i> Interest & Vision</h4>
-                    <p class="text-[10px] xl:text-[11px] leading-snug text-pure_snow/90 text-justify">
+                    <h4 class="font-display font-bold text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-eye text-bright_sun"></i> Interest & Vision</h4>
+                    <p class="text-[10px] xl:text-[11px] leading-relaxed text-pure_snow/90 text-justify">
                         I thrive in collaborative environments, committed to driving impactful <strong class="font-bold text-deep_forest bg-bright_sun/90 px-1 rounded">ecosystem restoration</strong>, sustainable landscape management, and ensuring robust <strong class="font-bold text-deep_forest bg-bright_sun/90 px-1 rounded">environmental compliance</strong> that benefits both nature and industry.
                     </p>
                 </div>
@@ -235,65 +244,65 @@
             <div class="hidden lg:block lg:w-[36%] h-full"></div>
 
             <!-- KOLOM KANAN -->
-            <div class="w-full lg:w-[32%] flex flex-col space-y-3 justify-center">
+            <div class="w-full lg:w-[32%] flex flex-col space-y-3 xl:space-y-4 justify-center">
                 <div class="bg-white/95 backdrop-blur-md border border-tech_teal/20 p-5 rounded-[2rem] shadow-xl reveal">
-                    <h4 class="font-display font-bold text-[14px] mb-2 text-deep_forest border-b border-tech_teal/20 pb-2">Education</h4>
+                    <h4 class="font-display font-bold text-[15px] mb-3 text-deep_forest border-b border-tech_teal/20 pb-2">Education</h4>
                     
                     <div class="mb-3 relative border-l-2 border-tech_teal/30 pl-3 ml-2">
                         <div class="absolute -left-[7px] top-1 w-3 h-3 bg-bright_sun rounded-full border-2 border-white"></div>
-                        <div class="flex justify-between items-start gap-2 mb-1.5">
+                        <div class="flex justify-between items-start gap-2 mb-2">
                             <div class="w-4/5">
-                                <h5 class="font-bold text-deep_forest text-[11px]">Institut Teknologi Bandung</h5>
-                                <p class="text-[9px] text-tech_teal font-semibold">Bachelor of Forestry Engineering</p>
-                                <p class="text-[8px] text-deep_forest/70 mt-0.5">GPA: 3.50 / 4.00 • Grad: 2026</p>
-                                <div class="bg-tech_teal/5 px-2 py-0.5 rounded-md mt-1 inline-block">
-                                    <p class="font-bold text-[8px] text-alert_fire"><i class="fa-solid fa-medal"></i> Dean's List (2x 4.00 GPA)</p>
+                                <h5 class="font-bold text-deep_forest text-[12px]">Institut Teknologi Bandung</h5>
+                                <p class="text-[10px] text-tech_teal font-semibold">Bachelor of Forestry Engineering</p>
+                                <p class="text-[9px] text-deep_forest/70 mt-0.5">GPA: 3.50 / 4.00 • Grad: 2026</p>
+                                <div class="bg-tech_teal/5 px-2 py-1 rounded-md mt-1 inline-block">
+                                    <p class="font-bold text-[9px] text-alert_fire"><i class="fa-solid fa-medal"></i> Dean's List (2x 4.00 GPA)</p>
                                 </div>
                             </div>
-                            <img src="logoITB.png" alt="ITB" class="h-6 w-6 object-contain bg-white rounded-full shadow-sm" loading="lazy">
+                            <img src="logoITB.png" alt="ITB" class="h-8 w-8 object-contain bg-white rounded-full shadow-sm" loading="lazy">
                         </div>
                         
-                        <div class="w-full max-w-[180px] bg-white p-1 shadow-sm transform -rotate-1 border border-gray-100">
-                            <img src="grad.jpg" alt="Graduation" class="w-full h-10 object-cover" loading="lazy">
-                            <p class="text-center font-display text-[6px] font-bold text-deep_forest mt-1">GRADUATION - ITB 2026</p>
+                        <div class="w-full max-w-[200px] bg-white p-1.5 shadow-sm transform -rotate-1 border border-gray-100">
+                            <img src="grad.jpg" alt="Graduation" class="w-full h-12 object-cover" loading="lazy">
+                            <p class="text-center font-display text-[7px] font-bold text-deep_forest mt-1">GRADUATION - ITB 2026</p>
                         </div>
                     </div>
 
                     <div class="relative border-l-2 border-tech_teal/30 pl-3 ml-2">
                         <div class="absolute -left-[7px] top-1 w-3 h-3 bg-tech_teal rounded-full border-2 border-white"></div>
                         <div>
-                            <h5 class="font-bold text-deep_forest text-[10px]">SMAN 19 Bandung</h5>
-                            <p class="text-[8px] text-deep_forest/70">Science Major • 2022</p>
+                            <h5 class="font-bold text-deep_forest text-[11px]">SMAN 19 Bandung</h5>
+                            <p class="text-[9px] text-deep_forest/70">Science Major • 2022</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-white/95 backdrop-blur-md border border-tech_teal/20 p-5 rounded-[2rem] shadow-xl reveal">
-                    <h4 class="font-display font-bold text-[14px] mb-2 text-deep_forest border-b border-tech_teal/20 pb-2">Core Expertise</h4>
+                    <h4 class="font-display font-bold text-[15px] mb-2 text-deep_forest border-b border-tech_teal/20 pb-2">Core Expertise</h4>
                     <div class="flex flex-wrap gap-1 mb-3">
-                        <span class="px-2 py-0.5 bg-tech_teal/5 text-deep_forest text-[8px] font-bold rounded-md border border-tech_teal/20">Spatial & GIS Analysis</span>
-                        <span class="px-2 py-0.5 bg-tech_teal/5 text-deep_forest text-[8px] font-bold rounded-md border border-tech_teal/20">Habitat Suitability</span>
-                        <span class="px-2 py-0.5 bg-tech_teal/5 text-deep_forest text-[8px] font-bold rounded-md border border-tech_teal/20">Post-Mining Reclamation</span>
-                        <span class="px-2 py-0.5 bg-tech_teal/5 text-deep_forest text-[8px] font-bold rounded-md border border-tech_teal/20">Biodiversity Monitoring</span>
-                        <span class="px-2 py-0.5 bg-tech_teal/5 text-deep_forest text-[8px] font-bold rounded-md border border-tech_teal/20">Drone Photogrammetry</span>
+                        <span class="px-2 py-0.5 bg-tech_teal/5 text-deep_forest text-[9px] font-bold rounded-md border border-tech_teal/20">Spatial & GIS Analysis</span>
+                        <span class="px-2 py-0.5 bg-tech_teal/5 text-deep_forest text-[9px] font-bold rounded-md border border-tech_teal/20">Habitat Suitability</span>
+                        <span class="px-2 py-0.5 bg-tech_teal/5 text-deep_forest text-[9px] font-bold rounded-md border border-tech_teal/20">Post-Mining Reclamation</span>
+                        <span class="px-2 py-0.5 bg-tech_teal/5 text-deep_forest text-[9px] font-bold rounded-md border border-tech_teal/20">Biodiversity Monitoring</span>
+                        <span class="px-2 py-0.5 bg-tech_teal/5 text-deep_forest text-[9px] font-bold rounded-md border border-tech_teal/20">Drone Photogrammetry</span>
                     </div>
 
-                    <h4 class="font-display font-bold text-[14px] mb-2 text-deep_forest border-b border-tech_teal/20 pb-2">Software Stack</h4>
+                    <h4 class="font-display font-bold text-[15px] mb-2 text-deep_forest border-b border-tech_teal/20 pb-2">Software Stack</h4>
                     <div class="flex flex-wrap gap-1.5">
                         <div class="flex items-center gap-1 px-1.5 py-0.5 bg-white rounded shadow-sm border border-gray-100">
-                            <img src="logo_arcgis.png" class="w-3 h-3 object-contain" loading="lazy"> <span class="text-[8px] font-bold text-deep_forest">ArcGIS</span>
+                            <img src="logo_arcgis.png" class="w-3 h-3 object-contain" loading="lazy"> <span class="text-[9px] font-bold text-deep_forest">ArcGIS</span>
                         </div>
                         <div class="flex items-center gap-1 px-1.5 py-0.5 bg-white rounded shadow-sm border border-gray-100">
-                            <img src="logo_qgis.png" class="w-3 h-3 object-contain" loading="lazy"> <span class="text-[8px] font-bold text-deep_forest">QGIS</span>
+                            <img src="logo_qgis.png" class="w-3 h-3 object-contain" loading="lazy"> <span class="text-[9px] font-bold text-deep_forest">QGIS</span>
                         </div>
                         <div class="flex items-center gap-1 px-1.5 py-0.5 bg-white rounded shadow-sm border border-gray-100">
-                            <img src="logo_rstudio.png" class="w-3 h-3 object-contain" loading="lazy"> <span class="text-[8px] font-bold text-deep_forest">RStudio</span>
+                            <img src="logo_rstudio.png" class="w-3 h-3 object-contain" loading="lazy"> <span class="text-[9px] font-bold text-deep_forest">RStudio</span>
                         </div>
                         <div class="flex items-center gap-1 px-1.5 py-0.5 bg-white rounded shadow-sm border border-gray-100">
-                            <img src="logomaxent.png" class="w-3 h-3 object-contain" loading="lazy"> <span class="text-[8px] font-bold text-deep_forest">MaxEnt</span>
+                            <img src="logomaxent.png" class="w-3 h-3 object-contain" loading="lazy"> <span class="text-[9px] font-bold text-deep_forest">MaxEnt</span>
                         </div>
                         <div class="flex items-center gap-1 px-1.5 py-0.5 bg-white rounded shadow-sm border border-gray-100">
-                            <img src="logo_agisoft.png" class="w-3 h-3 object-contain" loading="lazy"> <span class="text-[8px] font-bold text-deep_forest">Metashape</span>
+                            <img src="logo_agisoft.png" class="w-3 h-3 object-contain" loading="lazy"> <span class="text-[9px] font-bold text-deep_forest">Metashape</span>
                         </div>
                     </div>
                 </div>
@@ -312,12 +321,10 @@
         <div class="w-full z-10 px-4 relative flex items-center justify-center">
             <div class="roadmap-container max-w-[1300px] w-full">
                 
-                <!-- SVG Garis Meliuk -->
                 <svg class="roadmap-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
                     <path class="roadmap-path" d="M 0 50 C 4 50, 4 35, 8 35 S 16.4 65, 24.8 65 S 33.2 35, 41.6 35 S 50 65, 58.4 65 S 66.8 35, 75.2 35 S 83.6 65, 92 65 S 96 50, 100 50" />
                 </svg>
 
-                <!-- Item 1 (Atas) -->
                 <div class="roadmap-item up" style="left: 8%; top: 35%;" onclick="openModal('job1')">
                     <div class="roadmap-card">
                         <img src="vale1.jpg" alt="PT Vale" class="roadmap-thumbnail" loading="lazy">
@@ -330,7 +337,6 @@
                     <div class="roadmap-node bg-alert_fire"><i class="fa-solid fa-briefcase"></i></div>
                 </div>
 
-                <!-- Item 2 (Bawah) -->
                 <div class="roadmap-item down" style="left: 24.8%; top: 65%;" onclick="openModal('job2')">
                     <div class="roadmap-node bg-tech_teal"><i class="fa-solid fa-map"></i></div>
                     <div class="roadmap-card">
@@ -343,7 +349,6 @@
                     </div>
                 </div>
 
-                <!-- Item 3 (Atas) -->
                 <div class="roadmap-item up" style="left: 41.6%; top: 35%;" onclick="openModal('job3')">
                     <div class="roadmap-card">
                         <img src="spth4.jpg" alt="SPTH" class="roadmap-thumbnail" loading="lazy">
@@ -356,7 +361,6 @@
                     <div class="roadmap-node bg-bright_sun"><i class="fa-solid fa-seedling text-deep_forest"></i></div>
                 </div>
 
-                <!-- Item 4 (Bawah) -->
                 <div class="roadmap-item down" style="left: 58.4%; top: 65%;" onclick="openModal('job4')">
                     <div class="roadmap-node bg-deep_forest"><i class="fa-solid fa-flask"></i></div>
                     <div class="roadmap-card">
@@ -369,7 +373,6 @@
                     </div>
                 </div>
 
-                <!-- Item 5 (Atas) -->
                 <div class="roadmap-item up" style="left: 75.2%; top: 35%;" onclick="openModal('job5')">
                     <div class="roadmap-card">
                         <img src="tnuk1.jpg" alt="Ujung Kulon" class="roadmap-thumbnail" loading="lazy">
@@ -382,7 +385,6 @@
                     <div class="roadmap-node bg-tech_teal"><i class="fa-solid fa-leaf"></i></div>
                 </div>
 
-                <!-- Item 6 (Bawah) -->
                 <div class="roadmap-item down" style="left: 92%; top: 65%;" onclick="openModal('job6')">
                     <div class="roadmap-node bg-alert_fire"><i class="fa-solid fa-microscope"></i></div>
                     <div class="roadmap-card">
@@ -414,7 +416,7 @@
         <div class="max-w-[1300px] mx-auto w-full px-4 overflow-hidden z-10">
             <div class="projects-slider" id="projectsSlider">
                 
-                <!-- SLIDE 1 -->
+                <!-- SLIDE 1 (Index 1-8) -->
                 <div class="projects-slide">
                     <div class="bento-grid">
                         
@@ -472,6 +474,7 @@
                             </div>
                         </div>
                         
+                        <!-- Wildlife Ditukar Ke Slide 1 -->
                         <div class="bento-card" onclick="openModal('proj15')">
                             <div class="bento-img-container"><img src="tor5.jpg" alt="Camera Trap" loading="lazy"></div>
                             <div class="bento-content">
@@ -493,7 +496,7 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 2 -->
+                <!-- SLIDE 2 (Index 9-15) -->
                 <div class="projects-slide">
                     <div class="bento-grid">
                         
@@ -542,6 +545,7 @@
                             </div>
                         </div>
                         
+                        <!-- FMU Mapping Ditukar Ke Slide 2 -->
                         <div class="bento-card" onclick="openModal('proj1')">
                             <div class="bento-img-container"><img src="kphp4.png" alt="FMU Mapping" loading="lazy"></div>
                             <div class="bento-content">
@@ -583,46 +587,44 @@
         </div>
 
         <div class="marquee-wrapper">
-            <!-- Baris 1: Geser ke Kiri -->
             <div class="marquee-track marquee-track-left">
-                <img src="bio1.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 1">
-                <img src="bio2.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 2">
-                <img src="bio3.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 3">
-                <img src="bio4.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 4">
-                <img src="bio5.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 5">
-                <img src="bio6.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 6">
-                <img src="bio7.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 7">
-                <img src="bio8.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 8">
-                <!-- Duplikat untuk infinite loop -->
-                <img src="bio1.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 1">
-                <img src="bio2.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 2">
-                <img src="bio3.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 3">
-                <img src="bio4.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 4">
-                <img src="bio5.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 5">
-                <img src="bio6.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 6">
-                <img src="bio7.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 7">
-                <img src="bio8.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 8">
+                <img src="bio1.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 1" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+1'">
+                <img src="bio2.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 2" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+2'">
+                <img src="bio3.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 3" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+3'">
+                <img src="bio4.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 4" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+4'">
+                <img src="bio5.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 5" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+5'">
+                <img src="bio6.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 6" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+6'">
+                <img src="bio7.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 7" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+7'">
+                <img src="bio8.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 8" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+8'">
+                <!-- Duplicate -->
+                <img src="bio1.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 1" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+1'">
+                <img src="bio2.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 2" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+2'">
+                <img src="bio3.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 3" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+3'">
+                <img src="bio4.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 4" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+4'">
+                <img src="bio5.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 5" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+5'">
+                <img src="bio6.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 6" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+6'">
+                <img src="bio7.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 7" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+7'">
+                <img src="bio8.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 8" onerror="this.src='https://placehold.co/240x160/046865/ffffff?text=Bio+8'">
             </div>
 
-            <!-- Baris 2: Geser ke Kanan -->
             <div class="marquee-track marquee-track-right">
-                <img src="bio9.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 9">
-                <img src="bio10.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 10">
-                <img src="bio11.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 11">
-                <img src="bio12.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 12">
-                <img src="bio13.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 13">
-                <img src="bio14.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 14">
-                <img src="bio15.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 15">
-                <img src="bio1.JPG" class="marquee-img" loading="lazy" alt="Filler">
-                <!-- Duplikat untuk infinite loop -->
-                <img src="bio9.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 9">
-                <img src="bio10.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 10">
-                <img src="bio11.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 11">
-                <img src="bio12.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 12">
-                <img src="bio13.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 13">
-                <img src="bio14.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 14">
-                <img src="bio15.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 15">
-                <img src="bio1.JPG" class="marquee-img" loading="lazy" alt="Filler">
+                <img src="bio9.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 9" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+9'">
+                <img src="bio10.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 10" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+10'">
+                <img src="bio11.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 11" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+11'">
+                <img src="bio12.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 12" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+12'">
+                <img src="bio13.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 13" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+13'">
+                <img src="bio14.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 14" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+14'">
+                <img src="bio15.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 15" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+15'">
+                <img src="bio1.JPG" class="marquee-img" loading="lazy" alt="Filler" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio'">
+                <!-- Duplicate -->
+                <img src="bio9.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 9" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+9'">
+                <img src="bio10.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 10" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+10'">
+                <img src="bio11.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 11" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+11'">
+                <img src="bio12.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 12" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+12'">
+                <img src="bio13.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 13" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+13'">
+                <img src="bio14.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 14" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+14'">
+                <img src="bio15.JPG" class="marquee-img" loading="lazy" alt="Biodiversity 15" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio+15'">
+                <img src="bio1.JPG" class="marquee-img" loading="lazy" alt="Filler" onerror="this.src='https://placehold.co/240x160/21A0A0/ffffff?text=Bio'">
             </div>
         </div>
     </section>
@@ -640,7 +642,7 @@
                 
                 <div class="bento-card" style="cursor: default;">
                     <div class="bento-img-container">
-                        <img src="asper.jpg" alt="Aspirations" loading="lazy">
+                        <img src="asper.jpg" alt="Aspirations" loading="lazy" onerror="this.src='https://placehold.co/400x300/046865/ffffff?text=Org'">
                         <div class="absolute top-2 left-2 w-6 h-6 bg-alert_fire rounded-full flex items-center justify-center text-white font-bold text-[10px] shadow-md">01</div>
                     </div>
                     <div class="bento-content">
@@ -652,7 +654,7 @@
 
                 <div class="bento-card" style="cursor: default;">
                     <div class="bento-img-container">
-                        <img src="aun.jpg" alt="Expedition" loading="lazy">
+                        <img src="aun.jpg" alt="Expedition" loading="lazy" onerror="this.src='https://placehold.co/400x300/046865/ffffff?text=Org'">
                         <div class="absolute top-2 left-2 w-6 h-6 bg-deep_forest rounded-full flex items-center justify-center text-white font-bold text-[10px] shadow-md">02</div>
                     </div>
                     <div class="bento-content">
@@ -664,7 +666,7 @@
 
                 <div class="bento-card" style="cursor: default;">
                     <div class="bento-img-container">
-                        <img src="aspi.jpg" alt="Member" loading="lazy">
+                        <img src="aspi.jpg" alt="Member" loading="lazy" onerror="this.src='https://placehold.co/400x300/046865/ffffff?text=Org'">
                         <div class="absolute top-2 left-2 w-6 h-6 bg-bright_sun rounded-full flex items-center justify-center text-deep_forest font-bold text-[10px] shadow-md">03</div>
                     </div>
                     <div class="bento-content">
@@ -676,7 +678,7 @@
 
                 <div class="bento-card" style="cursor: default;">
                     <div class="bento-img-container">
-                        <img src="medik.jpg" alt="Medical Team" loading="lazy">
+                        <img src="medik.jpg" alt="Medical Team" loading="lazy" onerror="this.src='https://placehold.co/400x300/046865/ffffff?text=Org'">
                         <div class="absolute top-2 left-2 w-6 h-6 bg-tech_teal rounded-full flex items-center justify-center text-white font-bold text-[10px] shadow-md">04</div>
                     </div>
                     <div class="bento-content">
@@ -688,7 +690,7 @@
                 
                 <div class="bento-card" style="cursor: default;">
                     <div class="bento-img-container">
-                        <img src="oskm.jpg" alt="OSKM" loading="lazy">
+                        <img src="oskm.jpg" alt="OSKM" loading="lazy" onerror="this.src='https://placehold.co/400x300/046865/ffffff?text=Org'">
                         <div class="absolute top-2 left-2 w-6 h-6 bg-deep_forest rounded-full flex items-center justify-center text-white font-bold text-[10px] shadow-md">05</div>
                     </div>
                     <div class="bento-content">
@@ -700,7 +702,7 @@
 
                 <div class="bento-card" style="cursor: default;">
                     <div class="bento-img-container">
-                        <img src="senam.jpg" alt="Volunteer" loading="lazy">
+                        <img src="senam.jpg" alt="Volunteer" loading="lazy" onerror="this.src='https://placehold.co/400x300/046865/ffffff?text=Org'">
                         <div class="absolute top-2 left-2 w-6 h-6 bg-alert_fire rounded-full flex items-center justify-center text-white font-bold text-[10px] shadow-md">06</div>
                     </div>
                     <div class="bento-content">
@@ -712,7 +714,7 @@
                 
                 <div class="bento-card" style="cursor: default;">
                     <div class="bento-img-container">
-                        <img src="dokum.jpg" alt="Documentation" loading="lazy">
+                        <img src="dokum.jpg" alt="Documentation" loading="lazy" onerror="this.src='https://placehold.co/400x300/046865/ffffff?text=Org'">
                         <div class="absolute top-2 left-2 w-6 h-6 bg-bright_sun rounded-full flex items-center justify-center text-deep_forest font-bold text-[10px] shadow-md">07</div>
                     </div>
                     <div class="bento-content">
@@ -724,7 +726,7 @@
 
                 <div class="bento-card" style="cursor: default;">
                     <div class="bento-img-container">
-                        <img src="minor.jpg" alt="Sports" loading="lazy">
+                        <img src="minor.jpg" alt="Sports" loading="lazy" onerror="this.src='https://placehold.co/400x300/046865/ffffff?text=Org'">
                         <div class="absolute top-2 left-2 w-6 h-6 bg-tech_teal rounded-full flex items-center justify-center text-white font-bold text-[10px] shadow-md">08</div>
                     </div>
                     <div class="bento-content">
@@ -751,7 +753,7 @@
                     
                     <div class="w-full flex-shrink-0 flex flex-col p-6">
                         <div class="flex-1 w-full aspect-[16/9] bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-4 border border-gray-200">
-                            <img src="sertifvale.png" alt="PT Vale" class="w-full h-full object-contain" loading="lazy">
+                            <img src="sertifvale.png" alt="PT Vale" class="w-full h-full object-contain" loading="lazy" onerror="this.src='https://placehold.co/800x600/e5e7eb/046865?text=Certificate'">
                         </div>
                         <div class="text-center">
                             <h4 class="font-display font-bold text-lg text-deep_forest mb-1">Completed Internship at PT Vale Indonesia Tbk</h4>
@@ -761,7 +763,7 @@
                     
                     <div class="w-full flex-shrink-0 flex flex-col p-6">
                         <div class="flex-1 w-full aspect-[16/9] bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-4 border border-gray-200">
-                            <img src="sertifbpkh.png" alt="BPKH" class="w-full h-full object-contain" loading="lazy">
+                            <img src="sertifbpkh.png" alt="BPKH" class="w-full h-full object-contain" loading="lazy" onerror="this.src='https://placehold.co/800x600/e5e7eb/046865?text=Certificate'">
                         </div>
                         <div class="text-center">
                             <h4 class="font-display font-bold text-lg text-deep_forest mb-1">Completed Internship at BPKH Region XI Yogyakarta</h4>
@@ -771,7 +773,7 @@
 
                     <div class="w-full flex-shrink-0 flex flex-col p-6">
                         <div class="flex-1 w-full aspect-[16/9] bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-4 border border-gray-200">
-                            <img src="sertifcdt.png" alt="CDT" class="w-full h-full object-contain" loading="lazy">
+                            <img src="sertifcdt.png" alt="CDT" class="w-full h-full object-contain" loading="lazy" onerror="this.src='https://placehold.co/800x600/e5e7eb/046865?text=Certificate'">
                         </div>
                         <div class="text-center">
                             <h4 class="font-display font-bold text-lg text-deep_forest mb-1">Character Development Training (CDT) Trainee</h4>
@@ -781,7 +783,7 @@
                     
                      <div class="w-full flex-shrink-0 flex flex-col p-6">
                         <div class="flex-1 w-full aspect-[16/9] bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-4 border border-gray-200">
-                            <img src="sertifdean.png" alt="Dean's List" class="w-full h-full object-contain" loading="lazy">
+                            <img src="sertifdean.png" alt="Dean's List" class="w-full h-full object-contain" loading="lazy" onerror="this.src='https://placehold.co/800x600/e5e7eb/046865?text=Certificate'">
                         </div>
                         <div class="text-center">
                             <h4 class="font-display font-bold text-lg text-deep_forest mb-1">Dean's List Awardee</h4>
@@ -791,7 +793,7 @@
 
                     <div class="w-full flex-shrink-0 flex flex-col p-6">
                         <div class="flex-1 w-full aspect-[16/9] bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-4 border border-gray-200">
-                            <img src="sertifmaxent.png" alt="MaxEnt" class="w-full h-full object-contain" loading="lazy">
+                            <img src="sertifmaxent.png" alt="MaxEnt" class="w-full h-full object-contain" loading="lazy" onerror="this.src='https://placehold.co/800x600/e5e7eb/046865?text=Certificate'">
                         </div>
                         <div class="text-center">
                             <h4 class="font-display font-bold text-lg text-deep_forest mb-1">Wildlife Habitat Suitability Mapping Training</h4>
@@ -801,7 +803,7 @@
 
                     <div class="w-full flex-shrink-0 flex flex-col p-6">
                         <div class="flex-1 w-full aspect-[16/9] bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center p-2 mb-4 border border-gray-200">
-                            <img src="sertifosn.png" alt="OSC" class="w-full h-full object-contain" loading="lazy">
+                            <img src="sertifosn.png" alt="OSC" class="w-full h-full object-contain" loading="lazy" onerror="this.src='https://placehold.co/800x600/e5e7eb/046865?text=Certificate'">
                         </div>
                         <div class="text-center">
                             <h4 class="font-display font-bold text-lg text-deep_forest mb-1">Participant, West Java Student Olympiad (OSC)</h4>
@@ -890,230 +892,400 @@
         <div class="bg-pure_snow w-full max-w-5xl h-[90vh] rounded-3xl flex flex-col overflow-hidden relative shadow-2xl" id="pdfContainer">
             <div class="bg-deep_forest p-3 flex justify-between items-center text-white shrink-0 shadow-md z-20">
                 <h3 class="font-display font-bold text-[15px] text-bright_sun"><i class="fa-solid fa-file-pdf mr-2 text-alert_fire"></i> Document Viewer</h3>
-                <button onclick="closePdfModal()" class="w-8 h-8 bg-alert_fire hover:bg-bright_sun rounded-full transition-colors flex items-center justify-center text-lg"><i class="fa-solid fa-times"></i></button>
+                <button onclick="closePdfModal()" class="w-8 h-8 bg-alert_fire hover:bg-bright_sun hover:text-deep_forest rounded-full transition-colors flex items-center justify-center text-lg"><i class="fa-solid fa-times"></i></button>
             </div>
             <iframe id="pdfFrame" src="" class="w-full h-full border-none bg-gray-200"></iframe>
         </div>
     </div>
 
     <script>
-        // MENGKONEKSIKAN SELURUH TEKS PENJELASAN LENGKAP YANG TELAH DITRANSKRIP
         const modalData = {
             job1: { 
-                title: "Environment Strategic Dept. Sustainability Intern", company: "PT Vale Indonesia Tbk • 2026", pdf: "vale.pdf",
+                title: "Environment Strategic Dept. Sustainability Intern", company: "PT Vale Indonesia Tbk • May - July 2026", 
+                pdf: "vale.pdf",
                 points: [ 
                     "Evaluated post-mining reclamation via spatial mapping and silviculture measurements, delivering adaptive management recommendations for <span class='mark-highlight'>106 bamboos</span>.",
-                    "Digitized orchid inventory by developing a web-based system, successfully increasing tracking accuracy and validity for <span class='mark-highlight'>385 individuals</span>.",
-                    "Monitored Lake Matano's aquatic biodiversity using non-invasive <span class='mark-highlight'>eDNA sampling</span> methods.",
-                    "Identified and integrated <span class='mark-highlight'>40+ terrestrial wildlife individuals from camera trap</span> data."
+                    "Digitized orchid inventory by developing a web-based system, successfully increasing tracking accuracy and validity for <span class='mark-highlight'>385 individuals</span> (website: <a href='https://sustainorchid.github.io/SustainOrchidValeITB/' target='_blank' class='text-tech_teal underline break-all'>sustainorchid.github.io/SustainOrchidValeITB/</a>).",
+                    "Monitored Lake Matano's aquatic biodiversity using non-invasive <span class='mark-highlight'>eDNA sampling</span> methods, successfully mapping 14 spatial observation points.",
+                    "Identified and integrated <span class='mark-highlight'>40+ terrestrial wildlife individuals from camera trap</span> data into the corporate digital biodiversity database."
                 ],
-                slides: [ { img: "vale1.jpg", caption: "Monitoring Reclaimed Bamboo" }, { img: "vale2.jpg", caption: "Monitoring 385 Orchids" }, { img: "vale3.jpg", caption: "eDNA Sampling" }, { img: "vale5.jpg", caption: "Wildlife Camera Trap" }, { img: "sertifvale.png", caption: "Certificate of Internship" } ]
+                slides: [
+                    { img: "vale1.jpg", caption: "Monitoring Reclaimed Bamboo" },
+                    { img: "vale2.jpg", caption: "Monitoring 385 Orchids" },
+                    { img: "web.mp4", caption: "Orchid Web System" }, 
+                    { img: "vale3.jpg", caption: "eDNA Sampling" },
+                    { img: "vale5.jpg", caption: "Wildlife Camera Trap" },
+                    { img: "vale6.jpg", caption: "Final Presentation" },
+                    { img: "sertifvale.png", caption: "Certificate of Internship" }
+                ]
             },
-            job2: {
-                title: "Geographic Information System (GIS) Intern", company: "BPKH Region XI Yogyakarta • 2026", pdf: "bpkh.pdf",
-                points: [
-                    "Conducted <span class='mark-highlight'>land use interpretation and classification</span> of official 2024-2025 maps for Ngawi, Nganjuk, and Magetan Regencies.",
-                    "Verified field data and mapped <span class='mark-highlight'>78 PPTPKH land parcels</span> across 6 village maps in Kebumen.",
-                    "Reconstructed historical forest boundaries by digitizing Dutch colonial maps."
+            job2: { 
+                title: "Geographic Information System (GIS) Intern", company: "BPKH Wilayah XI Yogyakarta • Apr - May 2026", 
+                pdf: "",
+                points: [ 
+                    "<span class='mark-highlight'>Conducted land use interpretation and classification</span> of official 2024–2025 maps for Ngawi, Nganjuk, and Magetan Regencies published by the Ministry of Forestry of the Republic of Indonesia.",
+                    "Verified field data and mapped <span class='mark-highlight'>78 PPTPKH land parcels</span> across 6 village maps in Kebumen Regency.",
+                    "Reconstructed historical forest boundaries by digitizing Dutch colonial maps, covering a <span class='mark-highlight'>3,279-meter area with 94 markers</span>."
                 ],
-                slides: [ { img: "bpkh1.jpg", caption: "PPTPKH Mapping" }, { img: "bpkh2.jpg", caption: "Spatial Planning Meeting" }, { img: "sertifbpkh.png", caption: "Certificate of Internship" } ]
+                slides: [
+                    { img: "bpkh1.jpg", caption: "Land Use Classification" },
+                    { img: "bpkh2.jpg", caption: "PPTPKH Mapping" },
+                    { img: "bpkh3.jpg", caption: "Digitizing Historical Maps" },
+                    { img: "sertifbpkh.png", caption: "Certificate of Internship" }
+                ]
             },
-            job3: {
-                title: "Forest Rehabilitation Intern", company: "UPTD SPTH Jabar • 2026", pdf: "",
-                points: [
-                    "Analyzed critical land areas using GIS and USLE formulas to formulate <span class='mark-highlight'>rehabilitation strategies</span>.",
-                    "Evaluated the physical and physiological quality of <span class='mark-highlight'>certified forest seeds</span> in the laboratory."
+            job3: { 
+                title: "Forest Rehabilitation & Seed Quality Intern", company: "UPTD Sertifikasi & Perbenihan Tanaman Hutan • Mar - Apr 2026", 
+                pdf: "spth.pdf",
+                points: [ 
+                    "Re-analyzed historical land-cover datasets via USLE modeling, successfully improving spatial model accuracy <span class='mark-highlight'>from 26% to 82%</span>.",
+                    "Mapped <span class='mark-highlight'>soil erosion potential</span> and <span class='mark-highlight'>critical land status</span> across 155.63 ha to inform precise ecological planting programs.",
+                    "Conducted forest seed quality testing for Falcataria moluccana in the laboratory, including moisture content, seed weight, physical purity, germination rate, and <span class='mark-highlight'>seed viability using the tetrazolium method</span>."
                 ],
-                slides: [ { img: "spth4.jpg", caption: "Seed Quality Evaluation" }, { img: "spth2.jpg", caption: "Laboratory Testing" } ]
+                slides: [
+                    { img: "spth1.jpg", caption: "Seed Certification" },
+                    { img: "spth2.jpg", caption: "Edaphic Data Collection" },
+                    { img: "spth3.jpg", caption: "Final Presentation" },
+                    { img: "spth4.jpg", caption: "Routine Planting" }
+                ]
             },
-            job4: {
-                title: "Silviculture Lab Assistant", company: "Institut Teknologi Bandung • 2025", pdf: "",
-                points: [
-                    "Mentored undergraduate students in <span class='mark-highlight'>nursery design</span> and vegetative propagation techniques.",
-                    "Supervised and evaluated practicum sessions for silvicultural treatments and plant maintenance."
+            job4: { 
+                title: "Silviculture Techniques Laboratory Assistant", company: "Institut Teknologi Bandung • Aug - Dec 2025", 
+                pdf: "",
+                points: [ 
+                    "Mentored <span class='mark-highlight'>82 undergraduates</span> over 5 months through 12 core modules and 2 final research projects.",
+                    "Led the nursery design module, guiding <span class='mark-highlight'>plant propagation practices</span> and <span class='mark-highlight'>GIS-based species selection</span> for land reclamation."
                 ],
-                slides: [ { img: "teksil1.jpg", caption: "Mentoring Session" }, { img: "teksil2.jpg", caption: "Field Practicum" } ]
+                slides: [
+                    { img: "teksil1.jpg", caption: "Practicum Preparation" },
+                    { img: "teksil2.jpg", caption: "Practicum Evaluation" }
+                ]
             },
-            job5: {
-                title: "Conservation Intern", company: "Ujung Kulon National Park • 2025", pdf: "",
-                points: [
-                    "Analyzed ecotourism potential and visitor carrying capacity for the Peucang Island resort.",
-                    "Supported the monitoring of <span class='mark-highlight'>Javan Green Peafowl</span> population distribution through spatial mapping."
+            job5: { 
+                title: "Biodiversity and Conservation Intern", company: "Ujung Kulon National Park • Jun - Aug 2025", 
+                pdf: "tnuk.pdf",
+                points: [ 
+                    "Mapped ecotourism trekking routes, successfully expanding potential snorkeling sites <span class='mark-highlight'>from 1 to 3 via SWOT analysis</span>.",
+                    "Conducted <span class='mark-highlight'>field-based demographic analysis</span> on the Green Peafowl population at Cidaon to support <span class='mark-highlight'>continuous wildlife monitoring</span>.",
+                    "Mapped coral reef areas, ecotourism trekking routes, and tsunami evacuation routes to support <span class='mark-highlight'>spatial planning and ecotourism management</span>."
                 ],
-                slides: [ { img: "tnuk1.jpg", caption: "Ecotourism Analysis" }, { img: "tnuk2.jpg", caption: "Field Observation" } ]
+                slides: [
+                    { img: "tnuk1.jpg", caption: "Officer Interviews" },
+                    { img: "tnuk2.jpg", caption: "Evacuation Sign Install" },
+                    { img: "tnuk3.jpg", caption: "Ecotourism Analysis" },
+                    { img: "tnuk4.jpg", caption: "Ministry Discussion" },
+                    { img: "tnuk5.jpg", caption: "Signage Renewal" },
+                    { img: "tnuk6.jpg", caption: "Rhino Camp Observation" },
+                    { img: "tnuk7.jpg", caption: "Signage Renewal" }
+                ]
             },
-            job6: {
-                title: "Taxonomy Lab Assistant", company: "Institut Teknologi Bandung • 2024", pdf: "",
-                points: [
-                    "Coordinated comprehensive <span class='mark-highlight'>invertebrate taxonomy</span> learning modules for undergraduate students.",
-                    "Managed health and safety protocols during extensive field sampling expeditions."
+            job6: { 
+                title: "Animal and Plant Taxonomy Lab Assistant", company: "Institut Teknologi Bandung • Sep 2024 - Jan 2025", 
+                pdf: "",
+                points: [ 
+                    "Mentored 80+ students across 14 taxonomy modules and directed <span class='mark-highlight'>morphological specimen identification</span> for invertebrate phyla.",
+                    "Served as <span class='mark-highlight'>Medical Coordinator</span>, strictly enforcing health and safety management for all personnel during field activities."
                 ],
-                slides: [ { img: "tak1.jpg", caption: "Field Expedition" }, { img: "tak2.jpg", caption: "Taxonomy Classification" }, { img: "tak3.jpg", caption: "Sample Collection" }, { img: "tak4.jpg", caption: "Lab Analysis" } ]
+                slides: [
+                    { img: "tak1.jpg", caption: "Pangandaran Field Course" },
+                    { img: "tak2.jpg", caption: "Pangandaran Practicum" },
+                    { img: "tak3.jpg", caption: "Mount Batu Field Course" },
+                    { img: "tak4.jpg", caption: "Mount Batu Practicum" }
+                ]
             },
-
-            // DATA PROYEK LENGKAP HASIL TRANSKRIPSI FOTO (DENGAN HIGHLIGHT)
-            proj7: {
-                title: "Drone Photogrammetry and High-Resolution Mapping", company: "ITB Jatinangor", pdf: "",
-                points: [
-                    "Needed high-resolution spatial mapping to support campus infrastructure evaluation and spatial planning.",
-                    "Piloted drones for aerial data acquisition and processed the photogrammetric spatial data using <span class='mark-highlight'>Agisoft Metashape</span>.",
-                    "Generated highly accurate orthomosaics and comprehensive <span class='mark-highlight'>3D spatial models</span> of the campus environment."
-                ],
-                slides: [ { img: "agi1.png", caption: "Orthomosaic Map" }, { img: "agi1.png", caption: "Spatial Modeling" } ]
-            },
-            proj8: {
-                title: "Bamboo Cultivation Success Evaluation", company: "PT Vale Indonesia Tbk", pdf: "",
-                points: [
-                    "Assessed the ecological recovery progress and plant adaptability on post-mining reclamation sites to optimize land management.",
-                    "Conducted direct <span class='mark-highlight'>silvicultural measurements</span> and developed GIS distribution maps for adaptive bamboo growth.",
-                    "Delivered data-driven management strategies and primary species recommendations based on the comprehensive evaluation of <span class='mark-highlight'>106 bamboo individuals</span>."
-                ],
-                slides: [ { img: "bam6.png", caption: "Bamboo Distribution Map" }, { img: "bam6.png", caption: "Field Verification" } ]
-            },
-            proj9: {
-                title: "Digitizing Orchid Inventory Data", company: "Sawerigading Wallacea Nature Park", pdf: "",
-                points: [
-                    "Modernized the botanical inventory system at the corporate nature park to improve conservation tracking and data traceability.",
-                    "Designed a relational database structure and developed a custom <span class='mark-highlight'>web-based application</span> to digitize field records.",
-                    "Achieved 100% data validity and successfully registered <span class='mark-highlight'>385 orchid individuals</span> into a fully automated, accessible dashboard."
-                ],
-                slides: [ { img: "web7.jpg", caption: "SustainOrchid Dashboard" } ]
-            },
-            proj10: {
-                title: "Critical Land Assessment & MPTS Recommendations", company: "Kiarapayung Forest", pdf: "",
-                points: [
-                    "Aimed to formulate precise ecological planting programs for degraded regional forests to optimize state rehabilitation efforts.",
-                    "Executed <span class='mark-highlight'>USLE erosion modeling</span> to map land criticality and formulated site-based Multipurpose Tree Species (MPTS) recommendations.",
-                    "Corrected historical land-cover datasets across 155.63 ha, significantly improving spatial model accuracy by <span class='mark-highlight'>56 percentage points</span> (from previous baseline)."
-                ],
-                slides: [ { img: "spth7.png", caption: "Land Cover Reclassification" } ]
-            },
-            proj11: {
-                title: "Spatial Modeling Above Ground Biomass (AGB) Estimation Using Linear Regression", company: "Ruvu North Forest Reserve, Tanzania", pdf: "",
-                points: [
-                    "Evaluated natural terrain and human activity to map and estimate total plant biomass across a <span class='mark-highlight'>19,587-hectare</span> area in the Ruvu North Forest Reserve.",
-                    "Developed a highly efficient, 4-factor mathematical model using data from 27 field locations to optimize estimation accuracy without relying on complex satellite data.",
-                    "Successfully mapped the entire reserve, calculating a total of <span class='mark-highlight'>over 1.3 million tons of living biomass</span> with an average of 66 tons per hectare."
-                ],
-                slides: [ { img: "covpsuk1.png", caption: "AGB Estimation Map" } ]
-            },
-            proj12: {
-                title: "Predictive Spatial Modeling of Acer cappadocicum Presence Using Logistic Regression", company: "Majella National Park, Italy", pdf: "",
-                points: [
-                    "Formulated a streamlined 3-variable logistic regression model (NDVI, ISR, Aspect) for spatial prediction, achieving an <span class='mark-highlight'>\"excellent\" AUC score of 0.9368</span>.",
-                    "Validated the model's predictive reliability with 87.1% sensitivity and 90.4% specificity, successfully identifying 27 true positive occurrences with minimal false positives.",
-                    "Generated probability distribution maps for Majella National Park, precisely identifying <span class='mark-highlight'>252 hectares</span> of highly suitable habitat for the endemic Acer cappadocicum tree species."
-                ],
-                slides: [ { img: "covpsuk2.png", caption: "ROC Curve" } ]
-            },
-            proj13: {
-                title: "Habitat Suitability Modeling of Acer cappadocicum Using Maximum Entropy (MaxEnt)", company: "Majella National Park, Italy", pdf: "",
-                points: [
-                    "Developed a multi-variable MaxEnt model (Elevation and Aspect) that successfully prevented overfitting while achieving an <span class='mark-highlight'>exceptional cross-validation AUC score of 0.996</span>.",
-                    "Quantified precise ecological preferences, revealing that the species optimally thrives at mid-montane elevations of 1,300-1,600 masl and on southeast-to-south facing slopes between 50° and 200°.",
-                    "Generated species distribution maps utilizing a 0.35 probability threshold, successfully <span class='mark-highlight'>isolating exactly 106 hectares of highly suitable habitat</span> while classifying 3,942 hectares as unsuitable."
-                ],
-                slides: [ { img: "covpsuk3.png", caption: "MaxEnt Probability Map" } ]
-            },
-            proj14: {
-                title: "Geostatistical Spatial Interpolation (Kriging) and Hydrological Forecasting for Mangrove Rehabilitation", company: "TWA Angke Kapuk, Jakarta", pdf: "",
-                points: [
-                    "Developed and validated an Exponential variogram model for Kriging interpolation, achieving optimal predictive accuracy with an <span class='mark-highlight'>RMSE of 25.478</span> and a low relative error rate of 15.6%.",
-                    "Simulated a 10-year hydrological forecast incorporating a projected 15 mm/year water level increase, mapping future depths ranging from 44.746 to 316.893 cm across the ecosystem.",
-                    "Assessed future ecological viability based on depth thresholds, precisely <span class='mark-highlight'>delineating 86.43 hectares</span> as highly suitable for mangrove rehabilitation while isolating 9.47 hectares as non-viable."
-                ],
-                slides: [ { img: "covpsuk4.png", caption: "Kriging Interpolation Map" } ]
-            },
-            proj15: {
-                title: "Wildlife Monitoring and Biodiversity Assessment via Camera Traps", company: "Conservation Project", pdf: "",
-                points: [
-                    "Processed and analyzed field data from deployed camera traps to precisely <span class='mark-highlight'>monitor wildlife populations</span> across targeted natural habitats.",
-                    "Successfully identified and cataloged <span class='mark-highlight'>over 40 distinct animal species</span>, significantly enriching the regional ecological database.",
-                    "Integrated the spatial and ecological data into an interactive web platform and compiled comprehensive biodiversity reports to aggressively support <span class='mark-highlight'>conservation management strategies</span>."
-                ],
-                slides: [ { img: "tor5.jpg", caption: "Camera Trap Capture" } ]
-            },
-            proj1: {
-                title: "Mapping of Forest Management Units (KPHP)", company: "East & North Kalimantan", pdf: "",
+            proj1: { 
+                title: "Mapping of Forest Management Units (KPHP)", company: "East & North Kalimantan", 
+                pdf: "kphp.pdf",
                 points: [
                     "Required spatial delineation of candidate production forest areas to support regional forest management and planning.",
                     "Conducted <span class='mark-highlight'>GIS-based spatial delineation</span>, produced boundary maps, and computed unit areas based on specific regional management criteria.",
                     "Successfully mapped and classified <span class='mark-highlight'>68 Forest Management Units</span>, comprising 34 KPH, 4 KPHL, and 30 KPHP areas."
                 ],
-                slides: [ { img: "kphp4.png", caption: "FMU Delineation Map" } ]
+                slides: [
+                    { img: "kphp1.png", caption: "KPHP Area Map" },
+                    { img: "kphp2.png", caption: "Unrestricted Forest Map" },
+                    { img: "kphp3.png", caption: "Limited Forest Map" }
+                ] 
             },
-            proj2: {
-                title: "Reclamation Design of Post-Mining Land", company: "Gunung Geulis", pdf: "",
+            proj2: { 
+                title: "Reclamation Design of Post-Mining Land", company: "Gunung Geulis", 
+                pdf: "gugel.pdf",
                 points: [
                     "Aimed to address degraded post-mining land by designing an integrated reclamation and spring protection strategy.",
                     "Executed <span class='mark-highlight'>GIS site zoning</span> based on elevation, designed a tailored agroforestry system, and conceptualized a monitoring app for water quality.",
                     "Designed a 4.21 ha reclamation plan projected to yield a <span class='mark-highlight'>22.6% Internal Rate of Return (IRR)</span> with a rapid payback period of 7-8 months."
                 ],
-                slides: [ { img: "gugel4.png", caption: "Reclamation Maps" } ]
+                slides: [
+                    { img: "gugel1.png", caption: "Microclimate & Edaphic Data" },
+                    { img: "gugel2.png", caption: "2D Design Layout" },
+                    { img: "gugel3.png", caption: "Water Monitoring App" },
+                    { img: "gugel4.png", caption: "3D Reclamation Render" },
+                    { img: "gugel5.png", caption: "Stakeholder Analysis" },
+                    { img: "gugel6.png", caption: "Cost Budget Analysis" }
+                ] 
             },
-            proj3: {
-                title: "Integrated Forest System Design", company: "Cimenyan, Bandung", pdf: "",
+            proj3: { 
+                title: "Integrated Forest System Design", company: "Cimenyan, Bandung", 
+                pdf: "3d.pdf",
                 points: [
-                    "Aimed to build ecological and economic resilience within a degraded watershed area.",
+                    "Addressed severe soil erosion and aimed to improve local economic resilience within a degraded watershed area.",
                     "Analyzed <span class='mark-highlight'>erosion rates and critical land potential</span> in the area of interest using the USLE formula according to BPDAS-PS regulations.",
                     "Designed a <span class='mark-highlight'>4D agroforestry-based rehabilitation system</span> utilizing zoning-based spatial modeling and targeted silvicultural strategies.",
                     "Formulated a rehabilitation model across 4,057.70 ha, scientifically predicted to <span class='mark-highlight'>reduce soil erosion potential by 78.67%</span> over a 10-year projection."
                 ],
-                slides: [ { img: "3d3.png", caption: "4D Agroforestry Design" } ]
+                slides: [
+                    { img: "3d1.png", caption: "Zone B1: Rural Agroforestry" },
+                    { img: "3d2.png", caption: "Zone L1: Protected Area" },
+                    { img: "3d3.png", caption: "Zone B3: Limited Agroforestry" },
+                    { img: "3d4.png", caption: "3D Design Top View" },
+                    { img: "3d5.png", caption: "3D Design Side View" },
+                    { img: "3d6.png", caption: "Erosion Reduction Map" },
+                    { img: "3d7.png", caption: "Financial Feasibility" },
+                    { img: "3d8.png", caption: "Agroforestry Species Selection" },
+                    { img: "3d9.png", caption: "Annual Cost Plan" }
+                ] 
             },
-            proj4: {
-                title: "Spatial Modeling of Javan Green Peafowl", company: "Ujung Kulon", pdf: "",
+            proj4: { 
+                title: "Spatial Modeling of Javan Green Peafowl", company: "Ujung Kulon", 
+                pdf: "m.pdf",
                 points: [
                     "Needed critical spatial ecological data to support the conservation management of the endangered Javan Green Peafowl (Pavo muticus muticus).",
                     "Analyzed ecological factors and executed <span class='mark-highlight'>habitat suitability distribution modeling using MaxEnt</span> by integrating multiple environmental variables.",
                     "Produced a highly precise habitat suitability map covering a massive <span class='mark-highlight'>61,357.46 ha Area of Interest (AOI)</span> based on 11 recorded individuals."
                 ],
-                slides: [ { img: "m8.png", caption: "Habitat Suitability Map" } ]
+                slides: [
+                    { img: "m1.png", caption: "Observation Locations Map" },
+                    { img: "m2.png", caption: "Microclimate Observations" },
+                    { img: "m3.png", caption: "Jackknife Variable Test" },
+                    { img: "m4.png", caption: "Elevation & Distance Analysis" },
+                    { img: "m5.png", caption: "Distance Analysis (Roads/Built)" },
+                    { img: "m6.png", caption: "Habitat Suitability Map" },
+                    { img: "m7.png", caption: "Area Probability Analysis" },
+                    { img: "m8.png", caption: "Female Peafowl Observation" },
+                    { img: "m9.png", caption: "Male Display Observation" }
+                ] 
             },
-            proj5: {
-                title: "Land Cover Change Impacts", company: "Sub-Citarik Watershed", pdf: "",
+            proj5: { 
+                title: "Land Cover Change Impacts", company: "Sub-Citarik Watershed", 
+                pdf: "das.pdf",
                 points: [
                     "Required an evaluation of watershed ecological degradation to support strategic regional land-use planning and management.",
                     "Analyzed and modeled the impacts of land-cover transformations using comprehensive <span class='mark-highlight'>multi-year environmental and time-series spatial data</span>.",
                     "Delivered actionable spatial insights on watershed conditions to guide targeted ecosystem restoration interventions."
                 ],
-                slides: [ { img: "das9.png", caption: "SWAT Flowchart" } ]
+                slides: [
+                    { img: "das1.png", caption: "SWAT Method Flowchart" },
+                    { img: "das2.png", caption: "Water Yield (2000 vs 2020)" },
+                    { img: "das3.png", caption: "Soil Water (2000 vs 2020)" },
+                    { img: "das4.png", caption: "Erosion Rate (2000 vs 2020)" },
+                    { img: "das5.png", caption: "Precipitation (2000 vs 2020)" },
+                    { img: "das6.png", caption: "Infiltration (2000 vs 2020)" },
+                    { img: "das7.png", caption: "Evapotranspiration (2000-2020)" },
+                    { img: "das8.png", caption: "Curve Number (2000 vs 2020)" }
+                ] 
             },
-            proj6: {
-                title: "Ecological Analysis", company: "Mount Papandayan Nature Reserve", pdf: "",
+            proj6: { 
+                title: "Ecological Analysis", company: "Mount Papandayan Nature Reserve", 
+                pdf: "eko.pdf",
                 points: [
                     "Evaluated baseline ecosystem conditions, vegetation structure, and biodiversity health in a highly protected natural recreation area.",
                     "Conducted comprehensive field surveys including vegetation stand structure analysis, <span class='mark-highlight'>carbon stock estimation</span>, and avifauna observation.",
                     "Successfully identified and cataloged <span class='mark-highlight'>100 distinct plant species</span> across various habitus and 34 bird species."
                 ],
-                slides: [ { img: "eko13.png", caption: "Field Survey Data" } ]
+                slides: [
+                    { img: "eko1.png", caption: "Microclimate Analysis" },
+                    { img: "eko2.png", caption: "Stand Density Analysis" },
+                    { img: "eko3.png", caption: "Stand Age Distribution" },
+                    { img: "eko4.png", caption: "105 Plant Species ID" },
+                    { img: "eko5.png", caption: "Species by Life Form" },
+                    { img: "eko6.png", caption: "Diversity Index Analysis" },
+                    { img: "eko7.png", caption: "Important Value Index (IVI)" },
+                    { img: "eko8.png", caption: "Tree Relative Abundance" },
+                    { img: "eko9.png", caption: "Carbon Stock Analysis" },
+                    { img: "eko10.png", caption: "34 Bird Species ID" },
+                    { img: "eko11.png", caption: "Bird Abundance Analysis" },
+                    { img: "eko12.png", caption: "Feeding Guild Analysis" }
+                ] 
+            },
+            proj7: { 
+                title: "Drone Photogrammetry and High-Resolution Mapping", company: "ITB Jatinangor", 
+                pdf: "agi.pdf",
+                points: [
+                    "Needed high-resolution spatial mapping to support campus infrastructure evaluation and spatial planning.",
+                    "Piloted drones for aerial data acquisition and processed the photogrammetric spatial data using <span class='mark-highlight'>Agisoft Metashape</span>.",
+                    "Generated highly accurate orthomosaics and comprehensive <span class='mark-highlight'>3D spatial models</span> of the campus environment."
+                ],
+                slides: [
+                    { img: "agi.mp4", caption: "Drone Imagery Processing" },
+                    { img: "agi1.png", caption: "Drone Imagery Top View" },
+                    { img: "agi2.png", caption: "Camera & Overlap Survey" },
+                    { img: "agi3.png", caption: "Camera Calibration" },
+                    { img: "agi4.png", caption: "Digital Elevation Model (DEM)" }
+                ] 
+            },
+            proj8: { 
+                title: "Bamboo Cultivation Success Evaluation", company: "PT Vale Indonesia Tbk", 
+                pdf: "bam.pdf",
+                points: [
+                    "Assessed the ecological recovery progress and plant adaptability on post-mining reclamation sites to optimize land management.",
+                    "Conducted direct <span class='mark-highlight'>silvicultural measurements</span> and developed GIS distribution maps for adaptive bamboo growth.",
+                    "Delivered data-driven management strategies and primary species recommendations based on the comprehensive evaluation of <span class='mark-highlight'>106 bamboo individuals</span>."
+                ],
+                slides: [
+                    { img: "bam1.png", caption: "Bamboo Distribution" },
+                    { img: "bam2.png", caption: "Bamboo Condition Map" },
+                    { img: "bam3.png", caption: "Survival Rate & MAI" },
+                    { img: "bam4.png", caption: "Average Growth Evaluation" },
+                    { img: "bam5.png", caption: "Growth by Substrate" }
+                ] 
+            },
+            proj9: { 
+                title: "Digitizing Orchid Inventory Data", company: "Sawerigading Wallacea Nature Park", 
+                pdf: "ang.pdf",
+                points: [
+                    "Modernized the botanical inventory system at the corporate nature park to improve conservation tracking and data traceability.",
+                    "Designed a relational database structure and developed a custom <span class='mark-highlight'>web-based application</span> to digitize field records.",
+                    "Achieved 100% data validity and successfully registered <span class='mark-highlight'>385 orchid individuals</span> into a fully automated, accessible dashboard."
+                ],
+                slides: [
+                    { img: "web.mp4", caption: "Web Dashboard Overview" },
+                    { img: "web1.png", caption: "Inventory Dashboard" },
+                    { img: "web2.png", caption: "Dashboard Interface" },
+                    { img: "web3.png", caption: "Web Catalog Interface" },
+                    { img: "web4.png", caption: "Orchid Registration Form" },
+                    { img: "web5.png", caption: "Mutation Log Tracking" },
+                    { img: "web6.png", caption: "Inventory Data Sheet" }
+                ] 
+            },
+            proj10: { 
+                title: "Critical Land Assessment & MPTS Recommendations", company: "Kiarapayung Forest", 
+                pdf: "spth.pdf",
+                points: [
+                    "Aimed to formulate precise ecological planting programs for degraded regional forests to optimize state rehabilitation efforts.",
+                    "Executed <span class='mark-highlight'>USLE erosion modeling</span> to map land criticality and formulated site-based Multipurpose Tree Species (MPTS) recommendations.",
+                    "Corrected historical land-cover datasets across 155.63 ha, significantly improving spatial model accuracy by <span class='mark-highlight'>56 percentage points</span> (from 26% to 82%)."
+                ],
+                slides: [
+                    { img: "spth2.png", caption: "Land Cover Reclassification" },
+                    { img: "spth3.png", caption: "USLE Erosion Potential" },
+                    { img: "spth4.png", caption: "Critical Land Comparison" },
+                    { img: "spth5.png", caption: "Species Suitability Matrix" },
+                    { img: "spth6.png", caption: "Species Recommendation" }
+                ] 
+            },
+            proj11: {
+                title: "Spatial Modeling Above Ground Biomass (AGB) Estimation Using Linear Regression", 
+                company: "Ruvu North Forest Reserve, Tanzania", 
+                pdf: "",
+                points: [
+                    "Evaluated natural terrain and human activity to map and estimate total plant biomass across a <span class='mark-highlight'>19,587-hectare</span> area in the Ruvu North Forest Reserve.",
+                    "Developed a highly efficient, 4-factor mathematical model using data from 27 field locations to optimize estimation accuracy without relying on complex satellite data.",
+                    "Successfully mapped the entire reserve, calculating a total of <span class='mark-highlight'>over 1.3 million tons of living biomass</span> with an average of 66 tons per hectare."
+                ],
+                slides: [
+                    { img: "psuk1.png", caption: "Above Ground Biomass Estimation Map" }
+                ]
+            },
+            proj12: {
+                title: "Predictive Spatial Modeling of Acer cappadocicum Presence Using Logistic Regression", 
+                company: "Majella National Park, Italy", 
+                pdf: "",
+                points: [
+                    "Formulated a streamlined 3-variable logistic regression model (NDVI, ISR, Aspect) for spatial prediction, achieving an <span class='mark-highlight'>\"excellent\" AUC score of 0.9368</span>.",
+                    "Validated the model's predictive reliability with 87.1% sensitivity and 90.4% specificity, successfully identifying 27 true positive occurrences with minimal false positives.",
+                    "Generated probability distribution maps for Majella National Park, precisely identifying <span class='mark-highlight'>252 hectares</span> of highly suitable habitat for the endemic Acer cappadocicum tree species."
+                ],
+                slides: [
+                    { img: "psuk21.png", caption: "Regression Model Curve" },
+                    { img: "psuk22.png", caption: "Logistic Regression Curve" },
+                    { img: "psuk23.png", caption: "Species Presence Probability Map" },
+                    { img: "psuk24.png", caption: "Presence Probability Map with Threshold" }
+                ]
+            },
+            proj13: {
+                title: "Habitat Suitability Modeling of Acer cappadocicum Using Maximum Entropy (MaxEnt)", 
+                company: "Majella National Park, Italy", 
+                pdf: "",
+                points: [
+                    "Engineered a highly efficient, 2-variable MaxEnt model (Elevation and Aspect) that successfully prevented overfitting while achieving an <span class='mark-highlight'>exceptional cross-validation AUC score of 0.996</span>.",
+                    "Quantified precise ecological preferences, revealing that the species optimally thrives at mid-montane elevations of 1,300–1,600 masl and on southeast-to-south facing slopes between 50° and 200°.",
+                    "Generated species distribution maps utilizing a 0.35 probability threshold, successfully <span class='mark-highlight'>isolating exactly 106 hectares of highly suitable habitat</span> while classifying 3,942 hectares as unsuitable."
+                ],
+                slides: [
+                    { img: "psuk31.png", caption: "AUC Values by Environmental Variable Combinations" },
+                    { img: "psuk32.png", caption: "Species Presence Probability Map" },
+                    { img: "psuk33.png", caption: "Receiver Operating Characteristic (ROC) Curve" },
+                    { img: "psuk34.png", caption: "Presence Probability Map with Threshold" }
+                ]
+            },
+            proj14: {
+                title: "Geostatistical Spatial Interpolation (Kriging) and Hydrological Forecasting for Mangrove Rehabilitation", 
+                company: "TWA Angke Kapuk, Jakarta", 
+                pdf: "",
+                points: [
+                    "Validated an Exponential variogram model for Kriging interpolation, achieving optimal predictive accuracy with an <span class='mark-highlight'>RMSE of 25.478</span> and a low relative error rate of 15.6%.",
+                    "Simulated a 10-year hydrological forecast incorporating a projected 15 mm/year water level increase, mapping future depths ranging from 44.746 to 316.893 cm across the ecosystem.",
+                    "Assessed future ecological viability based on depth thresholds, precisely <span class='mark-highlight'>delineating 86.43 hectares</span> as highly suitable for mangrove rehabilitation while isolating 9.47 hectares as non-viable."
+                ],
+                slides: [
+                    { img: "psuk41.png", caption: "Water Depth Point Distribution" },
+                    { img: "psuk42.png", caption: "Water Depth Variogram Model Curve (Exponential)" },
+                    { img: "psuk43.png", caption: "Variogram Model Error Comparison" },
+                    { img: "psuk44.png", caption: "Land Suitability Map for Mangrove Rehabilitation" },
+                    { img: "psuk45.png", caption: "Estimated Water Depth Map" },
+                    { img: "psuk46.png", caption: "10-Year Predicted Water Depth Map" }
+                ]
+            },
+            proj15: {
+                title: "Wildlife Monitoring and Biodiversity Assessment via Camera Traps", 
+                company: "Conservation Project", 
+                pdf: "",
+                points: [
+                    "Processed and analyzed field data from deployed camera traps to precisely <span class='mark-highlight'>monitor wildlife populations</span> across targeted natural habitats.",
+                    "Successfully identified and cataloged <span class='mark-highlight'>over 40 distinct animal species</span>, significantly enriching the regional ecological database.",
+                    "Integrated the spatial and ecological data into an interactive web platform and compiled comprehensive biodiversity reports to aggressively support <span class='mark-highlight'>conservation management strategies</span>."
+                ],
+                slides: [
+                    { img: "tor1.mp4", caption: "Camera Trap Video Footage" },
+                    { img: "tor2.jpg", caption: "Wildlife Observation Data" },
+                    { img: "tor3.jpg", caption: "Species Identification Process" },
+                    { img: "tor4.jpg", caption: "Biodiversity Platform Dashboard" }
+                ]
             }
         };
 
         const jobOrder = ['job1', 'job2', 'job3', 'job4', 'job5', 'job6'];
-        // URUTAN PROYEK TERBARU: MaxEnt (proj13) di Slide 1, FMU Mapping (proj1) pindah ke Slide 2
         const projOrder = ['proj2','proj4','proj3','proj6','proj8','proj9','proj15','proj13','proj5','proj7','proj10','proj11','proj12','proj1','proj14'];
-        
         let currentModalCategory = '', currentModalId = '', currentPdfUrl = '', modalSlideIndex = 0, modalSlideTimer, currentSlides = [];
 
         document.addEventListener('DOMContentLoaded', () => { setTimeout(() => { document.body.classList.add('page-loaded'); }, 150); initAutoScrollNavbar(); });
 
-        // Auto-Hide Navbar Logika
+        // Auto-Hide Navbar Berdasarkan Arah Scroll (Up/Down)
         function initAutoScrollNavbar() {
-            let timeoutId;
+            let lastScrollTop = 0;
             const navbar = document.getElementById('navbar');
-            let isHoveringNav = false;
-
-            navbar.addEventListener('mouseenter', () => isHoveringNav = true);
-            navbar.addEventListener('mouseleave', () => { isHoveringNav = false; resetHideTimer(); });
-
-            function showNav() { navbar.style.transform = 'translateY(0)'; }
-            function hideNav() { if (window.scrollY > 50 && !isHoveringNav) { navbar.style.transform = 'translateY(-100%)'; } }
-            function resetHideTimer() { showNav(); clearTimeout(timeoutId); timeoutId = setTimeout(hideNav, 3000); }
-
-            window.addEventListener('mousemove', resetHideTimer); window.addEventListener('scroll', resetHideTimer);
-            window.addEventListener('click', resetHideTimer); window.addEventListener('touchstart', resetHideTimer);
-            resetHideTimer();
+            
+            window.addEventListener('scroll', () => {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // Styling saat discroll
+                if (scrollTop > 50) {
+                    navbar.classList.add('shadow-md', 'bg-pure_snow/95');
+                } else {
+                    navbar.classList.remove('shadow-md', 'bg-pure_snow/95');
+                }
+                
+                // Hide/Show berdasarkan arah scroll
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    // Scroll ke bawah - Sembunyikan Navbar
+                    navbar.style.transform = 'translateY(-100%)';
+                } else {
+                    // Scroll ke atas - Tampilkan Navbar
+                    navbar.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Menghindari nilai negatif
+            });
         }
 
         const revealObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); }}); }, { threshold: 0.1 });
@@ -1218,28 +1390,6 @@
         }
 
         document.addEventListener('keydown', (e) => { if (e.key === "Escape") { closePdfModal(); closeModal(); } });
-
-        // SISTEM PRELOAD: Mencegah gambar loading/blank saat diklik atau discroll
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                // 1. Preload semua gambar modal (pop-up) ke dalam memori browser
-                Object.values(modalData).forEach(data => {
-                    if (data.slides) {
-                        data.slides.forEach(slide => {
-                            if (!slide.img.toLowerCase().endsWith('.mp4')) {
-                                const img = new Image();
-                                img.src = slide.img;
-                            }
-                        });
-                    }
-                });
-                
-                // 2. Paksa semua gambar di halaman utama untuk dimuat penuh di latar belakang
-                document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-                    img.setAttribute('loading', 'eager');
-                });
-            }, 500); // Dijalankan 0.5 detik setelah web terbuka agar tidak memberatkan awal loading
-        });
     </script>
 </body>
 </html>
