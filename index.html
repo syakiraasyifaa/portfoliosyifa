@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Syifa</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        deep_forest: '#046865',
-                        tech_teal: '#21A0A0',
-                        bright_sun: '#FFE900', 
-                        alert_fire: '#E53D00',
-                        pure_snow: '#FCFFF7',
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Sora', 'sans-serif'],
-                    }
+        .mark-highlight { background-color: #FFE900; color: #046865; padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-weight: bold; display: inline-block; line-height: 1.2;}
+
+        /* Polaroid Modal Slider - WIDE LANDSCAPE 16:9 */
+        .polaroid {
+            position: absolute; background: white; padding: 12px 12px 45px 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3); border: 1px solid #eaeaea;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; 
+            transform: scale(0.8) translateY(20px) rotate(0deg);
+            width: 90%; max-width: 1100px; 
+            max-height: 85%; /* PERBAIKAN: Memastikan polaroid tidak pernah melebihi tinggi layar modal */
+            display: flex; flex-direction: column;
+        }
+        .polaroid-img-wrapper {
+            width: 100%; 
+            flex: 1; min-height: 0; /* PERBAIKAN: Mengizinkan kotak gambar untuk menyusut jika layar pendek */
+            aspect-ratio: 16 / 9; /* BINGKAI LANDSCAPE 16:9 */
+            max-height: 50vh; /* PERBAIKAN: Diperkecil dari 65vh ke 50vh agar ruang deskripsi di bawahnya aman */
+            display: flex; justify-content: center; align-items: center; background: #e5e7eb; overflow: hidden;
+        }
+        /* Mencegah gambar overflow dan otomatis scale seragam di tengah */
+        .polaroid img, .polaroid video { 
+            width: 100%; height: 100%; 
+            object-fit: contain; display: block;
+        }
                 }
             }
         }
@@ -910,77 +911,187 @@
                     "Monitored Lake Matano's aquatic biodiversity using non-invasive <span class='mark-highlight'>eDNA sampling</span> methods.",
                     "Identified and integrated <span class='mark-highlight'>40+ terrestrial wildlife individuals from camera trap</span> data."
                 ],
-                slides: [
-                    { img: "vale1.jpg", caption: "Monitoring Reclaimed Bamboo" }, { img: "vale2.jpg", caption: "Monitoring 385 Orchids" },
-                    { img: "web.mp4", caption: "Orchid Web System" }, { img: "vale3.jpg", caption: "eDNA Sampling" },
-                    { img: "vale5.jpg", caption: "Wildlife Camera Trap" }, { img: "sertifvale.png", caption: "Certificate of Internship" }
-                ]
+                slides: [ { img: "vale1.jpg", caption: "Monitoring Reclaimed Bamboo" }, { img: "vale2.jpg", caption: "Monitoring 385 Orchids" }, { img: "vale3.jpg", caption: "eDNA Sampling" }, { img: "vale5.jpg", caption: "Wildlife Camera Trap" }, { img: "sertifvale.png", caption: "Certificate of Internship" } ]
             },
-            job2: { 
-                title: "Geographic Information System (GIS) Intern", company: "BPKH Region XI Yogyakarta • 2026", 
-                points: [ 
-                    "<span class='mark-highlight'>Conducted land use interpretation and classification</span> of official 2024–2025 maps for Ngawi, Nganjuk, and Magetan Regencies.",
+            job2: {
+                title: "Geographic Information System (GIS) Intern", company: "BPKH Region XI Yogyakarta • 2026", pdf: "bpkh.pdf",
+                points: [
+                    "Conducted <span class='mark-highlight'>land use interpretation and classification</span> of official 2024-2025 maps for Ngawi, Nganjuk, and Magetan Regencies.",
                     "Verified field data and mapped <span class='mark-highlight'>78 PPTPKH land parcels</span> across 6 village maps in Kebumen.",
                     "Reconstructed historical forest boundaries by digitizing Dutch colonial maps."
                 ],
-                slides: [
-                    { img: "bpkh1.jpg", caption: "Land Use Classification" }, { img: "bpkh2.jpg", caption: "PPTPKH Mapping" },
-                    { img: "bpkh3.jpg", caption: "Digitizing Historical Maps" }, { img: "sertifbpkh.png", caption: "Certificate of Internship" }
-                ]
+                slides: [ { img: "bpkh1.jpg", caption: "PPTPKH Mapping" }, { img: "bpkh2.jpg", caption: "Spatial Planning Meeting" }, { img: "sertifbpkh.png", caption: "Certificate of Internship" } ]
             },
-            job3: { 
-                title: "Forest Rehabilitation Intern", company: "UPTD SPTH Jabar • 2026", pdf: "spth.pdf",
-                points: [ 
-                    "Re-analyzed historical land-cover datasets via USLE modeling, successfully improving spatial model accuracy from 26% to 82%.",
-                    "Mapped <span class='mark-highlight'>soil erosion potential</span> and <span class='mark-highlight'>critical land status</span> across 155.63 ha.",
-                    "Conducted forest seed quality testing for Falcataria moluccana in the laboratory."
+            job3: {
+                title: "Forest Rehabilitation Intern", company: "UPTD SPTH Jabar • 2026", pdf: "",
+                points: [
+                    "Analyzed critical land areas using GIS and USLE formulas to formulate <span class='mark-highlight'>rehabilitation strategies</span>.",
+                    "Evaluated the physical and physiological quality of <span class='mark-highlight'>certified forest seeds</span> in the laboratory."
                 ],
-                slides: [{ img: "spth1.jpg", caption: "Seed Certification" }, { img: "spth2.jpg", caption: "Edaphic Data Collection" }, { img: "spth4.jpg", caption: "Routine Planting" }]
+                slides: [ { img: "spth4.jpg", caption: "Seed Quality Evaluation" }, { img: "spth2.jpg", caption: "Laboratory Testing" } ]
             },
-            job4: { 
-                title: "Silviculture Techniques Laboratory Assistant", company: "Institut Teknologi Bandung • 2025", 
-                points: [ 
-                    "Mentored <span class='mark-highlight'>82 undergraduates</span> over 5 months through 12 core modules and 2 final research projects.",
-                    "Led the nursery design module, guiding plant propagation practices and GIS-based species selection."
+            job4: {
+                title: "Silviculture Lab Assistant", company: "Institut Teknologi Bandung • 2025", pdf: "",
+                points: [
+                    "Mentored undergraduate students in <span class='mark-highlight'>nursery design</span> and vegetative propagation techniques.",
+                    "Supervised and evaluated practicum sessions for silvicultural treatments and plant maintenance."
                 ],
-                slides: [{ img: "teksil1.jpg", caption: "Practicum Preparation" }, { img: "teksil2.jpg", caption: "Practicum Evaluation" }]
+                slides: [ { img: "teksil1.jpg", caption: "Mentoring Session" }, { img: "teksil2.jpg", caption: "Field Practicum" } ]
             },
-            job5: { 
-                title: "Biodiversity and Conservation Intern", company: "Ujung Kulon National Park • 2025", pdf: "tnuk.pdf",
-                points: [ 
-                    "Mapped ecotourism trekking routes, expanding potential snorkeling sites from 1 to 3 via SWOT analysis.",
-                    "Conducted <span class='mark-highlight'>field-based demographic analysis</span> on the Green Peafowl population.",
-                    "Mapped coral reef areas, ecotourism trekking routes, and tsunami evacuation routes."
+            job5: {
+                title: "Conservation Intern", company: "Ujung Kulon National Park • 2025", pdf: "",
+                points: [
+                    "Analyzed ecotourism potential and visitor carrying capacity for the Peucang Island resort.",
+                    "Supported the monitoring of <span class='mark-highlight'>Javan Green Peafowl</span> population distribution through spatial mapping."
                 ],
-                slides: [
-                    { img: "tnuk1.jpg", caption: "Officer Interviews" }, { img: "tnuk2.jpg", caption: "Evacuation Sign Install" },
-                    { img: "tnuk3.jpg", caption: "Ecotourism Analysis" }, { img: "tnuk6.jpg", caption: "Rhino Camp Observation" }
-                ]
+                slides: [ { img: "tnuk1.jpg", caption: "Ecotourism Analysis" }, { img: "tnuk2.jpg", caption: "Field Observation" } ]
             },
-            job6: { 
-                title: "Taxonomy Lab Assistant", company: "Institut Teknologi Bandung • Sep 2024 - Jan 2025", 
-                points: [ 
-                    "Mentored 80+ students across 14 taxonomy modules and directed morphological specimen identification for invertebrate phyla.",
-                    "Served as <span class='mark-highlight'>Medical Coordinator</span>, strictly enforcing health and safety management for all personnel during field activities."
+            job6: {
+                title: "Taxonomy Lab Assistant", company: "Institut Teknologi Bandung • 2024", pdf: "",
+                points: [
+                    "Coordinated comprehensive <span class='mark-highlight'>invertebrate taxonomy</span> learning modules for undergraduate students.",
+                    "Managed health and safety protocols during extensive field sampling expeditions."
                 ],
-                slides: [{ img: "tak1.jpg", caption: "Pangandaran Field Course" }, { img: "tak2.jpg", caption: "Pangandaran Practicum" }, { img: "tak3.jpg", caption: "Mount Batu Field Course" }, { img: "tak4.jpg", caption: "Mount Batu Practicum" }]
+                slides: [ { img: "tak1.jpg", caption: "Field Expedition" }, { img: "tak2.jpg", caption: "Taxonomy Classification" }, { img: "tak3.jpg", caption: "Sample Collection" }, { img: "tak4.jpg", caption: "Lab Analysis" } ]
             },
-            
-            proj1: { title: "Mapping of Forest Management Units (KPHP)", company: "East & North Kalimantan", pdf: "kphp.pdf", points: ["Conducted <span class='mark-highlight'>GIS-based spatial delineation</span>, produced boundary maps, and computed unit areas.", "Successfully mapped and classified <span class='mark-highlight'>68 Forest Management Units</span>."], slides: [{ img: "kphp1.png", caption: "KPHP Area Map" }, { img: "kphp2.png", caption: "Unrestricted Forest Map" }] },
-            proj2: { title: "Reclamation Design of Post-Mining Land", company: "Gunung Geulis", pdf: "gugel.pdf", points: ["Executed <span class='mark-highlight'>GIS site zoning</span> based on elevation, designed a tailored agroforestry system.", "Designed a 4.21 ha reclamation plan projected to yield a <span class='mark-highlight'>22.6% Internal Rate of Return (IRR)</span>."], slides: [{ img: "gugel1.png", caption: "Microclimate Data" }, { img: "gugel4.png", caption: "3D Reclamation Render" }] },
-            proj3: { title: "Integrated Forest System Design", company: "Cimenyan, Bandung", pdf: "3d.pdf", points: ["Analyzed <span class='mark-highlight'>erosion rates and critical land potential</span> in the area of interest using the USLE formula.", "Designed a <span class='mark-highlight'>4D agroforestry-based rehabilitation system</span> predicted to reduce soil erosion potential by 78.67%."], slides: [{ img: "3d3.png", caption: "Zone B3" }, { img: "3d4.png", caption: "3D Design Top View" }] },
-            proj4: { title: "Spatial Modeling of Javan Green Peafowl", company: "Ujung Kulon", pdf: "m.pdf", points: ["Analyzed ecological factors and executed <span class='mark-highlight'>habitat suitability distribution modeling using MaxEnt</span>.", "Produced a highly precise habitat suitability map covering a massive <span class='mark-highlight'>61,357.46 ha</span>."], slides: [{ img: "m6.png", caption: "Habitat Suitability Map" }, { img: "m8.png", caption: "Female Peafowl Observation" }] },
-            proj5: { title: "Land Cover Change Impacts", company: "Sub-Citarik Watershed", pdf: "das.pdf", points: ["Analyzed and modeled the impacts of land-cover transformations using <span class='mark-highlight'>multi-year spatial data</span>.", "Delivered actionable spatial insights on watershed conditions."], slides: [{ img: "das2.png", caption: "Water Yield" }, { img: "das4.png", caption: "Erosion Rate" }] },
-            proj6: { title: "Ecological Analysis", company: "Mount Papandayan", pdf: "eko.pdf", points: ["Conducted comprehensive field surveys including <span class='mark-highlight'>carbon stock estimation</span> and avifauna observation.", "Cataloged <span class='mark-highlight'>100 distinct plant species</span> and 34 bird species."], slides: [{ img: "eko4.png", caption: "105 Plant Species ID" }, { img: "eko9.png", caption: "Carbon Stock Analysis" }] },
-            proj7: { title: "Drone Photogrammetry", company: "ITB Jatinangor", pdf: "agi.pdf", points: ["Piloted drones for aerial data acquisition and processed the spatial data using <span class='mark-highlight'>Agisoft Metashape</span>.", "Generated highly accurate orthomosaics and <span class='mark-highlight'>3D spatial models</span>."], slides: [{ img: "agi.mp4", caption: "Drone Imagery Processing" }, { img: "agi1.png", caption: "Drone Imagery Top View" }] },
-            proj8: { title: "Bamboo Cultivation Success Evaluation", company: "PT Vale Indonesia", pdf: "bam.pdf", points: ["Conducted direct <span class='mark-highlight'>silvicultural measurements</span> and developed GIS distribution maps.", "Delivered management strategies based on <span class='mark-highlight'>106 bamboo individuals</span>."], slides: [{ img: "bam1.png", caption: "Bamboo Distribution" }, { img: "bam3.png", caption: "Survival Rate" }] },
-            proj9: { title: "Digitizing Orchid Inventory Data", company: "Sawerigading Wallacea Nature Park", pdf: "ang.pdf", points: ["Designed a relational database structure and developed a custom <span class='mark-highlight'>web-based application</span>.", "Achieved 100% data validity and registered <span class='mark-highlight'>385 orchid individuals</span>."], slides: [{ img: "web.mp4", caption: "Web Dashboard Overview" }, { img: "web1.png", caption: "Inventory Dashboard" }] },
-            proj10: { title: "Critical Land Assessment", company: "Kiarapayung Forest", pdf: "spth.pdf", points: ["Executed <span class='mark-highlight'>USLE erosion modeling</span> to map land criticality.", "Corrected historical land-cover datasets, improving model accuracy by <span class='mark-highlight'>56 percentage points</span>."], slides: [{ img: "spth3.png", caption: "USLE Erosion Potential" }, { img: "spth6.png", caption: "Species Recommendation" }] },
-            proj11: { title: "Above Ground Biomass Estimation", company: "Ruvu North Forest, Tanzania", points: ["Evaluated natural terrain to map and estimate total plant biomass across a <span class='mark-highlight'>19,587-hectare area</span>.", "Developed a highly efficient, <span class='mark-highlight'>4-factor mathematical model</span> using linear regression.", "Calculated over 1.3 million tons of living biomass with an average of 66 tons per hectare."], slides: [{img: "covpsuk1.png", caption: "Above Ground Biomass Estimation Map"}] },
-            proj12: { title: "Predictive Spatial Modeling using Logistic Regression", company: "Majella National Park, Italy", points: ["Formulated a <span class='mark-highlight'>3-variable logistic regression model</span> achieving an excellent AUC score of 0.9368.", "Validated predictive reliability with 87.1% sensitivity and 90.4% specificity.", "Identified <span class='mark-highlight'>252 hectares</span> of highly suitable habitat for Acer cappadocicum."], slides: [{img: "covpsuk2.png", caption: "Regression Model Curve"}, {img: "covpsuk2.png", caption: "Regression Curve Plot"}, {img: "covpsuk2.png", caption: "Species Presence Probability Map"}, {img: "covpsuk2.png", caption: "Thresholded Presence Probability Map"}] },
-            proj13: { title: "Habitat Suitability Modeling using MaxEnt", company: "Majella National Park, Italy", points: ["Engineered a 2-variable MaxEnt model achieving a <span class='mark-highlight'>cross-validation AUC of 0.996</span>.", "Quantified optimal thriving elevations at <span class='mark-highlight'>1,300–1,600 masl</span>.", "Isolated 106 hectares of highly suitable habitat using a 0.35 probability threshold."], slides: [{img: "covpsuk3.png", caption: "AUC based on Environmental Variables"}, {img: "covpsuk3.png", caption: "Species Presence Probability Map"}, {img: "covpsuk3.png", caption: "ROC Curve"}, {img: "covpsuk3.png", caption: "Thresholded Presence Probability Map"}] },
-            proj14: { title: "Geostatistical Spatial Interpolation (Kriging)", company: "TWA Angke Kapuk, Jakarta", points: ["Validated an Exponential variogram model achieving an <span class='mark-highlight'>RMSE of 25.478</span>.", "Simulated a 10-year hydrological forecast incorporating a 15 mm/year water level increase.", "Delineated <span class='mark-highlight'>86.43 hectares</span> as highly suitable for mangrove rehabilitation."], slides: [{img: "covpsuk4.png", caption: "Water Depth Distribution Points"}, {img: "covpsuk4.png", caption: "Water Depth Variogram Model (Exponential)"}, {img: "covpsuk4.png", caption: "Variogram Model Error Comparison"}, {img: "covpsuk4.png", caption: "Land Suitability Map for Mangrove Rehabilitation"}, {img: "covpsuk4.png", caption: "Estimated Water Depth Map"}, {img: "covpsuk4.png", caption: "10-Year Water Depth Prediction Map"}] },
-            proj15: { title: "Wildlife Monitoring via Camera Traps", company: "Biodiversity Assessment", points: ["Processed and analyzed field data from deployed camera traps.", "Successfully identified and cataloged <span class='mark-highlight'>over 40 distinct animal species</span>.", "Integrated spatial data into an interactive web platform to support conservation strategies."], slides: [{img: "tor1.mp4", caption: "Wildlife Footage Summary"}, {img: "tor2.jpg", caption: "Camera Trap Deployment"}, {img: "tor3.jpg", caption: "Species Identification"}, {img: "tor4.jpg", caption: "Data Logging in Field"}] }
+
+            // --- DATA PROYEK DARI SCREENSHOT (LENGKAP) ---
+            proj7: {
+                title: "Drone Photogrammetry and High-Resolution Mapping", company: "ITB Jatinangor", pdf: "",
+                points: [
+                    "Needed high-resolution spatial mapping to support campus infrastructure evaluation and spatial planning.",
+                    "Piloted drones for aerial data acquisition and processed the photogrammetric spatial data using <span class='mark-highlight'>Agisoft Metashape</span>.",
+                    "Generated highly accurate orthomosaics and comprehensive <span class='mark-highlight'>3D spatial models</span> of the campus environment."
+                ],
+                slides: [ { img: "agi1.png", caption: "Orthomosaic Map" }, { img: "agi1.png", caption: "Spatial Modeling" } ]
+            },
+            proj8: {
+                title: "Bamboo Cultivation Success Evaluation", company: "PT Vale Indonesia Tbk", pdf: "",
+                points: [
+                    "Assessed the ecological recovery progress and plant adaptability on post-mining reclamation sites to optimize land management.",
+                    "Conducted direct <span class='mark-highlight'>silvicultural measurements</span> and developed GIS distribution maps for adaptive bamboo growth.",
+                    "Delivered data-driven management strategies and primary species recommendations based on the comprehensive evaluation of <span class='mark-highlight'>106 bamboo individuals</span>."
+                ],
+                slides: [ { img: "bam6.png", caption: "Bamboo Distribution Map" }, { img: "bam6.png", caption: "Field Verification" } ]
+            },
+            proj9: {
+                title: "Digitizing Orchid Inventory Data", company: "Sawerigading Wallacea Nature Park", pdf: "",
+                points: [
+                    "Modernized the botanical inventory system at the corporate nature park to improve conservation tracking and data traceability.",
+                    "Designed a relational database structure and developed a custom <span class='mark-highlight'>web-based application</span> to digitize field records.",
+                    "Achieved 100% data validity and successfully registered <span class='mark-highlight'>385 orchid individuals</span> into a fully automated, accessible dashboard."
+                ],
+                slides: [ { img: "web7.jpg", caption: "SustainOrchid Dashboard" } ]
+            },
+            proj10: {
+                title: "Critical Land Assessment & MPTS Recommendations", company: "Kiarapayung Forest", pdf: "",
+                points: [
+                    "Aimed to formulate precise ecological planting programs for degraded regional forests to optimize state rehabilitation efforts.",
+                    "Executed <span class='mark-highlight'>USLE erosion modeling</span> to map land criticality and formulated site-based Multipurpose Tree Species (MPTS) recommendations.",
+                    "Corrected historical land-cover datasets across 155.63 ha, significantly improving spatial model accuracy by <span class='mark-highlight'>56 percentage points</span> (from previous baseline)."
+                ],
+                slides: [ { img: "spth7.png", caption: "Land Cover Reclassification" } ]
+            },
+            proj11: {
+                title: "Spatial Modeling Above Ground Biomass (AGB) Estimation Using Linear Regression", company: "Ruvu North Forest Reserve, Tanzania", pdf: "",
+                points: [
+                    "Evaluated natural terrain and human activity to map and estimate total plant biomass across a <span class='mark-highlight'>19,587-hectare</span> area in the Ruvu North Forest Reserve.",
+                    "Developed a highly efficient, 4-factor mathematical model using data from 27 field locations to optimize estimation accuracy without relying on complex satellite data.",
+                    "Successfully mapped the entire reserve, calculating a total of <span class='mark-highlight'>over 1.3 million tons of living biomass</span> with an average of 66 tons per hectare."
+                ],
+                slides: [ { img: "covpsuk1.png", caption: "AGB Estimation Map" } ]
+            },
+            proj12: {
+                title: "Predictive Spatial Modeling of Acer cappadocicum Presence Using Logistic Regression", company: "Majella National Park, Italy", pdf: "",
+                points: [
+                    "Formulated a streamlined 3-variable logistic regression model (NDVI, ISR, Aspect) for spatial prediction, achieving an <span class='mark-highlight'>\"excellent\" AUC score of 0.9368</span>.",
+                    "Validated the model's predictive reliability with 87.1% sensitivity and 90.4% specificity, successfully identifying 27 true positive occurrences with minimal false positives.",
+                    "Generated probability distribution maps for Majella National Park, precisely identifying <span class='mark-highlight'>252 hectares</span> of highly suitable habitat for the endemic Acer cappadocicum tree species."
+                ],
+                slides: [ { img: "covpsuk2.png", caption: "ROC Curve" } ]
+            },
+            proj13: {
+                title: "Habitat Suitability Modeling of Acer cappadocicum Using Maximum Entropy (MaxEnt)", company: "Majella National Park, Italy", pdf: "",
+                points: [
+                    "Developed a multi-variable MaxEnt model (Elevation and Aspect) that successfully prevented overfitting while achieving an <span class='mark-highlight'>exceptional cross-validation AUC score of 0.996</span>.",
+                    "Quantified precise ecological preferences, revealing that the species optimally thrives at mid-montane elevations of 1,300-1,600 masl and on southeast-to-south facing slopes between 50° and 200°.",
+                    "Generated species distribution maps utilizing a 0.35 probability threshold, successfully <span class='mark-highlight'>isolating exactly 106 hectares of highly suitable habitat</span> while classifying 3,942 hectares as unsuitable."
+                ],
+                slides: [ { img: "covpsuk3.png", caption: "MaxEnt Probability Map" } ]
+            },
+            proj14: {
+                title: "Geostatistical Spatial Interpolation (Kriging) and Hydrological Forecasting for Mangrove Rehabilitation", company: "TWA Angke Kapuk, Jakarta", pdf: "",
+                points: [
+                    "Developed and validated an Exponential variogram model for Kriging interpolation, achieving optimal predictive accuracy with an <span class='mark-highlight'>RMSE of 25.478</span> and a low relative error rate of 15.6%.",
+                    "Simulated a 10-year hydrological forecast incorporating a projected 15 mm/year water level increase, mapping future depths ranging from 44.746 to 316.893 cm across the ecosystem.",
+                    "Assessed future ecological viability based on depth thresholds, precisely <span class='mark-highlight'>delineating 86.43 hectares</span> as highly suitable for mangrove rehabilitation while isolating 9.47 hectares as non-viable."
+                ],
+                slides: [ { img: "covpsuk4.png", caption: "Kriging Interpolation Map" } ]
+            },
+            proj15: {
+                title: "Wildlife Monitoring and Biodiversity Assessment via Camera Traps", company: "Conservation Project", pdf: "",
+                points: [
+                    "Processed and analyzed field data from deployed camera traps to precisely <span class='mark-highlight'>monitor wildlife populations</span> across targeted natural habitats.",
+                    "Successfully identified and cataloged <span class='mark-highlight'>over 40 distinct animal species</span>, significantly enriching the regional ecological database.",
+                    "Integrated the spatial and ecological data into an interactive web platform and compiled comprehensive biodiversity reports to aggressively support <span class='mark-highlight'>conservation management strategies</span>."
+                ],
+                slides: [ { img: "tor5.jpg", caption: "Camera Trap Capture" } ]
+            },
+            proj1: {
+                title: "Mapping of Forest Management Units (KPHP)", company: "East & North Kalimantan", pdf: "",
+                points: [
+                    "Required spatial delineation of candidate production forest areas to support regional forest management and planning.",
+                    "Conducted <span class='mark-highlight'>GIS-based spatial delineation</span>, produced boundary maps, and computed unit areas based on specific regional management criteria.",
+                    "Successfully mapped and classified <span class='mark-highlight'>68 Forest Management Units</span>, comprising 34 KPH, 4 KPHL, and 30 KPHP areas."
+                ],
+                slides: [ { img: "kphp4.png", caption: "FMU Delineation Map" } ]
+            },
+            proj2: {
+                title: "Reclamation Design of Post-Mining Land", company: "Gunung Geulis", pdf: "",
+                points: [
+                    "Aimed to address degraded post-mining land by designing an integrated reclamation and spring protection strategy.",
+                    "Executed <span class='mark-highlight'>GIS site zoning</span> based on elevation, designed a tailored agroforestry system, and conceptualized a monitoring app for water quality.",
+                    "Designed a 4.21 ha reclamation plan projected to yield a <span class='mark-highlight'>22.6% Internal Rate of Return (IRR)</span> with a rapid payback period of 7-8 months."
+                ],
+                slides: [ { img: "gugel4.png", caption: "Reclamation Maps" } ]
+            },
+            proj3: {
+                title: "Integrated Forest System Design", company: "Cimenyan, Bandung", pdf: "",
+                points: [
+                    "Aimed to build ecological and economic resilience within a degraded watershed area.",
+                    "Analyzed <span class='mark-highlight'>erosion rates and critical land potential</span> in the area of interest using the USLE formula according to BPDAS-PS regulations.",
+                    "Designed a <span class='mark-highlight'>4D agroforestry-based rehabilitation system</span> utilizing zoning-based spatial modeling and targeted silvicultural strategies.",
+                    "Formulated a rehabilitation model across 4,057.70 ha, scientifically predicted to <span class='mark-highlight'>reduce soil erosion potential by 78.67%</span> over a 10-year projection."
+                ],
+                slides: [ { img: "3d3.png", caption: "4D Agroforestry Design" } ]
+            },
+            proj4: {
+                title: "Spatial Modeling of Javan Green Peafowl", company: "Ujung Kulon", pdf: "",
+                points: [
+                    "Needed critical spatial ecological data to support the conservation management of the endangered Javan Green Peafowl (Pavo muticus muticus).",
+                    "Analyzed ecological factors and executed <span class='mark-highlight'>habitat suitability distribution modeling using MaxEnt</span> by integrating multiple environmental variables.",
+                    "Produced a highly precise habitat suitability map covering a massive <span class='mark-highlight'>61,357.46 ha Area of Interest (AOI)</span> based on 11 recorded individuals."
+                ],
+                slides: [ { img: "m8.png", caption: "Habitat Suitability Map" } ]
+            },
+            proj5: {
+                title: "Land Cover Change Impacts", company: "Sub-Citarik Watershed", pdf: "",
+                points: [
+                    "Required an evaluation of watershed ecological degradation to support strategic regional land-use planning and management.",
+                    "Analyzed and modeled the impacts of land-cover transformations using comprehensive <span class='mark-highlight'>multi-year environmental and time-series spatial data</span>.",
+                    "Delivered actionable spatial insights on watershed conditions to guide targeted ecosystem restoration interventions."
+                ],
+                slides: [ { img: "das9.png", caption: "SWAT Flowchart" } ]
+            },
+            proj6: {
+                title: "Ecological Analysis", company: "Mount Papandayan Nature Reserve", pdf: "",
+                points: [
+                    "Evaluated baseline ecosystem conditions, vegetation structure, and biodiversity health in a highly protected natural recreation area.",
+                    "Conducted comprehensive field surveys including vegetation stand structure analysis, <span class='mark-highlight'>carbon stock estimation</span>, and avifauna observation.",
+                    "Successfully identified and cataloged <span class='mark-highlight'>100 distinct plant species</span> across various habitus and 34 bird species."
+                ],
+                slides: [ { img: "eko13.png", caption: "Field Survey Data" } ]
+            }
         };
 
         const jobOrder = ['job1', 'job2', 'job3', 'job4', 'job5', 'job6'];
