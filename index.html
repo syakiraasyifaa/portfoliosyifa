@@ -1218,6 +1218,28 @@
         }
 
         document.addEventListener('keydown', (e) => { if (e.key === "Escape") { closePdfModal(); closeModal(); } });
+
+        // SISTEM PRELOAD: Mencegah gambar loading/blank saat diklik atau discroll
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                // 1. Preload semua gambar modal (pop-up) ke dalam memori browser
+                Object.values(modalData).forEach(data => {
+                    if (data.slides) {
+                        data.slides.forEach(slide => {
+                            if (!slide.img.toLowerCase().endsWith('.mp4')) {
+                                const img = new Image();
+                                img.src = slide.img;
+                            }
+                        });
+                    }
+                });
+                
+                // 2. Paksa semua gambar di halaman utama untuk dimuat penuh di latar belakang
+                document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+                    img.setAttribute('loading', 'eager');
+                });
+            }, 500); // Dijalankan 0.5 detik setelah web terbuka agar tidak memberatkan awal loading
+        });
     </script>
 </body>
 </html>
