@@ -1,4 +1,45 @@
-<!-- Custom CSS -->
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORTFOLIO | SYIFA SYAKIRA</title>
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/128/17935/17935611.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['DM Sans', 'sans-serif'], serif: ['Outfit', 'sans-serif'], },
+                    colors: { 
+                        brand: { 
+                            light: '#F1EFE8',    /* Fuji Snow */
+                            orange: '#E45E32',   /* Cozy Nook baru */
+                            purpleL: '#4FB3B3',  /* Pengganti Tyrian Purple */
+                            purpleM: '#004F54',  /* Transporter Green */
+                            dark: '#102C33',     /* Black Chasm */
+                        } 
+                    },
+                    boxShadow: { 
+                        'brutal': '6px 6px 0px 0px #102C33', 
+                        'brutal-hover': '10px 10px 0px 0px #102C33', 
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
     <style>
         body { background-color: #F1EFE8; color: #102C33; overflow-x: hidden; }
         .nav-scrolled { background-color: rgba(241, 239, 232, 0.95) !important; backdrop-filter: blur(10px) !important; border-bottom: 3px solid #102C33; box-shadow: 0 4px 20px rgba(16, 44, 51, 0.1); }
@@ -38,3 +79,1003 @@
             text-justify: inter-word;
         }
     </style>
+
+    
+</head>
+<body class="antialiased selection:bg-brand-orange selection:text-white relative">
+
+    <div id="loadingOverlay" class="loader-overlay hidden">
+        <div class="spinner mb-4"></div>
+        <p class="text-brand-dark font-serif font-black text-lg tracking-wider uppercase" id="loadingText">SAVING TO DRIVE...</p>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div id="customConfirmModal" class="fixed inset-0 z-[10000] hidden flex items-center justify-center bg-brand-dark/80 backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-brand-light rounded-xl p-6 max-w-sm w-full modal-brutal scale-95 transition-transform duration-300 transform" id="customConfirmBox">
+            <h3 class="text-xl font-serif font-black text-brand-dark mb-3"><i class="fas fa-exclamation-triangle text-brand-orange mr-2"></i> CONFIRMATION</h3>
+            <p class="text-brand-dark font-medium mb-6 font-sans" id="customConfirmMessage">Are you sure?</p>
+            <div class="flex justify-end gap-3">
+                <button id="btnConfirmNo" class="px-5 py-2 text-brand-dark border-2 border-brand-dark font-bold text-sm hover:bg-gray-200 transition rounded">Cancel</button>
+                <button id="btnConfirmYes" class="px-5 py-2 bg-brand-orange text-white border-2 border-brand-dark rounded font-bold text-sm shadow-brutal hover:translate-y-1 transition">Confirm</button>
+            </div>
+        </div>
+    </div>
+<!-- Cropper Modal -->
+    <div id="cropperModal" class="fixed inset-0 z-[10000] hidden flex items-center justify-center bg-brand-dark/90 backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-brand-light rounded-xl p-6 w-full max-w-2xl modal-brutal scale-95 transition-transform duration-300 transform flex flex-col max-h-[90vh]" id="cropperBox">
+            <div class="flex justify-between items-center mb-4 border-b-4 border-brand-dark pb-2">
+                <h3 class="text-xl font-serif font-black text-brand-dark uppercase"><i class="fas fa-crop-alt text-brand-orange mr-2"></i> Sesuaikan Foto</h3>
+                <button onclick="closeCropperModal()" class="text-brand-dark hover:text-brand-orange transition"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            
+            <!-- Area Gambar yang akan di-crop -->
+            <div class="w-full flex-grow relative bg-gray-200 overflow-hidden rounded border-2 border-brand-dark min-h-[300px] h-[50vh]">
+                <img id="cropperImage" src="" class="max-w-full block">
+            </div>
+            
+            <!-- Tombol Aksi -->
+            <div class="flex justify-end gap-3 mt-6 pt-4 border-t-2 border-brand-dark">
+                <button onclick="closeCropperModal()" class="px-5 py-2.5 text-brand-dark border-2 border-brand-dark font-bold text-sm hover:bg-white transition rounded uppercase">Batal</button>
+                <button onclick="executeCropAndUpload()" class="px-5 py-2.5 bg-brand-orange text-white border-2 border-brand-dark rounded font-bold text-sm shadow-[4px_4px_0px_0px_#1A0050] hover:translate-y-1 hover:shadow-none transition uppercase"><i class="fas fa-save mr-1"></i> Crop & Simpan</button>
+            </div>
+        </div>
+    </div>
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 bg-transparent pt-4" id="navbar">
+        <div class="w-full px-6 md:px-12 max-w-[1400px] mx-auto">
+            <div class="flex justify-between items-center h-16 bg-brand-light/90 border-3 border-brand-dark shadow-brutal rounded-xl px-6 backdrop-blur-md">
+<div class="flex-shrink-0"><a href="#" class="font-serif text-3xl font-black tracking-tighter text-brand-dark z-30 flex items-center gap-2">SYIFA<span class="text-brand-orange">.</span></a></div>                <div class="hidden lg:flex items-center space-x-6 z-30 font-serif font-bold text-sm text-brand-dark uppercase">
+                    <a href="#home-hero" class="hover:text-brand-orange transition">Home</a>
+                    <a href="#about" class="hover:text-brand-orange transition">About</a>
+                    <a href="#skills" class="hover:text-brand-orange transition">Skills</a>
+                    <a href="#experience" class="hover:text-brand-orange transition">Experience</a>
+                    <a href="#organization" class="hover:text-brand-orange transition">Organization</a>
+                    <!-- DROPDOWN PROJECTS (Otomatis) -->
+                    <div class="relative group">
+                        <a href="#projects" class="hover:text-brand-orange transition flex items-center gap-1 py-2">Projects <i class="fas fa-chevron-down text-[10px]"></i></a>
+                        <!-- Bridge transparan agar hover tidak terputus -->
+                        <div class="absolute left-0 top-full pt-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all z-50 w-48">
+                            <div id="navProjectDropdown" class="bg-brand-light border-2 border-brand-dark shadow-[4px_4px_0px_0px_#1A0050] rounded flex flex-col overflow-hidden">
+                                <!-- Kategori di-inject via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DROPDOWN CONTACT (Statis) -->
+                    <div class="relative group">
+                        <a href="#contact" class="hover:text-brand-orange transition flex items-center gap-1 py-2">Contact <i class="fas fa-chevron-down text-[10px]"></i></a>
+                        <div class="absolute right-0 lg:left-0 top-full pt-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all z-50 w-44">
+                            <div class="bg-brand-light border-2 border-brand-dark shadow-[4px_4px_0px_0px_#1A0050] rounded flex flex-col overflow-hidden">
+                                <a href="mailto:syakiraasyifaa@gmail.com" class="px-4 py-3 hover:bg-brand-orange hover:text-white border-b-2 border-brand-dark transition flex items-center gap-2 text-xs font-black"><i class="fas fa-envelope text-sm w-4 text-center"></i> Email</a>
+                                <a href="https://www.linkedin.com/in/syakiraasyifaa/" target="_blank" class="px-4 py-3 hover:bg-brand-orange hover:text-white border-b-2 border-brand-dark transition flex items-center gap-2 text-xs font-black"><i class="fab fa-linkedin-in text-sm w-4 text-center"></i> LinkedIn</a>
+                                <a href="https://wa.me/6282317069464" target="_blank" class="px-4 py-3 hover:bg-brand-orange hover:text-white transition flex items-center gap-2 text-xs font-black"><i class="fab fa-whatsapp text-sm w-4 text-center"></i> WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden lg:flex items-center z-30 gap-3">
+                    <button id="logoutBtn" onclick="exitAdminMode()" class="hidden px-4 py-2 rounded border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white text-xs font-bold uppercase transition shadow-[4px_4px_0px_0px_#ef4444] active:shadow-none active:translate-y-1"><i class="fas fa-sign-out-alt"></i> Exit</button>
+                </div>
+                <div class="lg:hidden flex items-center z-30"><button id="mobile-menu-btn" class="text-brand-dark border-2 border-brand-dark bg-white rounded w-10 h-10 flex items-center justify-center shadow-brutal"><i class="fas fa-bars"></i></button></div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden lg:hidden bg-brand-light border-b-4 border-brand-dark absolute w-full shadow-2xl z-40 mt-4 pb-6 pt-4 text-center font-serif font-black text-lg flex flex-col space-y-4">
+            <a href="#home-hero" class="block text-brand-purpleL" onclick="document.getElementById('mobile-menu').classList.add('hidden')">HOME</a>
+            <a href="#about" class="block text-brand-dark" onclick="document.getElementById('mobile-menu').classList.add('hidden')">ABOUT</a>
+            <a href="#skills" class="block text-brand-dark" onclick="document.getElementById('mobile-menu').classList.add('hidden')">SKILLS</a>
+            <a href="#experience" class="block text-brand-dark" onclick="document.getElementById('mobile-menu').classList.add('hidden')">EXPERIENCE</a>
+            
+            <!-- Mobile Projects Dynamic Categories -->
+            <div class="border-y-2 border-brand-dark/10 py-3 mx-4">
+                <a href="#projects" class="block text-brand-dark mb-3" onclick="document.getElementById('mobile-menu').classList.add('hidden')">PROJECTS</a>
+                <div id="mobileProjectTabs" class="flex flex-col gap-3 text-sm font-sans">
+                    <!-- Kategori di-inject via JS otomatis -->
+                </div>
+            </div>
+
+            <!-- Mobile Contact Static Links -->
+            <div class="mx-4">
+                <span class="block text-brand-dark mb-3">CONTACT</span>
+                <div class="flex justify-center gap-6 text-sm font-sans font-bold">
+                    <a href="mailto:syakiraasyifaa@gmail.com" class="text-brand-dark hover:text-brand-orange transition flex flex-col items-center gap-1"><i class="fas fa-envelope text-xl"></i> Email</a>
+                    <a href="https://www.linkedin.com/in/syakiraasyifaa/" target="_blank" class="text-brand-dark hover:text-brand-orange transition flex flex-col items-center gap-1"><i class="fab fa-linkedin-in text-xl"></i> LinkedIn</a>
+                    <a href="https://wa.me/6282317069464" target="_blank" class="text-brand-dark hover:text-brand-orange transition flex flex-col items-center gap-1"><i class="fab fa-whatsapp text-xl"></i> WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HIDDEN UPLOADS -->
+    <div class="fixed hidden z-[-99]">
+        <input type="file" id="profileUploadInput" accept="image/*">
+        <input type="file" id="wallpaperUploadInput" accept="image/*">
+        <input type="file" id="cvUploadInput" accept=".pdf,.doc,.docx">
+        <input type="file" id="uniLogoUploadInput" accept="image/*">
+        <input type="file" id="tagImageUploadInput" accept="image/*">
+        <input type="file" id="expGalleryUploadInput" accept="image/*">
+        <input type="file" id="expCoverUploadInput" accept="image/*">
+        <input type="file" id="orgBgImageUploadInput" accept="image/*">
+        <input type="file" id="projFrontImageUploadInput" accept="image/*">
+        <input type="file" id="modalLogoUploadInput" accept="image/*">
+        <input type="file" id="aboutCarouselUploadInput" accept="image/*">
+    </div>
+
+    <!-- HOME HERO -->
+    <section class="min-h-screen bg-gradient-to-br from-brand-dark via-brand-purpleM to-brand-purpleL relative pt-24 pb-12 flex items-center scroll-mt-0 overflow-hidden" id="home-hero">
+        <button onclick="triggerWallpaperUpload()" class="admin-control hidden absolute top-24 right-8 bg-white border-3 border-brand-dark text-brand-dark px-4 py-2 rounded shadow-brutal font-serif font-bold text-xs uppercase z-30 flex items-center gap-2 hover:bg-brand-light"><i class="fas fa-image"></i> Edit Background</button>
+        <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 relative z-20 flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="w-full md:w-3/5 text-left relative group">
+                <h1 class="font-serif text-5xl sm:text-7xl lg:text-[5.5rem] font-black mb-6 leading-[1.1] text-brand-light tracking-tight uppercase">
+                    <span class="block" id="heroTitleLine1">Translating Data Into</span><span class="text-highlight block" id="heroTitleLine2">Sustainable Solutions.</span>
+                </h1>
+                <button onclick="editHeroTitle()" class="admin-control hidden absolute -right-4 top-0 bg-white border-2 border-brand-dark text-brand-dark p-2 rounded shadow-brutal z-30 opacity-0 group-hover:opacity-100 transition"><i class="fas fa-edit"></i></button>
+                <div class="relative group mt-6">
+                    <p class="text-brand-light text-lg sm:text-xl font-medium leading-relaxed max-w-xl border-l-4 border-brand-orange pl-4 font-sans" id="heroDescText">Integrating ecological science, GIS spatial modeling, and technology to provide sustainable solutions for forest management, land reclamation, and biodiversity conservation.</p>
+                    <button onclick="editHeroDesc()" class="admin-control hidden absolute -right-8 top-0 bg-white border-2 border-brand-dark text-brand-dark p-2 rounded shadow-brutal z-30 opacity-0 group-hover:opacity-100 transition"><i class="fas fa-edit"></i></button>
+                </div>
+            </div>
+            <div class="w-full md:w-2/5 flex justify-center relative group z-20">
+                <div class="absolute w-full h-[105%] bg-brand-orange rounded-t-full bottom-0 -z-10 right-4 border-4 border-brand-dark"></div>
+                <div class="relative w-64 h-80 sm:w-80 sm:h-96 md:w-full md:h-[500px] overflow-hidden border-4 border-brand-dark shadow-brutal bg-brand-purpleL rounded-xl">
+                    <img id="profileImage" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover transition duration-500">
+                    <button onclick="triggerProfileUpload()" class="admin-control hidden absolute bottom-4 right-4 bg-white border-2 border-brand-dark text-brand-dark w-12 h-12 rounded-full shadow-brutal flex items-center justify-center hover:bg-brand-orange hover:text-white transition z-30"><i class="fas fa-camera text-lg"></i></button>
+                </div>
+                <div class="absolute -bottom-6 -left-6 md:-left-12 bg-brand-light border-4 border-brand-dark p-4 shadow-brutal group/badge">
+                    <h2 class="text-2xl font-serif font-black text-brand-dark tracking-tight" id="heroTitleText">Syifa Syakira</h2>
+                    <p class="text-brand-purpleL font-bold uppercase text-sm font-sans" id="heroRoleText">Forestry Engineer</p>
+                    <button onclick="editHeroProfile()" class="admin-control hidden absolute -top-4 -right-4 bg-white border-2 border-brand-dark text-brand-dark p-1 rounded z-30 opacity-0 group-hover/badge:opacity-100"><i class="fas fa-edit text-xs"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="min-h-screen py-16 bg-brand-light scroll-mt-16 flex items-center z-10 relative border-b-4 border-brand-dark" id="about">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                <div class="space-y-6">
+                    <div class="relative group inline-block w-full">
+                        <h2 class="font-serif text-4xl sm:text-5xl font-black text-brand-dark leading-[1.1] uppercase"><span id="aboutTitle1">Passionate about</span><br><span class="text-brand-purpleM" id="aboutTitleHighlight">Sustainable Environments</span><br><span id="aboutTitle2">and Technology.</span></h2>
+                        <button onclick="editAboutTitle()" class="admin-control hidden absolute -right-8 top-0 bg-white border-2 border-brand-dark p-2 rounded shadow-brutal z-20 opacity-0 group-hover:opacity-100"><i class="fas fa-edit"></i></button>
+                    </div>
+                    <div class="relative group">
+                        <div class="space-y-4 text-brand-dark font-sans font-medium text-base leading-relaxed">
+                            <p id="bioP1">I am a highly motivated Forestry Engineering student with a profound interest in Reforestation Technology, Spatial Analysis, and Biodiversity Monitoring.</p>
+                            <p id="bioP2">My field experiences range from evaluating bamboo reclamation on post-mining sites to mapping shoreline dynamics and conducting flora/fauna inventories.</p>
+                        </div>
+                        <button onclick="editBio()" class="admin-control hidden absolute -right-6 top-0 bg-white border-2 border-brand-dark p-2 rounded shadow-brutal z-20 opacity-0 group-hover:opacity-100"><i class="fas fa-edit"></i></button>
+                    </div>
+                </div>
+                <div class="space-y-6 relative group z-10">
+                    <button onclick="editEducationData()" class="admin-control hidden absolute -right-4 -top-4 bg-white border-2 border-brand-dark p-2 rounded shadow-brutal z-20 opacity-0 group-hover:opacity-100"><i class="fas fa-edit"></i></button>
+                    <div class="bold-card p-6 bg-brand-purpleL text-white">
+                        <p class="text-sm font-sans font-bold tracking-widest uppercase border-b-2 border-white pb-2 mb-4">Education</p>
+                        <div class="mb-4 relative flex items-start gap-4">
+                            <div class="w-14 h-14 bg-white rounded border-2 border-brand-dark flex items-center justify-center flex-shrink-0 relative group/logo shadow-[4px_4px_0px_0px_#1A0050]">
+                                <img id="uniLogo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Logo_Institut_Teknologi_Bandung.svg/1024px-Logo_Institut_Teknologi_Bandung.svg.png" class="w-8 h-8 object-contain">
+                                <button onclick="triggerUniLogoUpload()" class="admin-control hidden absolute inset-0 bg-black/70 text-white flex items-center justify-center text-xs opacity-0 group-hover/logo:opacity-100 transition z-20"><i class="fas fa-camera"></i></button>
+                            </div>
+                            <div>
+                                <h3 class="font-serif font-bold text-xl leading-tight uppercase" id="eduUni">Institut Teknologi Bandung</h3>
+                                <p class="font-sans font-medium text-sm mb-1" id="eduMajor">Bachelor of Forestry Engineering</p>
+                                <p class="text-brand-dark text-xs font-bold border-2 border-brand-dark inline-block px-2 py-0.5 bg-brand-light">GPA: <span id="eduGpa">3.66</span> (<span id="eduStatus">Cumlaude</span>)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bold-card p-6 bg-brand-dark text-brand-light relative group">
+                        <button onclick="editVision()" class="admin-control hidden absolute right-2 top-2 bg-white text-brand-dark p-2 border border-brand-dark rounded z-20 opacity-0 group-hover:opacity-100"><i class="fas fa-edit"></i></button>
+                        <h3 class="font-serif font-black text-xl text-brand-orange uppercase mb-2" id="visionTitle">Core Focus & Vision</h3>
+                        <p class="font-sans text-sm leading-relaxed text-gray-300" id="visionDesc">Aspiring to build a career in corporate sustainability...</p>
+                    </div>
+
+        
+                    <!-- TAMBAHAN: Kotak Jumlah Exp & Proyek (Clickable) -->
+                    <div class="grid grid-cols-2 gap-4 mt-6">
+                        <!-- Kotak Experience: Navigasi ke #experience -->
+                        <a href="#experience" class="bold-card p-4 bg-brand-orange text-white text-center flex flex-col justify-center border-2 border-brand-dark shadow-[4px_4px_0px_0px_#1A0050] cursor-pointer hover:text-white decoration-transparent">
+                            <h4 class="font-serif text-4xl font-black mb-1" id="expCountDisplay">0</h4>
+                            <p class="font-sans text-xs font-bold uppercase tracking-wider">Experiences</p>
+                        </a>
+                        
+                        <!-- Kotak Projects: Navigasi ke #projects -->
+                        <a href="#projects" class="bold-card p-4 bg-brand-purpleM text-white text-center flex flex-col justify-center border-2 border-brand-dark shadow-[4px_4px_0px_0px_#1A0050] cursor-pointer hover:text-white decoration-transparent">
+                            <h4 class="font-serif text-4xl font-black mb-1" id="projCountDisplay">0</h4>
+                            <p class="font-sans text-xs font-bold uppercase tracking-wider">Projects</p>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- AKHIR DARI ABOUT SECTION -->
+    </section>
+
+    <!-- ========================================== -->
+    <!-- BAND FOTO CAROUSEL (Di Antara About & Skills) -->
+    <!-- ========================================== -->
+    <div class="w-full border-b-4 border-brand-dark bg-brand-purpleL py-8 relative group/carousel overflow-hidden">
+        <div class="absolute top-4 right-4 sm:right-12 z-30">
+            <button onclick="triggerAboutCarouselUpload()" class="admin-control hidden px-4 py-2 bg-brand-orange text-white border-2 border-brand-dark font-black uppercase text-xs shadow-[4px_4px_0px_0px_#1A0050] hover:translate-y-1 hover:shadow-none transition"><i class="fas fa-camera mr-2"></i> Add Photo</button>
+        </div>
+        
+        <!-- Slider Marquee Container -->
+        <div id="aboutCarouselWrapper" class="flex w-max animate-marquee">
+            <!-- Foto-foto akan di-inject lewat JavaScript -->
+        </div>
+    </div>
+    <!-- ========================================== -->
+
+    <!-- SKILLS SECTION (BENTO BOX LAYOUT) -->
+    <section class="h-screen max-h-[1080px] min-h-[600px] pt-20 pb-8 bg-brand-purpleM flex flex-col relative z-10 border-b-4 border-brand-dark overflow-hidden" id="skills">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col h-full">
+            <!-- Header Row -->
+            <div class="mb-6 flex justify-between items-end shrink-0 relative group">
+                <h2 class="font-serif text-4xl lg:text-5xl font-black text-brand-light uppercase tracking-tight" id="skillsMainTitle">Skills & Expertise</h2>
+                <div class="flex gap-3">
+                    <button onclick="editSkillsHeader()" class="admin-control hidden bg-white border-2 border-brand-dark p-2 rounded shadow-brutal opacity-0 group-hover:opacity-100 transition"><i class="fas fa-edit text-brand-dark"></i></button>
+                    <button onclick="addSkillCard()" class="admin-control hidden px-4 py-2 border-2 border-brand-dark bg-brand-orange text-white text-xs font-bold uppercase shadow-[4px_4px_0px_0px_#1A0050] hover:translate-y-1 hover:shadow-none transition"><i class="fas fa-plus mr-1"></i> Add Skill</button>
+                </div>
+            </div>
+            
+            <!-- Bento Container -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 flex-grow min-h-0">
+                <!-- Kiri: Software Stack (1/3 Lebar, Scroll Internal) -->
+                <div class="lg:col-span-4 xl:col-span-3 bold-card bg-brand-light p-4 lg:p-5 flex flex-col relative group/stack h-full overflow-hidden border-3 border-brand-dark">
+                    <div class="flex justify-between items-center mb-4 shrink-0 border-b-2 border-brand-dark pb-2">
+                        <h3 class="font-serif text-lg font-black text-brand-dark uppercase" id="softwareStackTitle">Software Stack</h3>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="editSoftwareStackTitle()" class="admin-control hidden bg-white border-2 border-brand-dark text-brand-dark p-1.5 rounded opacity-0 group-hover/stack:opacity-100 transition hover:bg-brand-orange hover:text-white"><i class="fas fa-edit text-[10px]"></i></button>
+                            <button onclick="addSoftwareTag()" class="admin-control hidden bg-brand-orange border-2 border-brand-dark text-white p-1.5 rounded opacity-0 group-hover/stack:opacity-100 transition hover:-translate-y-0.5"><i class="fas fa-plus text-[10px]"></i></button>
+                        </div>
+                    </div>
+                    <!-- Internal Scroll untuk Software Tags -->
+                    <div class="flex flex-col gap-3 flex-grow overflow-y-auto custom-scrollbar pr-2 w-full" id="unifiedSoftwareContainer"></div>
+                </div>
+
+                <!-- Kanan: Skill Cards Grid (2/3 Lebar, Scroll Internal) -->
+                <div class="lg:col-span-8 xl:col-span-9 h-full overflow-y-auto custom-scrollbar pr-2 pb-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4" id="skillsContainer">
+                        <!-- Skill Cards Injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION (NEW: ACCORDION HOVER EFFECT) -->
+    <section class="py-16 bg-brand-light relative scroll-mt-16 z-10 border-b-4 border-brand-dark flex flex-col" id="experience">
+        <div class="w-full px-4 sm:px-6 lg:px-8 z-10 mb-8 relative flex flex-col md:flex-row justify-between items-end gap-6 max-w-[1400px] mx-auto">
+            <div class="relative group z-10 text-left">
+                <h2 class="font-serif text-5xl font-black text-brand-dark uppercase tracking-tight mb-2" id="expMainTitle">Professional Experience</h2>
+                <button onclick="editExpHeader()" class="admin-control hidden absolute -right-12 top-0 bg-white border-2 border-brand-dark p-2 rounded shadow-brutal z-20 opacity-0 group-hover:opacity-100"><i class="fas fa-edit text-brand-dark"></i></button>
+                <p class="font-sans text-brand-dark font-medium text-base max-w-xl" id="expSubDesc">Integrating geospatial analysis and ecological research.</p>
+            </div>
+            <div class="text-right z-10 relative">
+                <button onclick="addExperienceCard()" class="admin-control hidden px-6 py-3 border-3 border-brand-dark bg-brand-dark text-white font-serif font-black uppercase shadow-brutal hover:bg-brand-orange hover:shadow-none transition-all z-20 relative"><i class="fas fa-plus mr-2"></i> Add Exp</button>
+            </div>
+        </div>
+        
+        <!-- Accordion Flex Container -->
+        <div class="w-full px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
+            <div class="flex flex-col lg:flex-row w-full h-[600px] lg:h-[400px] gap-2 lg:gap-3" id="experienceContainer">
+                <!-- Cards Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ORGANIZATION SECTION (CAROUSEL SLIDER) -->
+    <section class="py-16 bg-brand-purpleL relative scroll-mt-16 z-10 border-b-4 border-brand-dark flex flex-col" id="organization">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 z-10 relative w-full">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-6 z-10 relative border-b-3 border-white/20 pb-6">
+                <div class="text-left relative group z-10">
+                    <h2 class="font-serif text-5xl font-black text-white uppercase tracking-tight mb-2" id="orgMainTitle">Organization</h2>
+                    <button onclick="editOrgHeader()" class="admin-control hidden absolute -right-12 top-0 bg-white border-2 border-brand-dark p-2 rounded shadow-brutal z-20 opacity-0 group-hover:opacity-100"><i class="fas fa-edit text-brand-dark"></i></button>
+                    <p class="font-sans text-white/80 font-medium text-base max-w-xl" id="orgSubDesc">Leadership, community development, and volunteering.</p>
+                </div>
+                <!-- Panah Scroll & Tombol Add -->
+                <div class="flex items-center gap-3">
+                    <button onclick="scrollOrganizations('left')" class="w-10 h-10 bg-white border-2 border-brand-dark text-brand-dark rounded shadow-brutal flex items-center justify-center hover:bg-brand-orange hover:text-white transition cursor-pointer"><i class="fas fa-chevron-left"></i></button>
+                    <button onclick="scrollOrganizations('right')" class="w-10 h-10 bg-white border-2 border-brand-dark text-brand-dark rounded shadow-brutal flex items-center justify-center hover:bg-brand-orange hover:text-white transition cursor-pointer"><i class="fas fa-chevron-right"></i></button>
+                    <button onclick="addOrgCard()" class="admin-control hidden px-6 py-2.5 h-10 border-2 border-brand-dark bg-brand-orange text-white text-sm font-black uppercase shadow-[4px_4px_0px_0px_#1A0050] hover:translate-y-1 transition hover:shadow-none"><i class="fas fa-plus"></i> Add Org</button>
+                </div>
+            </div>
+            
+            <!-- Container Slider (Scroll Horizontal) -->
+            <div class="w-full relative p-2 -m-2 overflow-hidden">
+                <div class="flex gap-6 w-full overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-4 pt-1 px-1" id="orgContainer">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section class="min-h-screen py-16 bg-brand-light relative scroll-mt-16 z-10 border-b-4 border-brand-dark flex flex-col" id="projects">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 relative w-full flex-grow">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-6 z-10 relative border-b-3 border-brand-dark pb-6">
+                <div class="relative group z-10">
+                    <h2 class="font-serif text-5xl font-black text-brand-dark uppercase tracking-tight mb-2" id="projMainTitle">Featured Projects</h2>
+                    <button onclick="editProjHeader()" class="admin-control hidden absolute -right-8 top-0 bg-white border-2 border-brand-dark p-2 rounded shadow-brutal z-20 opacity-0 group-hover:opacity-100"><i class="fas fa-edit text-brand-dark"></i></button>
+                    <p class="font-sans text-brand-dark font-medium text-base max-w-xl" id="projSubDesc">Selected research, mapping, and field evaluation projects.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+                    <div id="projectFilterTabs" class="flex flex-wrap gap-2 w-full sm:w-auto font-sans font-bold"></div>
+                    <button onclick="addProjectCard()" class="admin-control hidden px-6 py-2.5 border-2 border-brand-dark bg-brand-orange text-white text-sm font-black uppercase shadow-brutal hover:translate-y-1 transition flex-shrink-0"><i class="fas fa-plus"></i> Add Project</button>
+                </div>
+            </div>
+            <div id="projectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-dark pt-16 pb-8 relative overflow-hidden scroll-mt-16 z-10" id="contact">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center mb-12 relative z-20">
+            <div class="text-left relative group inline-block">
+                <button onclick="editContact()" class="admin-control hidden absolute -right-8 top-0 bg-brand-light border-2 border-brand-dark text-brand-dark p-2 rounded shadow-brutal z-30 opacity-0 group-hover:opacity-100"><i class="fas fa-edit"></i></button>
+                <h2 class="font-serif text-5xl sm:text-7xl font-black text-brand-light mb-4 uppercase leading-[1.1]">
+                    <span id="contactTitle1">Let's Work</span><br> 
+                    <span id="contactTitle2" class="text-brand-orange">Together.</span><br>
+                    Amazing.
+                </h2>
+                <p id="contactDesc" class="font-sans text-gray-300 text-base max-w-md font-medium mt-4">Open for discussions on spatial projects, forestry research, or sharing environmental insights.</p>
+                <p class="font-sans text-brand-light font-black mt-6 text-xl inline-block pb-1">Start by <span class="text-brand-purpleL border-b-4 border-brand-purpleL pb-1">saying hi</span></p>
+            </div>
+            
+            <div class="flex flex-wrap justify-start md:justify-end gap-5 z-20 relative">
+                <a href="mailto:syakiraasyifaa@gmail.com" class="w-14 h-14 rounded-lg border-3 border-brand-light flex items-center justify-center text-brand-light hover:bg-brand-orange hover:border-brand-orange hover:text-white transition-colors text-2xl shadow-[4px_4px_0px_0px_#FFF8F6] hover:shadow-none hover:translate-y-1"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/syakiraasyifaa/" target="_blank" class="w-14 h-14 rounded-lg border-3 border-brand-light flex items-center justify-center text-brand-light hover:bg-brand-orange hover:border-brand-orange hover:text-white transition-colors text-2xl shadow-[4px_4px_0px_0px_#FFF8F6] hover:shadow-none hover:translate-y-1"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://wa.me/6282317069464" target="_blank" class="w-14 h-14 rounded-lg border-3 border-brand-light flex items-center justify-center text-brand-light hover:bg-brand-orange hover:border-brand-orange hover:text-white transition-colors text-2xl shadow-[4px_4px_0px_0px_#FFF8F6] hover:shadow-none hover:translate-y-1"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 border-t-2 border-brand-purpleM pt-6 flex flex-col md:flex-row justify-between items-center text-brand-purpleL font-sans font-bold text-xs tracking-widest uppercase relative z-20">
+            <p id="contactCopyright">© 2026 SYIFA SYAKIRA.</p>
+            <button onclick="openLoginModal()" class="mt-4 md:mt-0 hover:text-brand-light transition z-30 flex items-center gap-2"><i class="fas fa-lock"></i> Admin Access</button>
+        </div>
+    </footer>
+
+    <!-- ADMIN SAVE BAR & MODALS -->
+    <div id="adminSaveBar" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-brand-light px-6 py-4 rounded-xl shadow-brutal border-4 border-brand-dark z-[120] flex items-center gap-4 transition-all duration-500 translate-y-32 opacity-0 pointer-events-none">
+        <div class="flex items-center gap-2">
+            <span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-orange opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-brand-orange"></span></span>
+            <span class="text-xs font-black text-brand-dark uppercase font-serif">Unsaved Changes</span>
+        </div>
+        <div class="w-px h-6 bg-gray-300"></div>
+        <button onclick="discardChanges()" class="text-xs font-black text-brand-dark hover:text-brand-orange uppercase font-sans">Discard</button>
+        <button onclick="publishChanges()" class="bg-brand-purpleM hover:bg-brand-dark text-white font-sans text-xs font-black px-6 py-2.5 rounded border-2 border-brand-dark transition shadow-[4px_4px_0px_0px_#1A0050] uppercase hover:translate-y-1 hover:shadow-none">Save to Drive</button>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-brand-dark/80 backdrop-blur-sm"><div class="bg-brand-light rounded-xl p-8 max-w-sm w-full mx-4 modal-brutal z-[101]"><div class="flex justify-between items-center mb-6 border-b-4 border-brand-dark pb-2"><h3 class="font-serif text-2xl font-black uppercase text-brand-dark">Admin Login</h3><button onclick="closeLoginModal()" class="text-brand-dark hover:text-brand-orange transition"><i class="fas fa-times text-xl"></i></button></div><div class="space-y-4 font-sans"><div><label class="block text-xs font-bold text-brand-dark mb-2 uppercase">Username</label><input type="text" id="username" class="w-full px-4 py-3 bg-white border-2 border-brand-dark rounded"></div><div><label class="block text-xs font-bold text-brand-dark mb-2 uppercase">Password</label><input type="password" id="password" class="w-full px-4 py-3 bg-white border-2 border-brand-dark rounded"></div><div id="loginError" class="text-brand-orange text-xs hidden font-bold">Invalid credentials.</div><button onclick="attemptLogin()" class="w-full py-3.5 bg-brand-orange text-white border-2 border-brand-dark rounded font-black uppercase hover:translate-y-1 transition mt-4">LOGIN</button></div></div></div>
+    
+    <!-- Edit Modal -->
+    <div id="customEditModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-brand-dark/80 backdrop-blur-sm p-4"><div class="bg-brand-light rounded-xl p-6 sm:p-8 max-w-lg w-full modal-brutal flex flex-col max-h-[90vh] z-[101]"><div class="flex justify-between items-center mb-6 border-b-4 border-brand-dark pb-2"><h3 class="text-2xl font-serif font-black uppercase text-brand-dark" id="customEditTitle">Edit Data</h3><button onclick="closeCustomEditModal()" class="text-brand-dark hover:text-brand-orange transition"><i class="fas fa-times text-xl"></i></button></div><div id="customEditForm" class="space-y-4 overflow-y-auto custom-scrollbar pr-2 pb-2 flex-grow font-sans"></div><div class="flex justify-end gap-4 mt-6 pt-4 border-t-2 border-brand-dark font-sans"><button onclick="closeCustomEditModal()" class="px-6 py-2.5 border-2 border-brand-dark font-bold uppercase text-sm hover:bg-white transition rounded">Cancel</button><button onclick="saveCustomEdit()" class="px-6 py-2.5 bg-brand-purpleM text-white border-2 border-brand-dark rounded font-bold uppercase text-sm hover:translate-y-1 transition">Save Changes</button></div></div></div>
+
+    <!-- Shared Detail Modal -->
+    <div id="sharedDetailModal" class="fixed inset-0 z-[110] hidden flex items-center justify-center bg-brand-dark/90 backdrop-blur-sm p-4 transition-all duration-300 opacity-0" onclick="closeSharedModal()">
+        <div class="bg-brand-light rounded-2xl w-full max-w-5xl max-h-[90vh] modal-brutal flex flex-col overflow-hidden scale-95 transition-transform duration-300 z-[111]" id="sharedModalContent" onclick="event.stopPropagation()">
+            <div class="bg-brand-dark text-brand-light p-6 sm:p-8 flex justify-between items-start relative shrink-0 border-b-4 border-brand-dark">
+                <button onclick="editCurrentSharedDetails()" class="admin-control hidden absolute top-4 left-4 bg-white/20 hover:bg-white/40 px-3 py-1.5 rounded border border-white text-xs font-bold transition flex items-center gap-1.5 z-10" title="Edit Teks & Deskripsi Pop-up"><i class="fas fa-edit"></i> Edit Info</button>
+                <div class="flex-1 mt-6 sm:mt-0 flex flex-col sm:flex-row gap-4 items-center sm:items-start pl-0 sm:pl-28">
+                    <div class="relative group/modallogo shrink-0">
+                        <img id="modalLogo" src="" class="h-14 w-14 object-contain bg-white rounded-lg p-1.5 border-2 border-brand-light hidden">
+                        <i id="modalIcon" class="fas fa-folder-open text-4xl text-brand-orange bg-white/10 p-3 rounded-lg border-2 border-brand-light"></i>
+                        <button onclick="triggerModalLogoUpload()" class="admin-control hidden absolute -top-2 -right-2 bg-white border-2 border-brand-dark text-brand-dark w-6 h-6 rounded-full flex items-center justify-center hover:bg-brand-orange hover:text-white transition z-20 shadow-[2px_2px_0px_0px_#1A0050]" title="Upload Logo"><i class="fas fa-camera text-[10px]"></i></button>
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <h2 class="text-2xl sm:text-3xl font-serif font-black text-white mb-1 uppercase" id="modalTitle">Title</h2>
+                        <p class="text-brand-orange font-sans font-bold text-sm flex items-center justify-center sm:justify-start gap-2 uppercase tracking-wide"><span id="modalSubtitle">Subtitle</span><span class="text-white/30">|</span><i class="far fa-calendar-alt"></i> <span id="modalDate">Date</span></p>
+                    </div>
+                </div>
+                <button onclick="closeSharedModal()" class="bg-brand-orange border-2 border-brand-light text-white w-10 h-10 rounded shadow-[4px_4px_0px_0px_#FFF8F6] flex items-center justify-center hover:translate-y-1 transition-all ml-4 shrink-0"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="flex flex-col md:flex-row flex-1 overflow-hidden bg-white font-sans">
+                <div class="w-full md:w-1/2 p-6 sm:p-8 overflow-y-auto custom-scrollbar border-r-4 border-brand-dark">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-brand-purpleL text-white font-bold text-[10px] uppercase tracking-wider mb-6 border-2 border-brand-dark shadow-[2px_2px_0px_0px_#1A0050]">Core Contributions & Impact</div>
+                    <ul class="space-y-4 text-brand-dark text-sm font-medium leading-relaxed" id="modalAchievements"></ul>
+                </div>
+                <div class="w-full md:w-1/2 p-6 flex flex-col justify-center items-center bg-brand-light relative">
+                    <div class="admin-control hidden absolute top-4 right-4 flex gap-2 z-10">
+                        <button onclick="directUploadModalImage()" class="bg-brand-purpleM hover:bg-brand-dark text-white border-2 border-brand-dark px-3 py-1.5 rounded text-xs font-bold shadow-[2px_2px_0px_0px_#1A0050] transition"><i class="fas fa-plus"></i> Foto</button>
+                        <button onclick="directDeleteModalImage()" class="bg-brand-orange hover:bg-red-600 text-white border-2 border-brand-dark px-3 py-1.5 rounded text-xs font-bold shadow-[2px_2px_0px_0px_#1A0050] transition"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="w-full aspect-[3/2] rounded-xl overflow-hidden shadow-brutal border-3 border-brand-dark relative bg-white" id="modalGalleryContainer">
+                        <img id="modalImage" src="" class="w-full h-full object-cover transition-opacity duration-300">
+                        <button onclick="prevModalImage()" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded border-2 border-brand-dark bg-white text-brand-dark shadow-[2px_2px_0px_0px_#1A0050] flex items-center justify-center hover:bg-brand-purpleL hover:text-white transition"><i class="fas fa-chevron-left text-sm"></i></button>
+                        <button onclick="nextModalImage()" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded border-2 border-brand-dark bg-white text-brand-dark shadow-[2px_2px_0px_0px_#1A0050] flex items-center justify-center hover:bg-brand-purpleL hover:text-white transition"><i class="fas fa-chevron-right text-sm"></i></button>
+                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-brand-dark/90 border-2 border-brand-light px-4 py-1.5 rounded text-white text-xs font-bold shadow" id="modalImageCaption">Caption</div>
+                    </div>
+                    <div class="flex gap-2 mt-6" id="modalGalleryDots"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script>
+        // SCRIPT URL UPDATED
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwN3UXalRd1enp8Je3KfqEi5AY3Kk-WLuYa77nY6iM_MRFjsdz6XprldUHmBWIC1gx1/exec";
+        
+        let hasUnsavedChanges = false; let isAdmin = false; let currentModalMode = '';
+
+        function showConfirmModal(msg, onConfirm) {
+            const modal = document.getElementById('customConfirmModal'); const msgEl = document.getElementById('customConfirmMessage');
+            const btnYes = document.getElementById('btnConfirmYes'); const btnNo = document.getElementById('btnConfirmNo');
+            const box = document.getElementById('customConfirmBox'); msgEl.innerText = msg;
+            modal.classList.remove('hidden'); setTimeout(() => { modal.classList.remove('opacity-0'); box.classList.remove('scale-95'); }, 10);
+            const cleanup = () => { modal.classList.add('opacity-0'); box.classList.add('scale-95'); setTimeout(() => modal.classList.add('hidden'), 300); btnYes.removeEventListener('click', yesHandler); btnNo.removeEventListener('click', noHandler); };
+            const yesHandler = () => { cleanup(); onConfirm(); }; const noHandler = () => { cleanup(); };
+            btnYes.addEventListener('click', yesHandler); btnNo.addEventListener('click', noHandler);
+        }
+
+        function markUnsavedChanges() { if (isAdmin) { hasUnsavedChanges = true; const bar = document.getElementById('adminSaveBar'); bar.classList.remove('translate-y-32', 'opacity-0', 'pointer-events-none'); bar.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto'); } }
+
+        async function publishChanges() {
+            const unifiedContainerElement = document.getElementById('unifiedSoftwareContainer');
+            if (unifiedContainerElement) {
+                const tempDiv = document.createElement('div'); tempDiv.innerHTML = unifiedContainerElement.innerHTML;
+                tempDiv.querySelectorAll('.admin-control').forEach(el => el.classList.add('hidden')); unifiedContainerElement.innerHTML = tempDiv.innerHTML;
+                if (isAdmin) unifiedContainerElement.querySelectorAll('.admin-control').forEach(el => el.classList.remove('hidden'));
+            }
+            await saveAllDataToDrive(); hasUnsavedChanges = false; document.getElementById('adminSaveBar').classList.add('translate-y-32', 'opacity-0', 'pointer-events-none');
+        }
+
+        function discardChanges() { showConfirmModal("Buang semua perubahan yang belum disimpan?", () => { window.location.reload(); }); }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            const cachedData = localStorage.getItem('portfolioDataCache');
+            if (cachedData) applyDataToDOM(JSON.parse(cachedData)); else showLoading("LOADING DATA...");
+            try { let response = await fetch(SCRIPT_URL); let result = await response.json(); if (result && result.globalData) { localStorage.setItem('portfolioDataCache', JSON.stringify(result)); applyDataToDOM(result); } } catch (e) {}
+            if (!isAdmin) document.querySelectorAll('.admin-control').forEach(el => el.classList.add('hidden'));
+            hideLoading(); 
+        });
+
+        function applyDataToDOM(result) {
+            const textElements = ['heroTitleLine1', 'heroTitleLine2', 'heroDescText', 'heroTitleText', 'heroRoleText', 'aboutTitle1', 'aboutTitleHighlight', 'aboutTitle2', 'bioP1', 'bioP2', 'eduUni', 'eduMajor', 'eduGpa', 'eduStatus', 'visionTitle', 'visionDesc', 'skillsMainTitle', 'softwareStackTitle', 'expMainTitle', 'expSubDesc', 'orgMainTitle', 'orgSubDesc', 'projMainTitle', 'projSubDesc', 'contactTitle1', 'contactTitle2', 'contactDesc', 'contactCopyright'];
+            // Fungsi Otomatis Mengubah **kata** menjadi Teks Highlight Berwarna Oranye
+            const processHighlights = (text) => {
+                if (!text) return "";
+                // Mengganti format **kata** dengan tag HTML span berwarna brand-orange
+                return text.replace(/\*\*(.*?)\*\*/g, '<span class="text-brand-orange font-bold underline decoration-brand-orange underline-offset-4">$1</span>');
+            };
+            textElements.forEach(id => { 
+                if (result.globalData[id] && document.getElementById(id)) {
+                    document.getElementById(id).innerHTML = processHighlights(result.globalData[id]);
+                } 
+            });
+            if (result.globalData.profileImage) document.getElementById('profileImage').src = result.globalData.profileImage;
+            if (result.globalData.uniLogo) document.getElementById('uniLogo').src = result.globalData.uniLogo;
+            
+            // Auto Migrate Skill Cards to New 3 Column Style (Bg-White)
+            if (result.globalData.skillsContainerHTML) {
+                const tempDiv = document.createElement('div'); tempDiv.innerHTML = result.globalData.skillsContainerHTML;
+                tempDiv.querySelectorAll('.bold-card').forEach(card => {
+                   card.className = "bold-card bg-white p-4 lg:p-5 flex flex-col items-start group/card relative z-10 w-full h-full";
+                    const iconCont = card.querySelector('.skill-icon-container'); if(iconCont) iconCont.className = "text-3xl mb-3 skill-icon-container text-brand-dark";
+                    const title = card.querySelector('.skill-title'); if(title) title.className = "font-serif text-xl font-black mb-2 skill-title uppercase leading-tight z-10 text-brand-dark line-clamp-1";
+                    const desc = card.querySelector('.skill-desc'); if(desc) desc.className = "text-xs font-medium flex-grow skill-desc z-10 font-sans text-gray-700 skill-desc-text line-clamp-3";
+
+                    const editBtn = card.querySelector('button[onclick^="editSpecificSkill"]'); const delBtn = card.querySelector('button[onclick^="deleteSkill"]');
+                    if (editBtn && delBtn && !editBtn.parentElement.classList.contains('flex')) {
+                        const btnWrapper = document.createElement('div'); btnWrapper.className = 'admin-control absolute top-4 right-4 flex gap-2 z-20 hidden';
+                        editBtn.className = 'bg-white border-2 border-brand-dark p-2 rounded shadow-brutal hover:bg-brand-orange hover:text-white transition'; editBtn.innerHTML = '<i class="fas fa-edit text-brand-dark pointer-events-none"></i>';
+                        delBtn.className = 'bg-white border-2 border-brand-dark p-2 rounded shadow-brutal hover:bg-red-500 hover:text-white transition'; delBtn.innerHTML = '<i class="fas fa-trash text-red-500 pointer-events-none"></i>';
+                        card.appendChild(btnWrapper); btnWrapper.appendChild(editBtn); btnWrapper.appendChild(delBtn);
+                    }
+                });
+                document.getElementById('skillsContainer').innerHTML = tempDiv.innerHTML;
+                if(isAdmin) document.getElementById('skillsContainer').querySelectorAll('.admin-control').forEach(el=>el.classList.remove('hidden'));
+            }
+
+            if (result.globalData.unifiedSoftwareContainerHTML) {
+                const tempDiv = document.createElement('div'); tempDiv.innerHTML = result.globalData.unifiedSoftwareContainerHTML;
+                
+                // Auto-Migrasi tampilan tag ke bentuk baris penuh
+                tempDiv.querySelectorAll('.group\\/tag').forEach(tag => {
+                    tag.className = "w-full px-4 py-3 bg-white border-2 border-brand-dark text-brand-dark font-bold text-sm rounded-lg flex items-center gap-3 relative group/tag shadow-[2px_2px_0px_0px_#1A0050] hover:bg-brand-purpleL hover:text-white transition-colors cursor-pointer shrink-0";
+                });
+
+                if (isAdmin) tempDiv.querySelectorAll('.admin-control').forEach(el => el.classList.remove('hidden')); else tempDiv.querySelectorAll('.admin-control').forEach(el => el.classList.add('hidden'));
+                document.getElementById('unifiedSoftwareContainer').innerHTML = tempDiv.innerHTML;
+            }
+            if (result.experiences) experiencesData = result.experiences;
+            if (result.projects) projectsData = result.projects;
+            if (result.organizations) organizationsData = result.organizations;
+            if (result.globalData.aboutCarouselImages) aboutCarouselData = result.globalData.aboutCarouselImages;
+            renderAboutCarousel();
+
+            renderTimeline(); renderOrganizations(); filterProjects('All');
+        }
+
+        async function saveAllDataToDrive() {
+            showLoading("SAVING TO DRIVE..."); let globalData = {};
+            const textElements = ['heroTitleLine1', 'heroTitleLine2', 'heroDescText', 'heroTitleText', 'heroRoleText', 'aboutTitle1', 'aboutTitleHighlight', 'aboutTitle2', 'bioP1', 'bioP2', 'eduUni', 'eduMajor', 'eduGpa', 'eduStatus', 'visionTitle', 'visionDesc', 'skillsMainTitle', 'softwareStackTitle', 'expMainTitle', 'expSubDesc', 'orgMainTitle', 'orgSubDesc', 'projMainTitle', 'projSubDesc', 'contactTitle1', 'contactTitle2', 'contactDesc', 'contactCopyright'];
+            textElements.forEach(id => { let el = document.getElementById(id); if(el) globalData[id] = el.innerHTML; });
+            globalData.profileImage = document.getElementById('profileImage').src; globalData.uniLogo = document.getElementById('uniLogo').src;
+            
+            const skContainer = document.createElement('div'); skContainer.innerHTML = document.getElementById('skillsContainer').innerHTML;
+            skContainer.querySelectorAll('.admin-control').forEach(el => el.classList.add('hidden')); globalData.skillsContainerHTML = skContainer.innerHTML;
+            
+            const sfContainer = document.createElement('div'); sfContainer.innerHTML = document.getElementById('unifiedSoftwareContainer').innerHTML;
+            sfContainer.querySelectorAll('.admin-control').forEach(el => el.classList.add('hidden')); globalData.unifiedSoftwareContainerHTML = sfContainer.innerHTML;
+            globalData.aboutCarouselImages = aboutCarouselData;
+
+            const payload = { action: "saveTextData", content: { globalData: globalData, experiences: experiencesData, projects: projectsData, organizations: organizationsData } };
+            try { await sendDataToBackend(payload); } catch(e) {} hideLoading(); alert("Berhasil Disimpan!");
+        }
+
+        async function uploadImageToDriveAndGetUrl(file, base64Data) {
+            showLoading("UPLOADING IMAGE TO DRIVE...");
+            try {
+                const payload = {
+                    action: "uploadImage",
+                    filename: file.name || "uploaded_image.png",
+                    mimeType: file.type || "image/png",
+                    base64Data: base64Data
+                };
+                const response = await sendDataToBackend(payload);
+                hideLoading();
+                if (response && response.id) {
+                    return `https://drive.google.com/thumbnail?id=${response.id}&sz=w1920`;
+                }
+                return null;
+            } catch (e) {
+                hideLoading();
+                alert("Upload failed: " + e.message);
+                return null;
+            }
+        }
+
+        function showLoading(text) { document.getElementById('loadingText').innerText = text; document.getElementById('loadingOverlay').classList.remove('hidden'); }
+        function hideLoading() { document.getElementById('loadingOverlay').classList.add('hidden'); }
+
+        async function sendDataToBackend(payload) {
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if(result.status === "error") throw new Error(result.message);
+                return result.data;
+            } catch (error) {
+                console.error("Error API:", error);
+                alert("NETWORK ERROR: " + error.message);
+                return null;
+            }
+        }
+
+        // ADMIN LOGIN
+        function openLoginModal() { document.getElementById('loginModal').classList.remove('hidden'); }
+        function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); document.getElementById('loginError').classList.add('hidden'); }
+        function attemptLogin() { if (document.getElementById('username').value === 'portfosyifa' && document.getElementById('password').value === '@20242530') { isAdmin = true; document.body.classList.add('admin-mode-active'); document.getElementById('logoutBtn').classList.remove('hidden'); closeLoginModal(); document.querySelectorAll('.admin-control').forEach(el => el.classList.remove('hidden')); renderTimeline(); renderOrganizations(); filterProjects('All'); } else { document.getElementById('loginError').classList.remove('hidden'); } }
+        function exitAdminMode() { if(hasUnsavedChanges) { showConfirmModal("Changes not saved. Discard?", () => { executeExit(); }); } else { executeExit(); } }
+        function executeExit() { isAdmin = false; document.body.classList.remove('admin-mode-active'); document.getElementById('logoutBtn').classList.add('hidden'); document.querySelectorAll('.admin-control').forEach(el => el.classList.add('hidden')); renderTimeline(); renderOrganizations(); filterProjects('All'); if(hasUnsavedChanges) window.location.reload(); }
+
+        // CUSTOM EDIT MODAL
+        let currentEditCallback = null;
+        function openCustomEditModal(title, fields, callback) {
+            document.getElementById('customEditTitle').innerText = title; const formEl = document.getElementById('customEditForm'); formEl.innerHTML = ''; currentEditCallback = callback;
+            fields.forEach(f => {
+                const w = document.createElement('div'); const l = document.createElement('label'); l.className = 'block text-xs font-bold text-brand-dark mb-2 uppercase'; l.innerHTML = f.label; w.appendChild(l); let i;
+                if (f.type === 'textarea') { i = document.createElement('textarea'); i.rows = f.rows || 4; i.className = 'w-full px-4 py-3 border-2 border-brand-dark rounded focus:outline-none focus:border-brand-purpleM'; } 
+                else { i = document.createElement('input'); i.type = 'text'; i.className = 'w-full px-4 py-3 border-2 border-brand-dark rounded focus:outline-none focus:border-brand-purpleM'; }
+                i.id = f.id; i.value = f.value; w.appendChild(i); formEl.appendChild(w);
+            });
+            document.getElementById('customEditModal').classList.remove('hidden');
+        }
+        function saveCustomEdit() { if (currentEditCallback) { const d = {}; document.getElementById('customEditForm').querySelectorAll('input, textarea').forEach(i => d[i.id] = i.value); currentEditCallback(d); markUnsavedChanges(); } closeCustomEditModal(); }
+        function closeCustomEditModal() { document.getElementById('customEditModal').classList.add('hidden'); }
+
+        // SKILLS
+        function addSkillCard() {
+            openCustomEditModal('Add Skill', [{id:'t',label:'Title',type:'text',value:''},{id:'d',label:'Desc (Enter for Bullets)',type:'textarea',value:''},{id:'i',label:'Icon Class (e.g. fas fa-tree)',type:'text',value:'fas fa-star'}], d=>{
+                if(!d.t) return;
+                const html = `<div class="bold-card bg-white p-4 lg:p-5 flex flex-col items-start group/card relative z-10 w-full h-full">
+                    <div class="admin-control absolute top-3 right-3 flex gap-2 z-20 ${isAdmin?'':'hidden'}">
+                        <button onclick="editSpecificSkillCard(this)" class="bg-white border-2 border-brand-dark p-1.5 rounded shadow-[2px_2px_0px_0px_#1A0050] hover:bg-brand-orange hover:text-white transition"><i class="fas fa-edit text-[10px] text-brand-dark pointer-events-none"></i></button>
+                        <button onclick="deleteSkillCard(this)" class="bg-white border-2 border-brand-dark p-1.5 rounded shadow-[2px_2px_0px_0px_#1A0050] hover:bg-red-500 hover:text-white transition"><i class="fas fa-trash text-[10px] text-red-500 pointer-events-none"></i></button>
+                    </div>
+                    <div class="text-3xl mb-3 skill-icon-container text-brand-dark"><i class="${d.i}"></i></div>
+                    <h3 class="font-serif text-xl font-black mb-2 skill-title uppercase leading-tight z-10 text-brand-dark line-clamp-1" title="${d.t}">${d.t}</h3>
+                    <p class="text-xs font-medium flex-grow skill-desc z-10 font-sans text-gray-700 skill-desc-text line-clamp-3" title="${d.d}">${d.d}</p>
+                </div>`;
+                document.getElementById('skillsContainer').insertAdjacentHTML('beforeend', html); markUnsavedChanges();
+            });
+        }
+        function editSpecificSkillCard(btn) {
+            const card = btn.closest('.bold-card');
+            openCustomEditModal('Edit Skill', [
+                {id:'t',label:'Title',type:'text',value:card.querySelector('.skill-title').innerText}, {id:'d',label:'Desc (Enter for Bullets)',type:'textarea',value:card.querySelector('.skill-desc').innerText}, {id:'i',label:'Icon Class',type:'text',value:card.querySelector('.skill-icon-container i').className}
+            ], d=>{ card.querySelector('.skill-title').innerText=d.t; card.querySelector('.skill-desc').innerText=d.d; card.querySelector('.skill-icon-container i').className=d.i; markUnsavedChanges(); });
+        }
+        function deleteSkillCard(btn) { showConfirmModal("Hapus Skill Card ini?", () => { btn.closest('.bold-card').remove(); markUnsavedChanges(); }); }
+
+        // EXPERIENCE (ACCORDION HOVER)
+        let experiencesData = [ { id: 1, title: "Env Intern", company: "PT Vale", date: "May 2026", desc: "Reclamation Assessment.", achievements: ["Assessed bamboo reclamation..."], images: ["https://images.unsplash.com/photo-1611273426858-450d8e81430c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"], captions: ["Field mapping"] } ];
+        function renderTimeline() {
+            const container = document.getElementById('experienceContainer'); container.innerHTML = '';
+            const countDisplay = document.getElementById('expCountDisplay'); if(countDisplay) countDisplay.innerText = experiencesData.length;
+            experiencesData.forEach((exp) => {
+                const bgImage = (exp.images && exp.images.length > 0 && exp.images[0].trim() !== "") ? exp.images[0] : 'https://placehold.co/600x800/1A0050/FFF8F6?text=Experience';
+                const html = `<div class="flex-1 lg:hover:flex-[4] transition-all duration-500 ease-in-out cursor-pointer relative group/exp overflow-hidden rounded-xl bg-brand-dark border-3 border-brand-dark min-h-[80px]" onclick="openSharedModal(${exp.id}, 'experience')">
+                    <div class="admin-control ${isAdmin?'':'hidden'} absolute top-4 right-4 flex gap-2 z-[50]">
+                        <button onclick="triggerExpCoverUpload(event, ${exp.id})" class="bg-white border-2 border-brand-dark text-brand-dark p-2 rounded shadow-brutal hover:bg-brand-orange hover:text-white" title="Ganti Foto Depan"><i class="fas fa-camera pointer-events-none"></i></button>
+                        <button onclick="editExpCard(event, ${exp.id})" class="bg-white border-2 border-brand-dark text-brand-dark p-2 rounded shadow-brutal hover:bg-brand-orange hover:text-white" title="Edit Info Depan"><i class="fas fa-edit pointer-events-none"></i></button>
+                    </div>
+                    <img src="${bgImage}" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover/exp:opacity-90 transition-opacity duration-500 pointer-events-none">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent pointer-events-none"></div>
+                    <div class="absolute bottom-0 left-0 w-full p-4 lg:p-6 text-white min-w-[200px] flex flex-col justify-end pointer-events-none">
+                        <p class="text-brand-orange text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-1 truncate drop-shadow-md"><i class="far fa-calendar-alt"></i> ${exp.date}</p>
+                        <h3 class="font-serif text-lg sm:text-2xl font-black uppercase leading-tight truncate group-hover/exp:whitespace-normal group-hover/exp:line-clamp-2 drop-shadow-lg">${exp.title}</h3>
+                        <p class="text-gray-300 font-sans text-[10px] sm:text-xs font-bold uppercase tracking-wider mt-1 truncate drop-shadow-md">${exp.company}</p>
+                    </div>
+                </div>`; container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+        
+        let currentExpIdForCover = null;
+        function triggerExpCoverUpload(event, id) { if(!isAdmin) return; event.stopPropagation(); currentExpIdForCover = id; document.getElementById('expCoverUploadInput').click(); }
+        document.getElementById('expCoverUploadInput').addEventListener('change', function(e) {
+            const f = e.target.files[0]; if (f && currentExpIdForCover) { const r = new FileReader(); r.onload = async ev => { const u = await uploadImageToDriveAndGetUrl(f, ev.target.result); if(u) { const idx = experiencesData.findIndex(ex => ex.id === currentExpIdForCover); if(idx !== -1) { if (!experiencesData[idx].images) experiencesData[idx].images = []; if(experiencesData[idx].images.length===0) experiencesData[idx].images.push(u); else experiencesData[idx].images[0] = u; renderTimeline(); markUnsavedChanges(); } } }; r.readAsDataURL(f); } e.target.value = '';
+        });
+        function editExpCard(e, id) { e.stopPropagation(); const idx = experiencesData.findIndex(x=>x.id===id); if(idx===-1) return; openCustomEditModal('Edit Teks Depan Exp', [{id:'t',label:'Title',type:'text',value:experiencesData[idx].title},{id:'c',label:'Company',type:'text',value:experiencesData[idx].company},{id:'d',label:'Date',type:'text',value:experiencesData[idx].date},{id:'desc',label:'Desc',type:'textarea',value:experiencesData[idx].desc}], d=>{ experiencesData[idx].title=d.t; experiencesData[idx].company=d.c; experiencesData[idx].date=d.d; experiencesData[idx].desc=d.desc; renderTimeline(); markUnsavedChanges(); }); }
+
+        // ORGANIZATION (GRID 4 KOLOM)
+        let organizationsData = [ { id: 1, role: "President", name: "Forestry Student Assoc", date: "2024", desc: "Led the board.", fullDesc: ["Organized seminar."], bgImage: "https://images.unsplash.com/photo-1523580494112-071d384e24eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80", images: [] } ];
+        function renderOrganizations() {
+            const container = document.getElementById('orgContainer'); container.innerHTML = '';
+            organizationsData.forEach((org) => {
+                const html = `<div class="bold-card flex flex-col h-full min-h-[320px] bg-white relative group/org cursor-pointer overflow-hidden rounded-xl shrink-0 snap-start w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]" onclick="openSharedModal(${org.id}, 'organization')">
+                    <div class="admin-control ${isAdmin ? '' : 'hidden'} absolute top-2 right-2 flex gap-1 z-50">
+                        <button onclick="triggerOrgBgUpload(event, ${org.id})" class="bg-brand-purpleM border-2 border-brand-dark text-white p-1.5 rounded shadow-[2px_2px_0px_0px_#1A0050] transition hover:translate-y-0.5 hover:shadow-none" title="Change Background"><i class="fas fa-camera text-[10px] pointer-events-none"></i></button>
+                        <button onclick="editOrgCard(event, ${org.id})" class="bg-white border-2 border-brand-dark text-brand-dark p-1.5 rounded shadow-[2px_2px_0px_0px_#1A0050] transition hover:bg-brand-orange hover:text-white" title="Edit Info Depan"><i class="fas fa-edit text-[10px] pointer-events-none"></i></button>
+                    </div>
+                    <div class="h-40 w-full relative overflow-hidden border-b-3 border-brand-dark shrink-0 bg-brand-dark">
+                        <img src="${org.bgImage}" class="w-full h-full object-cover group-hover/org:scale-105 transition duration-500 opacity-90 group-hover/org:opacity-100">
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <p class="text-brand-orange font-bold text-[10px] tracking-widest uppercase mb-1 truncate">${org.date}</p>
+                        <h3 class="font-serif text-xl font-black mb-1 uppercase leading-tight line-clamp-2 text-brand-dark">${org.role}</h3>
+                        <p class="text-brand-purpleM text-[11px] font-bold uppercase tracking-wider mb-2 truncate">${org.name}</p>
+                        <p class="text-gray-600 text-xs font-medium line-clamp-3 flex-grow font-sans">${org.desc}</p>
+                    </div>
+                </div>`; container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        // Fungsi Panah Kiri-Kanan untuk Organization
+        function scrollOrganizations(dir) {
+            const container = document.getElementById('orgContainer');
+            // Menyesuaikan jarak geser berdasarkan ukuran layar (4 card di Desktop, 2 di Tablet, 1 di HP)
+            const cardsVisible = window.innerWidth >= 1024 ? 4 : (window.innerWidth >= 640 ? 2 : 1);
+            const scrollAmount = container.clientWidth / cardsVisible;
+            
+            if(dir === 'left') container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            else container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+        
+        let currentOrgIdForBg = null; function triggerOrgBgUpload(event, id) { event.stopPropagation(); currentOrgIdForBg = id; document.getElementById('orgBgImageUploadInput').click(); }
+        document.getElementById('orgBgImageUploadInput').addEventListener('change', function(e) { const f = e.target.files[0]; if (f && currentOrgIdForBg) { const r = new FileReader(); r.onload = async ev => { const u = await uploadImageToDriveAndGetUrl(f, ev.target.result); if(u) { const idx = organizationsData.findIndex(o => o.id === currentOrgIdForBg); if(idx !== -1) { organizationsData[idx].bgImage = u; renderOrganizations(); markUnsavedChanges(); } } }; r.readAsDataURL(f); } e.target.value = ''; });
+        function editOrgCard(e, id) { e.stopPropagation(); const idx = organizationsData.findIndex(o => o.id === id); if(idx === -1) return; const org = organizationsData[idx]; openCustomEditModal('Edit Info Depan Org', [{ id: 'eRole', label: 'Role', type: 'text', value: org.role }, { id: 'eName', label: 'Name', type: 'text', value: org.name }, { id: 'eDate', label: 'Date', type: 'text', value: org.date }, { id: 'eDesc', label: 'Desc', type: 'textarea', rows: 3, value: org.desc }], d => { organizationsData[idx].role = d.eRole; organizationsData[idx].name = d.eName; organizationsData[idx].date = d.eDate; organizationsData[idx].desc = d.eDesc; renderOrganizations(); markUnsavedChanges(); }); }
+
+        // PROJECTS
+        let projectsData = [ { id: 1, title: "Shoreline", category: "GIS", location: "Subang", shortDesc: "Modeling.", fullDesc: ["Modeled DSAS."], coverImage: "https://images.unsplash.com/photo-1620127252536-049e9e6231d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", images: [], captions: [] } ];
+        // 1. FUNGSI BARU: Merender Tab Kategori Secara Otomatis
+        function renderProjectTabs(activeFilter) {
+            const tabsContainer = document.getElementById('projectFilterTabs');
+            const navDropdown = document.getElementById('navProjectDropdown'); // Wadah dropdown navigasi
+            const mobileTabs = document.getElementById('mobileProjectTabs');
+if(mobileTabs) mobileTabs.innerHTML = '';
+            if (!tabsContainer && !navDropdown) return;
+            
+            // Ambil nama kategori unik secara otomatis
+            const categories = ['All', ...new Set(projectsData.map(p => p.category || 'Uncategorized'))];
+            
+            if(tabsContainer) tabsContainer.innerHTML = '';
+            if(navDropdown) navDropdown.innerHTML = '';
+            
+            categories.forEach(cat => {
+                const isActive = cat === activeFilter;
+                
+                // 1. Render untuk Tab di bagian utama
+                if(tabsContainer) {
+                    const activeClass = isActive 
+                        ? "px-4 py-2 border-2 border-brand-dark bg-brand-purpleM text-white text-xs font-black uppercase shadow-[2px_2px_0px_0px_#1A0050] rounded cursor-default"
+                        : "px-4 py-2 border-2 border-brand-dark bg-white text-brand-dark hover:bg-brand-orange hover:text-white text-xs font-black uppercase shadow-[2px_2px_0px_0px_#1A0050] transition hover:-translate-y-0.5 rounded cursor-pointer";
+                    tabsContainer.innerHTML += `<button onclick="filterProjects('${cat}')" class="${activeClass}">${cat}</button>`;
+                }
+                
+                // 2. Render untuk Dropdown di Navigasi Atas
+                if(navDropdown) {
+                    navDropdown.innerHTML += `<a href="#projects" onclick="filterProjects('${cat}')" class="px-4 py-2.5 hover:bg-brand-purpleM hover:text-white border-b-2 border-brand-dark last:border-b-0 transition flex items-center justify-between text-xs font-black uppercase group/item">${cat} ${isActive ? '<i class="fas fa-check text-brand-orange group-hover/item:text-white"></i>' : ''}</a>`;
+                }
+                
+                // 3. Render untuk Dropdown Mobile Menu
+                if(mobileTabs) {
+                    mobileTabs.innerHTML += `<a href="#projects" onclick="filterProjects('${cat}'); document.getElementById('mobile-menu').classList.add('hidden');" class="text-gray-600 hover:text-brand-orange uppercase font-bold transition flex items-center justify-center gap-2">${cat} ${isActive ? '<i class="fas fa-check text-brand-orange"></i>' : ''}</a>`;
+                }
+            });
+        }
+
+        // 2. FUNGSI FILTER YANG DIPERBARUI
+        function filterProjects(filterVal) {
+            const grid = document.getElementById('projectsGrid'); grid.innerHTML = '';
+            
+            // Panggil pembuatan tombol tab kategori di atas
+            renderProjectTabs(filterVal);
+            
+            const projDisplay = document.getElementById('projCountDisplay'); if(projDisplay) projDisplay.innerText = projectsData.length;
+            const filteredData = filterVal === 'All' ? projectsData : projectsData.filter(p => p.category === filterVal);
+            
+            filteredData.forEach((proj) => {
+                const html = `<div class="bold-card overflow-hidden flex flex-col cursor-pointer group/proj relative rounded-xl" onclick="openSharedModal(${proj.id}, 'project')">
+                    <div class="admin-control ${isAdmin?'':'hidden'} absolute top-2 right-2 flex gap-1 z-30">
+                        <button onclick="editProjectCard(event, ${proj.id})" class="bg-white border-2 border-brand-dark hover:bg-brand-orange hover:text-white p-1.5 rounded shadow-[2px_2px_0px_0px_#1A0050] transition"><i class="fas fa-edit text-[10px] pointer-events-none"></i></button>
+                        <button onclick="triggerProjFrontImageUpload(event, ${proj.id})" class="bg-brand-purpleM border-2 border-brand-dark text-white p-1.5 rounded shadow-[2px_2px_0px_0px_#1A0050] transition hover:translate-y-0.5 hover:shadow-none" title="Ganti Cover Foto"><i class="fas fa-camera text-[10px] pointer-events-none"></i></button>
+                    </div>
+                    <div class="h-44 relative shrink-0 border-b-3 border-brand-dark overflow-hidden bg-brand-dark"><img src="${proj.coverImage}" class="w-full h-full object-cover group-hover/proj:scale-105 transition duration-500 opacity-90 group-hover/proj:opacity-100"></div>
+                    <div class="p-6 flex flex-col flex-grow bg-white font-sans"><span class="text-brand-orange text-[10px] font-black uppercase tracking-widest mb-2">${proj.category}</span><h3 class="font-serif text-2xl font-black text-brand-dark mb-2 leading-tight uppercase">${proj.title}</h3><p class="text-brand-dark font-medium text-sm line-clamp-3 flex-grow">${proj.shortDesc}</p></div>
+                </div>`; grid.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        let currentProjIdForFrontImg = null; function triggerProjFrontImageUpload(event, id) { event.stopPropagation(); currentProjIdForFrontImg = id; document.getElementById('projFrontImageUploadInput').click(); }
+        document.getElementById('projFrontImageUploadInput').addEventListener('change', function(e) { const f = e.target.files[0]; if (f && currentProjIdForFrontImg) { const r = new FileReader(); r.onload = async ev => { const u = await uploadImageToDriveAndGetUrl(f, ev.target.result); if(u) { const idx = projectsData.findIndex(p => p.id === currentProjIdForFrontImg); if(idx !== -1) { projectsData[idx].coverImage = u; filterProjects('All'); markUnsavedChanges(); } } }; r.readAsDataURL(f); } e.target.value = ''; });
+        function editProjectCard(e, id) { e.stopPropagation(); const idx = projectsData.findIndex(x=>x.id===id); if(idx===-1) return; openCustomEditModal('Edit Teks Project Depan', [{id:'t',label:'Title',type:'text',value:projectsData[idx].title},{id:'c',label:'Category',type:'text',value:projectsData[idx].category},{id:'d',label:'Short Desc',type:'textarea',value:projectsData[idx].shortDesc}], d=>{ projectsData[idx].title=d.t; projectsData[idx].category=d.c; projectsData[idx].shortDesc=d.d; filterProjects('All'); markUnsavedChanges(); }); }
+
+        // SHARED POPUP MODAL (EXP, ORG, PROJ)
+        let currentOpenId = null, currentGalleryIndex = 0;
+        function openSharedModal(id, mode) {
+            currentModalMode = mode; currentOpenId = id; currentGalleryIndex = 0; let item;
+            if(mode === 'project') item = projectsData.find(p => p.id === id); else if(mode === 'experience') item = experiencesData.find(e => e.id === id); else if(mode === 'organization') item = organizationsData.find(o => o.id === id);
+            if(!item) return;
+
+            document.getElementById('modalTitle').innerText = mode === 'organization' ? item.role : item.title;
+            document.getElementById('modalSubtitle').innerText = mode === 'project' ? item.category : (mode === 'organization' ? item.name : item.company);
+            document.getElementById('modalDate').innerText = mode === 'project' ? (item.location || 'Project') : item.date;
+
+            const logo = document.getElementById('modalLogo'), ico = document.getElementById('modalIcon');
+            if(item.instLogo) { logo.src = item.instLogo; logo.classList.remove('hidden'); ico.classList.add('hidden'); } 
+            else { logo.classList.add('hidden'); ico.classList.remove('hidden'); ico.className = mode === 'project' ? "fas fa-folder-open text-4xl text-brand-orange bg-white/10 p-3 rounded-lg border-2 border-brand-light" : "fas fa-building text-4xl text-brand-orange bg-white/10 p-3 rounded-lg border-2 border-brand-light"; }
+            
+            const achContainer = document.getElementById('modalAchievements'); achContainer.innerHTML = '';
+            const listData = (mode === 'project' || mode === 'organization') ? (item.fullDesc || [item.desc || item.shortDesc]) : item.achievements;
+            listData.forEach(ach => { achContainer.innerHTML += `<li class="flex items-start gap-3"><i class="fas fa-check-circle text-brand-purpleL mt-1 text-xs"></i><span>${ach}</span></li>`; });
+            
+            updateGalleryView(); const m = document.getElementById('sharedDetailModal'), c = document.getElementById('sharedModalContent');
+            m.classList.remove('hidden'); setTimeout(() => { m.classList.remove('opacity-0'); c.classList.remove('scale-95'); }, 10);
+            if(isAdmin) m.querySelectorAll('.admin-control').forEach(el=>el.classList.remove('hidden'));
+        }
+
+        function closeSharedModal() { const m = document.getElementById('sharedDetailModal'), c = document.getElementById('sharedModalContent'); m.classList.add('opacity-0'); c.classList.add('scale-95'); setTimeout(() => { m.classList.add('hidden'); }, 300); }
+
+        function triggerModalLogoUpload() { document.getElementById('modalLogoUploadInput').click(); }
+        document.getElementById('modalLogoUploadInput').addEventListener('change', function(e) {
+            const f = e.target.files[0]; if(f && currentOpenId) {
+                const r = new FileReader(); r.onload = async ev => {
+                    const u = await uploadImageToDriveAndGetUrl(f, ev.target.result);
+                    if(u) { let item; if(currentModalMode === 'project') item = projectsData.find(p=>p.id===currentOpenId); else if(currentModalMode === 'organization') item = organizationsData.find(o=>o.id===currentOpenId); else item = experiencesData.find(ex=>ex.id===currentOpenId);
+                        if(item) { item.instLogo = u; document.getElementById('modalLogo').src = u; document.getElementById('modalLogo').classList.remove('hidden'); document.getElementById('modalIcon').classList.add('hidden'); markUnsavedChanges(); }
+                    }
+                }; r.readAsDataURL(f);
+            } e.target.value='';
+        });
+
+        function editCurrentSharedDetails() {
+            let item, listKey;
+            if(currentModalMode === 'project') { item = projectsData.find(p => p.id === currentOpenId); listKey = 'fullDesc'; } else if(currentModalMode === 'organization') { item = organizationsData.find(o => o.id === currentOpenId); listKey = 'fullDesc'; } else { item = experiencesData.find(e => e.id === currentOpenId); listKey = 'achievements'; }
+            if(!item) return;
+
+            const descText = (item[listKey] || []).join('\n\n');
+            openCustomEditModal('Edit Teks Dalam Pop-up', [{id:'dTitle',label:'Title/Role',type:'text',value:item.title || item.role},{id:'dLoc',label:'Subtitle/Company',type:'text',value:item.location || item.company || item.name},{id:'dFull',label:'Detail Point (Enter 2x untuk baris baru)',type:'textarea',rows:6,value:descText}], d=>{
+                if(item.title !== undefined) item.title = d.dTitle; else item.role = d.dTitle;
+                if(item.location !== undefined) item.location = d.dLoc; else if(item.company !== undefined) item.company = d.dLoc; else item.name = d.dLoc;
+                if(d.dFull) item[listKey] = d.dFull.split('\n\n').filter(a => a.trim() !== ''); 
+                if(currentModalMode === 'project') filterProjects('All'); else if(currentModalMode === 'organization') renderOrganizations(); else renderTimeline();
+                openSharedModal(currentOpenId, currentModalMode); markUnsavedChanges();
+            });
+        }
+
+        function updateGalleryView() {
+            let item; if(currentModalMode === 'project') item = projectsData.find(p => p.id === currentOpenId); else if(currentModalMode === 'experience') item = experiencesData.find(e => e.id === currentOpenId); else if(currentModalMode === 'organization') item = organizationsData.find(o => o.id === currentOpenId);
+            if((currentModalMode === 'project' || currentModalMode === 'organization') && (!item.images || item.images.length === 0)) item.images = [item.coverImage || item.bgImage];
+            const img = document.getElementById('modalImage'), cap = document.getElementById('modalImageCaption'), dots = document.getElementById('modalGalleryDots');
+            if(item.images && item.images.length > 0) { img.src = item.images[currentGalleryIndex]; cap.innerText = item.captions ? (item.captions[currentGalleryIndex] || '') : ''; cap.classList.remove('hidden'); } else { img.src = ''; cap.classList.add('hidden'); }
+            dots.innerHTML=''; if(item.images && item.images.length > 1) { item.images.forEach((_, i) => { dots.innerHTML += `<div class="w-2.5 h-2.5 rounded-full border-2 border-brand-dark cursor-pointer transition-all ${i===currentGalleryIndex?'bg-brand-purpleL scale-125':'bg-white'}" onclick="currentGalleryIndex=${i}; updateGalleryView();"></div>`; }); }
+        }
+        function nextModalImage() { let item = currentModalMode === 'project' ? projectsData.find(p=>p.id===currentOpenId) : (currentModalMode === 'organization' ? organizationsData.find(o=>o.id===currentOpenId) : experiencesData.find(e=>e.id===currentOpenId)); if(!item || item.images.length<=1) return; currentGalleryIndex=(currentGalleryIndex+1)%item.images.length; updateGalleryView(); }
+        function prevModalImage() { let item = currentModalMode === 'project' ? projectsData.find(p=>p.id===currentOpenId) : (currentModalMode === 'organization' ? organizationsData.find(o=>o.id===currentOpenId) : experiencesData.find(e=>e.id===currentOpenId)); if(!item || item.images.length<=1) return; currentGalleryIndex=(currentGalleryIndex-1+item.images.length)%item.images.length; updateGalleryView(); }
+        
+        function directUploadModalImage() { document.getElementById('expGalleryUploadInput').click(); }
+        document.getElementById('expGalleryUploadInput').addEventListener('change', function(e) { const f = e.target.files[0]; if(f && currentOpenId) { const r = new FileReader(); r.onload = async ev => { const u = await uploadImageToDriveAndGetUrl(f, ev.target.result); if(u) { let item = currentModalMode === 'project' ? projectsData.find(p=>p.id===currentOpenId) : (currentModalMode === 'organization' ? organizationsData.find(o=>o.id===currentOpenId) : experiencesData.find(ex=>ex.id===currentOpenId)); if(!item.images) item.images = []; if(!item.captions) item.captions = []; item.images.push(u); item.captions.push(prompt("Caption Foto:")||''); currentGalleryIndex = item.images.length-1; updateGalleryView(); markUnsavedChanges(); } }; r.readAsDataURL(f); } e.target.value=''; });
+        function directDeleteModalImage() { let item = currentModalMode === 'project' ? projectsData.find(p=>p.id===currentOpenId) : (currentModalMode === 'organization' ? organizationsData.find(o=>o.id===currentOpenId) : experiencesData.find(e=>e.id===currentOpenId)); if(item.images.length>1) { showConfirmModal("Hapus foto ini?", () => { item.images.splice(currentGalleryIndex,1); if(item.captions) item.captions.splice(currentGalleryIndex,1); currentGalleryIndex=0; updateGalleryView(); markUnsavedChanges(); }); } else { alert("Tidak bisa menghapus gambar terakhir."); } }
+
+        // EDIT TEXT BINDINGS 
+        function editHeroTitle() { openCustomEditModal('Edit Title', [{id:'l1',label:'Line 1',type:'text',value:document.getElementById('heroTitleLine1').innerText},{id:'l2',label:'Line 2',type:'text',value:document.getElementById('heroTitleLine2').innerText}], d=>{document.getElementById('heroTitleLine1').innerText=d.l1;document.getElementById('heroTitleLine2').innerText=d.l2;});}
+        function editHeroDesc() { openCustomEditModal('Edit Desc', [{id:'d',label:'Desc',type:'textarea',value:document.getElementById('heroDescText').innerText}], d=>{document.getElementById('heroDescText').innerText=d.d;});}
+        function editHeroProfile() { openCustomEditModal('Profile', [{id:'n',label:'Name',type:'text',value:document.getElementById('heroTitleText').innerText},{id:'r',label:'Role',type:'text',value:document.getElementById('heroRoleText').innerText}], d=>{document.getElementById('heroTitleText').innerText=d.n;document.getElementById('heroRoleText').innerText=d.r;});}
+        function editAboutTitle() { openCustomEditModal('About Title', [{id:'t1',label:'Text 1',type:'text',value:document.getElementById('aboutTitle1').innerText},{id:'th',label:'Highlight',type:'text',value:document.getElementById('aboutTitleHighlight').innerText},{id:'t2',label:'Text 2',type:'text',value:document.getElementById('aboutTitle2').innerText}], d=>{document.getElementById('aboutTitle1').innerText=d.t1;document.getElementById('aboutTitleHighlight').innerText=d.th;document.getElementById('aboutTitle2').innerText=d.t2;});}
+        function editBio() { openCustomEditModal('Bio', [{id:'p1',label:'P1',type:'textarea',value:document.getElementById('bioP1').innerText},{id:'p2',label:'P2',type:'textarea',value:document.getElementById('bioP2').innerText}], d=>{document.getElementById('bioP1').innerText=d.p1;document.getElementById('bioP2').innerText=d.p2;});}
+        function editEducationData() { openCustomEditModal('Education', [{ id: 'eUni', label: 'University', type: 'text', value: document.getElementById('eduUni').innerText },{ id: 'eMajor', label: 'Major', type: 'text', value: document.getElementById('eduMajor').innerText },{ id: 'eGpa', label: 'GPA', type: 'text', value: document.getElementById('eduGpa').innerText },{ id: 'eStatus', label: 'Status', type: 'text', value: document.getElementById('eduStatus').innerText }], d => { document.getElementById('eduUni').innerText = d.eUni; document.getElementById('eduMajor').innerText = d.eMajor; document.getElementById('eduGpa').innerText = d.eGpa; document.getElementById('eduStatus').innerText = d.eStatus; }); }
+        function editVision() { openCustomEditModal('Core Focus', [{id:'vT',label:'Title',type:'text',value:document.getElementById('visionTitle').innerText},{id:'vD',label:'Desc',type:'textarea',value:document.getElementById('visionDesc').innerHTML}], d=>{document.getElementById('visionTitle').innerText=d.vT; document.getElementById('visionDesc').innerHTML=d.vD;}); }
+        function editContact() { openCustomEditModal('Contact & Copyright', [{id:'c1',label:'Text1',type:'text',value:document.getElementById('contactTitle1').innerText},{id:'c2',label:'Text2',type:'text',value:document.getElementById('contactTitle2').innerText},{id:'cd',label:'Desc',type:'textarea',value:document.getElementById('contactDesc').innerText},{id:'cr',label:'Copyright',type:'text',value:document.getElementById('contactCopyright').innerText}], d=>{ document.getElementById('contactTitle1').innerText=d.c1; document.getElementById('contactTitle2').innerText=d.c2; document.getElementById('contactDesc').innerText=d.cd; document.getElementById('contactCopyright').innerText=d.cr; }); }
+        
+        function editSkillsHeader() { openCustomEditModal('Edit Title', [{id:'skTitle',label:'Judul Utama',type:'text',value:document.getElementById('skillsMainTitle').innerText}], d=>{document.getElementById('skillsMainTitle').innerText=d.skTitle;});}
+        function editSoftwareStackTitle() { openCustomEditModal('Software Stack Title', [{ id: 'ssTitle', label: 'Judul', type: 'text', value: document.getElementById('softwareStackTitle').innerText }], d => { document.getElementById('softwareStackTitle').innerText = d.ssTitle; }); }
+        function editExpHeader() { openCustomEditModal('Edit Header', [{id:'t',label:'Title',type:'text',value:document.getElementById('expMainTitle').innerText},{id:'d',label:'Desc',type:'textarea',value:document.getElementById('expSubDesc').innerText}], d=>{document.getElementById('expMainTitle').innerText=d.t;document.getElementById('expSubDesc').innerText=d.d;});}
+        function editOrgHeader() { openCustomEditModal('Edit Header', [{id:'t',label:'Title',type:'text',value:document.getElementById('orgMainTitle').innerText},{id:'d',label:'Desc',type:'textarea',value:document.getElementById('orgSubDesc').innerText}], d=>{document.getElementById('orgMainTitle').innerText=d.t;document.getElementById('orgSubDesc').innerText=d.d;});}
+        function editProjHeader() { openCustomEditModal('Edit Title', [{id:'t',label:'Title',type:'text',value:document.getElementById('projMainTitle').innerText},{id:'d',label:'Desc',type:'textarea',value:document.getElementById('projSubDesc').innerText}], d=>{document.getElementById('projMainTitle').innerText=d.t;document.getElementById('projSubDesc').innerText=d.d;});}
+
+        // OTHER UPLOADS
+        function triggerProfileUpload() { document.getElementById('profileUploadInput').click(); }
+        document.getElementById('profileUploadInput').addEventListener('change', function(e) { const f = e.target.files[0]; if (f) { const r = new FileReader(); r.onload = async ev => { const u = await uploadImageToDriveAndGetUrl(f, ev.target.result); if (u) { document.getElementById('profileImage').src = u; markUnsavedChanges(); } }; r.readAsDataURL(f); } e.target.value = ''; });
+        
+        function triggerWallpaperUpload() { document.getElementById('wallpaperUploadInput').click(); }
+        document.getElementById('wallpaperUploadInput').addEventListener('change', function(e) { const f = e.target.files[0]; if (f) { const r = new FileReader(); r.onload = async ev => { const u = await uploadImageToDriveAndGetUrl(f, ev.target.result); if (u) { document.getElementById('home-hero').style.backgroundImage = `url('${u}')`; document.getElementById('home-hero').style.backgroundSize = 'cover'; document.getElementById('home-hero').classList.remove('bg-gradient-to-br'); markUnsavedChanges(); } }; r.readAsDataURL(f); } e.target.value = ''; });
+        
+        function triggerCvUpload() { document.getElementById('cvUploadInput').click(); }
+        document.getElementById('cvUploadInput').addEventListener('change', async function(e) { const f = e.target.files[0]; if (f) { showLoading("UPLOADING CV..."); const r = new FileReader(); r.onload = async ev => { try { const res = await sendDataToBackend({ action: "uploadImage", filename: f.name, mimeType: f.type, base64Data: ev.target.result }); hideLoading(); if (res && res.url) { document.getElementById('cvDownloadLink').href = res.url; alert("CV berhasil diperbarui!"); markUnsavedChanges(); } } catch (err) { hideLoading(); alert("Gagal upload CV."); } }; r.readAsDataURL(f); } e.target.value = ''; });
+        
+        function triggerUniLogoUpload() { document.getElementById('uniLogoUploadInput').click(); }
+        document.getElementById('uniLogoUploadInput').addEventListener('change', function(e) { const f = e.target.files[0]; if (f) { const r = new FileReader(); r.onload = async ev => { const u = await uploadImageToDriveAndGetUrl(f, ev.target.result); if (u) { document.getElementById('uniLogo').src = u; markUnsavedChanges(); } }; r.readAsDataURL(f); } e.target.value = ''; });
+
+        function addSoftwareTag() {
+            openCustomEditModal('Add Tool', [{ id: 'tN', label: 'Nama Tool', type: 'text', value: '' }, { id: 'tV', label: 'Class Icon (fas fa-...) ATAU URL Gambar', type: 'text', value: 'fas fa-code' }], d => {
+                if (!d.tN) return; const container = document.getElementById('unifiedSoftwareContainer'); const tagDiv = document.createElement('div');
+                tagDiv.className = 'w-full px-4 py-3 bg-white border-2 border-brand-dark text-brand-dark font-bold text-sm rounded-lg flex items-center gap-3 relative group/tag shadow-[2px_2px_0px_0px_#1A0050] hover:bg-brand-purpleL hover:text-white transition-colors cursor-pointer shrink-0';
+                let vHTML = d.tV.startsWith('http') ? `<img src="${d.tV}" class="w-4 h-4 object-contain editable-tag-img" alt="${d.tN}" onclick="editTagImage(this)">` : `<i class="${d.tV} editable-tag-img text-brand-dark" onclick="editTagImage(this)"></i>`;
+                tagDiv.innerHTML = `${vHTML} <span class="editable-tag-text uppercase font-sans" onclick="editTagText(this)">${d.tN}</span> <button onclick="deleteSoftwareTag(this)" class="admin-control absolute -top-2 -right-2 bg-red-500 text-white border-2 border-brand-dark rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover/tag:opacity-100 z-20"><i class="fas fa-times text-[8px] pointer-events-none"></i></button>`;
+                container.appendChild(tagDiv); if (isAdmin) tagDiv.querySelectorAll('.admin-control').forEach(el => el.classList.remove('hidden')); markUnsavedChanges();
+            });
+        }
+        function addExperienceCard() { openCustomEditModal('Add Experience', [{id:'t',label:'Job Title',type:'text',value:''},{id:'c',label:'Company',type:'text',value:''},{id:'d',label:'Date',type:'text',value:''},{id:'desc',label:'Short Desc',type:'textarea',value:''}], d=>{ if(!d.t) return; experiencesData.push({ id: Date.now(), title: d.t, company: d.c, date: d.d, desc: d.desc, achievements:["New Role"], images:["https://placehold.co/600x400?text=New"], captions:[""] }); renderTimeline(); markUnsavedChanges(); }); }
+        function addOrgCard() { openCustomEditModal('Add Organization', [{ id: 'nRole', label: 'Role / Posisi', type: 'text', value: '' }, { id: 'nName', label: 'Organization Name', type: 'text', value: '' }, { id: 'nDate', label: 'Date Range', type: 'text', value: '' }, { id: 'nDesc', label: 'Description', type: 'textarea', rows: 3, value: '' }], d => { if(!d.nRole) return; organizationsData.push({ id: Date.now(), role: d.nRole, name: d.nName, date: d.nDate, desc: d.nDesc, fullDesc: ["Detail point 1..."], bgImage: "https://placehold.co/800x600?text=Org+Image", images: ["https://placehold.co/800x600?text=Org+Image"] }); renderOrganizations(); markUnsavedChanges(); }); }
+        function addProjectCard() { openCustomEditModal('Add Project', [{id:'t',label:'Project Title',type:'text',value:''},{id:'c',label:'Category',type:'text',value:''},{id:'d',label:'Short Desc',type:'textarea',value:''}], d=>{ if(!d.t) return; projectsData.unshift({ id: Date.now(), title: d.t, category: d.c || 'Uncategorized', shortDesc: d.d, coverImage: "https://placehold.co/600x400?text=Cover+Image", fullDesc:[d.d], images:[], captions:[] }); filterProjects('All'); markUnsavedChanges(); }); }
+        
+        let currentTagToEdit = null;
+        function editTagImage(element) {
+            if (!isAdmin) return; 
+            if (element.tagName.toLowerCase() === 'img') { currentTagToEdit = element; document.getElementById('tagImageUploadInput').click(); } 
+            else if (element.tagName.toLowerCase() === 'i') { openCustomEditModal('Edit Icon Class', [{id:'ico', label:'FontAwesome Class (e.g. fas fa-tree)', type:'text', value: element.className.replace('editable-tag-img text-brand-dark', '').trim()}], d => { element.className = `${d.ico} editable-tag-img text-brand-dark`; markUnsavedChanges(); }); }
+        }
+        document.getElementById('tagImageUploadInput').addEventListener('change', function(e) { const f = e.target.files[0]; if (f && currentTagToEdit) { const r = new FileReader(); r.onload = async ev => { const u = await uploadImageToDriveAndGetUrl(f, ev.target.result); if (u) { currentTagToEdit.src = u; markUnsavedChanges(); } }; r.readAsDataURL(f); } e.target.value = ''; });
+        function editTagText(el) { if (!isAdmin) return; openCustomEditModal('Edit Software', [{id:'txt', label:'Name', type:'text', value:el.innerText}], d => { el.innerText = d.txt; markUnsavedChanges(); }); }
+        function deleteSoftwareTag(btn) { showConfirmModal("Hapus tool ini?", () => { btn.closest('.group\\/tag').remove(); markUnsavedChanges(); }); }
+    // PENGELOLAAN CAROUSEL ABOUT
+        let aboutCarouselData = ["https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", "https://images.unsplash.com/photo-1611273426858-450d8e81430c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", "https://images.unsplash.com/photo-1620127252536-049e9e6231d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"]; 
+        
+        function renderAboutCarousel() {
+            const wrapper = document.getElementById('aboutCarouselWrapper');
+            if(!wrapper) return;
+            if(aboutCarouselData.length === 0) { wrapper.innerHTML = ''; return; }
+            
+            let itemsHTML = '';
+            aboutCarouselData.forEach((src, idx) => {
+                itemsHTML += `<div class="carousel-item group/c-img">
+                    <div class="admin-control ${isAdmin?'':'hidden'} absolute top-2 right-2 z-50">
+                        <button onclick="deleteAboutCarouselImage(${idx})" class="bg-red-500 border-2 border-brand-dark text-white w-8 h-8 rounded hover:bg-white hover:text-red-500 transition flex items-center justify-center"><i class="fas fa-trash text-xs pointer-events-none"></i></button>
+                    </div>
+                    <img src="${src}" class="w-full h-full object-cover">
+                </div>`;
+            });
+            
+            // Digandakan agar animasinya bisa berputar tanpa batas (seamless loop)
+            wrapper.innerHTML = itemsHTML + itemsHTML;
+            if(isAdmin) wrapper.querySelectorAll('.admin-control').forEach(el=>el.classList.remove('hidden'));
+        }
+
+        function triggerAboutCarouselUpload() { document.getElementById('aboutCarouselUploadInput').click(); }
+        document.getElementById('aboutCarouselUploadInput').addEventListener('change', function(e) {
+            const f = e.target.files[0]; if(f) {
+                const r = new FileReader(); r.onload = async ev => {
+                    const u = await uploadImageToDriveAndGetUrl(f, ev.target.result);
+                    if(u) { aboutCarouselData.push(u); renderAboutCarousel(); markUnsavedChanges(); }
+                }; r.readAsDataURL(f);
+            } e.target.value = '';
+        });
+
+        function deleteAboutCarouselImage(idx) {
+            showConfirmModal("Hapus foto ini dari carousel?", () => { aboutCarouselData.splice(idx, 1); renderAboutCarousel(); markUnsavedChanges(); });
+        }
+       // ==========================================
+        // SISTEM CROPPER & UPLOAD SENTRALISASI (BUG FIXED)
+        // ==========================================
+        let cropperInstance = null; let currentCropCallback = null;
+
+        // 1. Matikan event upload lama secara aman & spesifik
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const inputIds = [
+                    'profileUploadInput', 'wallpaperUploadInput', 'uniLogoUploadInput', 
+                    'tagImageUploadInput', 'expCoverUploadInput', 'orgBgImageUploadInput', 
+                    'projFrontImageUploadInput', 'modalLogoUploadInput', 'expGalleryUploadInput',
+                    'aboutCarouselUploadInput'
+                ];
+                inputIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) {
+                        const clone = el.cloneNode(true);
+                        el.parentNode.replaceChild(clone, el);
+                    }
+                });
+                attachCropperListeners(); 
+            }, 500); 
+        });
+
+        // 2. Tampilkan Layar Pemotong Gambar
+        function processImageWithCropper(file, aspectRatio, callback) {
+            if(!file) return; const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('cropperImage').src = e.target.result; 
+                const m = document.getElementById('cropperModal'); const b = document.getElementById('cropperBox');
+                m.classList.remove('hidden'); setTimeout(() => { m.classList.remove('opacity-0'); b.classList.remove('scale-95'); }, 10);
+                
+                if(cropperInstance) cropperInstance.destroy();
+                cropperInstance = new Cropper(document.getElementById('cropperImage'), { 
+                    aspectRatio: aspectRatio, viewMode: 1, autoCropArea: 0.9, background: false
+                });
+                currentCropCallback = callback;
+            }; reader.readAsDataURL(file);
+        }
+
+        function closeCropperModal() { 
+            const m = document.getElementById('cropperModal'); const b = document.getElementById('cropperBox');
+            m.classList.add('opacity-0'); b.classList.add('scale-95');
+            setTimeout(() => { 
+                m.classList.add('hidden'); 
+                if(cropperInstance) cropperInstance.destroy(); 
+                cropperInstance = null; 
+                currentCropCallback = null; 
+            }, 300);
+        }
+
+        // 3. Eksekusi Hasil Pemotongan & Kirim ke Drive (FIX: Callback diamankan)
+        async function executeCropAndUpload() {
+            if(!cropperInstance || !currentCropCallback) return;
+            // fillColor: '#fff' mencegah foto transparan (PNG) berubah jadi hitam
+            const canvas = cropperInstance.getCroppedCanvas({ maxWidth: 1920, maxHeight: 1920, fillColor: '#fff' });
+            if(!canvas) { closeCropperModal(); return; }
+            
+            // SIMPAN memori tugas sebelum modal ditutup
+            const savedCallback = currentCropCallback; 
+            
+            showLoading("UPLOADING CROP..."); closeCropperModal();
+            const base64Data = canvas.toDataURL('image/jpeg', 0.85); 
+            const simulatedFile = { name: "cropped_image.jpg", type: "image/jpeg" };
+            
+            // Menunggu respon dari Google Drive
+            const url = await uploadImageToDriveAndGetUrl(simulatedFile, base64Data);
+            
+            // Menjalankan memori tugas yang sudah disimpan
+            if(url) { 
+                savedCallback(url); 
+                markUnsavedChanges(); 
+            }
+        }
+
+        // 4. Rute Spesifik untuk Tiap Input Gambar
+        function attachCropperListeners() {
+            const attach = (id, ratio, callback) => {
+                const el = document.getElementById(id);
+                if(el) { el.addEventListener('change', (e) => { const f = e.target.files[0]; if(f) processImageWithCropper(f, ratio, callback); e.target.value=''; }); }
+            };
+
+            attach('profileUploadInput', 3/4, (url) => { document.getElementById('profileImage').src = url; });
+            attach('wallpaperUploadInput', 16/9, (url) => { document.getElementById('home-hero').style.backgroundImage = `url('${url}')`; document.getElementById('home-hero').style.backgroundSize = 'cover'; document.getElementById('home-hero').classList.remove('bg-gradient-to-br'); });
+            attach('uniLogoUploadInput', 1/1, (url) => { document.getElementById('uniLogo').src = url; });
+            attach('tagImageUploadInput', 1/1, (url) => { if(typeof currentTagToEdit !== 'undefined' && currentTagToEdit) currentTagToEdit.src = url; });
+            attach('expCoverUploadInput', NaN, (url) => { const idx = experiencesData.findIndex(ex => ex.id === currentExpIdForCover); if(idx !== -1) { if(!experiencesData[idx].images) experiencesData[idx].images = []; if(experiencesData[idx].images.length===0) experiencesData[idx].images.push(url); else experiencesData[idx].images[0] = url; renderTimeline(); } });
+            attach('orgBgImageUploadInput', NaN, (url) => { const idx = organizationsData.findIndex(o => o.id === currentOrgIdForBg); if(idx !== -1) { organizationsData[idx].bgImage = url; renderOrganizations(); } });
+            attach('projFrontImageUploadInput', NaN, (url) => { const idx = projectsData.findIndex(p => p.id === currentProjIdForFrontImg); if(idx !== -1) { projectsData[idx].coverImage = url; filterProjects('All'); } });
+            attach('modalLogoUploadInput', 1/1, (url) => { let item; if(currentModalMode==='project') item = projectsData.find(p=>p.id===currentOpenId); else if(currentModalMode==='organization') item=organizationsData.find(o=>o.id===currentOpenId); else item=experiencesData.find(ex=>ex.id===currentOpenId); if(item) { item.instLogo = url; document.getElementById('modalLogo').src = url; document.getElementById('modalLogo').classList.remove('hidden'); document.getElementById('modalIcon').classList.add('hidden'); } });
+            attach('expGalleryUploadInput', NaN, (url) => { let item; if(currentModalMode==='project') item = projectsData.find(p=>p.id===currentOpenId); else if(currentModalMode==='organization') item=organizationsData.find(o=>o.id===currentOpenId); else item=experiencesData.find(ex=>ex.id===currentOpenId); if(item) { if(!item.images) item.images=[]; if(!item.captions) item.captions=[]; item.images.push(url); item.captions.push(prompt("Caption Foto:")||''); currentGalleryIndex = item.images.length-1; updateGalleryView(); } });
+            attach('aboutCarouselUploadInput', NaN, (url) => { if(typeof aboutCarouselData !== 'undefined') { aboutCarouselData.push(url); if(typeof renderAboutCarousel === 'function') renderAboutCarousel(); } });
+        }
+    </script>
+</body>
+</html>
