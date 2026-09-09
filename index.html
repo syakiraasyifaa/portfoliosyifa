@@ -14,44 +14,55 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 
-    <!-- Tailwind Config -->
+  <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['DM Sans', 'sans-serif'], serif: ['Outfit', 'sans-serif'], },
-                    colors: { brand: { light: '#FFF8F6', orange: '#FF5733', purpleL: '#7B2FFF', purpleM: '#4A0EBF', dark: '#1A0050', } },
-                    boxShadow: { 'brutal': '6px 6px 0px 0px #1A0050', 'brutal-hover': '10px 10px 0px 0px #1A0050', }
+                    colors: { 
+                        brand: { 
+                            light: '#F1EFE8',    /* Fuji Snow */
+                            orange: '#E45E32',   /* Cozy Nook baru */
+                            purpleL: '#4FB3B3',  /* Pengganti Tyrian Purple */
+                            purpleM: '#004F54',  /* Transporter Green */
+                            dark: '#102C33',     /* Black Chasm */
+                        } 
+                    },
+                    boxShadow: { 
+                        'brutal': '6px 6px 0px 0px #102C33', 
+                        'brutal-hover': '10px 10px 0px 0px #102C33', 
+                    }
                 }
             }
         }
     </script>
 
-    <!-- Custom CSS -->
+<!-- Custom CSS -->
     <style>
-        body { background-color: #FFF8F6; color: #1A0050; overflow-x: hidden; }
-        .nav-scrolled { background-color: rgba(255, 248, 246, 0.95) !important; backdrop-filter: blur(10px) !important; border-bottom: 3px solid #1A0050; box-shadow: 0 4px 20px rgba(26, 0, 80, 0.1); }
-        .bold-card { background-color: #ffffff; border: 3px solid #1A0050; border-radius: 1rem; box-shadow: 6px 6px 0px 0px #1A0050; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
-        .bold-card:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0px 0px #1A0050; }
-        .modal-brutal { border: 4px solid #1A0050; box-shadow: 12px 12px 0px 0px #1A0050; }
+        body { background-color: #F1EFE8; color: #102C33; overflow-x: hidden; }
+        .nav-scrolled { background-color: rgba(241, 239, 232, 0.95) !important; backdrop-filter: blur(10px) !important; border-bottom: 3px solid #102C33; box-shadow: 0 4px 20px rgba(16, 44, 51, 0.1); }
+        .bold-card { background-color: #ffffff; border: 3px solid #102C33; border-radius: 1rem; box-shadow: 6px 6px 0px 0px #102C33; transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+        .bold-card:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0px 0px #102C33; }
+        .modal-brutal { border: 4px solid #102C33; box-shadow: 12px 12px 0px 0px #102C33; }
         
         .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #4A0EBF; border-radius: 4px; border: 2px solid #FFF8F6; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #004F54; border-radius: 4px; border: 2px solid #F1EFE8; }
 
         .editable-tag-img { cursor: pointer; transition: opacity 0.2s; }
         .editable-tag-img:hover { opacity: 0.6; }
-        .admin-mode-active .editable-tag-img { outline: 2px dashed #FF5733; }
+        .admin-mode-active .editable-tag-img { outline: 2px dashed #E45E32; }
         .admin-mode-active .editable-tag-text { cursor: pointer; }
-        .admin-mode-active .editable-tag-text:hover { text-decoration: underline; text-decoration-style: dashed; color: #FF5733; }
+        .admin-mode-active .editable-tag-text:hover { text-decoration: underline; text-decoration-style: dashed; color: #E45E32; }
 
         button[onclick^="edit"], button[onclick^="add"], button[onclick^="trigger"], button[onclick^="delete"] { transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important; cursor: pointer; }
-        button[onclick^="edit"]:hover, button[onclick^="add"]:hover, button[onclick^="trigger"]:hover, button[onclick^="delete"]:hover { background-color: #FF5733 !important; color: #FFF8F6 !important; border-color: #1A0050 !important; transform: translate(-3px, -3px) !important; box-shadow: 4px 4px 0px 0px #1A0050 !important; z-index: 50 !important; opacity: 1 !important; }
+        button[onclick^="edit"]:hover, button[onclick^="add"]:hover, button[onclick^="trigger"]:hover, button[onclick^="delete"]:hover { background-color: #E45E32 !important; color: #102C33 !important; border-color: #102C33 !important; transform: translate(-3px, -3px) !important; box-shadow: 4px 4px 0px 0px #102C33 !important; z-index: 50 !important; opacity: 1 !important; }
 
-        .loader-overlay { position: fixed; inset: 0; background: rgba(255,248,246,0.95); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .spinner { border: 6px solid #FFF8F6; border-top: 6px solid #7B2FFF; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+        .loader-overlay { position: fixed; inset: 0; background: rgba(241, 239, 232, 0.95); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .spinner { border: 6px solid #F1EFE8; border-top: 6px solid #4FB3B3; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .text-highlight { color: #FF5733; text-shadow: 2px 2px 0px #1A0050; }
+        .text-highlight { color: #E45E32; text-shadow: 2px 2px 0px #102C33; }
         
         /* Skills whitespace for bullets */
         .skill-desc-text { white-space: pre-line; }
@@ -59,8 +70,15 @@
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .animate-marquee { animation: scroll-left 40s linear infinite; }
         .animate-marquee:hover { animation-play-state: paused; } /* Berhenti saat disorot mouse */
-        .carousel-item { width: 320px; height: 220px; flex-shrink: 0; position: relative; margin-right: 1.5rem; border: 3px solid #1A0050; border-radius: 12px; overflow: hidden; box-shadow: 6px 6px 0px 0px #1A0050; background: #fff; }
+        .carousel-item { width: 320px; height: 220px; flex-shrink: 0; position: relative; margin-right: 1.5rem; border: 3px solid #102C33; border-radius: 12px; overflow: hidden; box-shadow: 6px 6px 0px 0px #102C33; background: #fff; }
+        
+        p { text-align: justify; }
+        .skill-desc, .line-clamp-3, #heroDescText, #bioP1, #bioP2, #visionDesc {
+            text-align: justify;
+            text-justify: inter-word;
+        }
     </style>
+
 </head>
 <body class="antialiased selection:bg-brand-orange selection:text-white relative">
 
@@ -80,31 +98,88 @@
             </div>
         </div>
     </div>
-
+<!-- Cropper Modal -->
+    <div id="cropperModal" class="fixed inset-0 z-[10000] hidden flex items-center justify-center bg-brand-dark/90 backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-brand-light rounded-xl p-6 w-full max-w-2xl modal-brutal scale-95 transition-transform duration-300 transform flex flex-col max-h-[90vh]" id="cropperBox">
+            <div class="flex justify-between items-center mb-4 border-b-4 border-brand-dark pb-2">
+                <h3 class="text-xl font-serif font-black text-brand-dark uppercase"><i class="fas fa-crop-alt text-brand-orange mr-2"></i> Sesuaikan Foto</h3>
+                <button onclick="closeCropperModal()" class="text-brand-dark hover:text-brand-orange transition"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            
+            <!-- Area Gambar yang akan di-crop -->
+            <div class="w-full flex-grow relative bg-gray-200 overflow-hidden rounded border-2 border-brand-dark min-h-[300px] h-[50vh]">
+                <img id="cropperImage" src="" class="max-w-full block">
+            </div>
+            
+            <!-- Tombol Aksi -->
+            <div class="flex justify-end gap-3 mt-6 pt-4 border-t-2 border-brand-dark">
+                <button onclick="closeCropperModal()" class="px-5 py-2.5 text-brand-dark border-2 border-brand-dark font-bold text-sm hover:bg-white transition rounded uppercase">Batal</button>
+                <button onclick="executeCropAndUpload()" class="px-5 py-2.5 bg-brand-orange text-white border-2 border-brand-dark rounded font-bold text-sm shadow-[4px_4px_0px_0px_#1A0050] hover:translate-y-1 hover:shadow-none transition uppercase"><i class="fas fa-save mr-1"></i> Crop & Simpan</button>
+            </div>
+        </div>
+    </div>
     <!-- NAVBAR -->
     <nav class="fixed w-full z-50 top-0 transition-all duration-300 bg-transparent pt-4" id="navbar">
         <div class="w-full px-6 md:px-12 max-w-[1400px] mx-auto">
             <div class="flex justify-between items-center h-16 bg-brand-light/90 border-3 border-brand-dark shadow-brutal rounded-xl px-6 backdrop-blur-md">
-                <div class="flex-shrink-0"><a href="#" class="font-serif text-3xl font-black tracking-tighter text-brand-dark z-30 flex items-center gap-2">ILHAM<span class="text-brand-orange">.</span></a></div>
-                <div class="hidden lg:flex items-center space-x-6 z-30 font-serif font-bold text-sm text-brand-dark uppercase">
+<div class="flex-shrink-0"><a href="#" class="font-serif text-3xl font-black tracking-tighter text-brand-dark z-30 flex items-center gap-2">SYIFA<span class="text-brand-orange">.</span></a></div>                <div class="hidden lg:flex items-center space-x-6 z-30 font-serif font-bold text-sm text-brand-dark uppercase">
                     <a href="#home-hero" class="hover:text-brand-orange transition">Home</a>
                     <a href="#about" class="hover:text-brand-orange transition">About</a>
                     <a href="#skills" class="hover:text-brand-orange transition">Skills</a>
                     <a href="#experience" class="hover:text-brand-orange transition">Experience</a>
                     <a href="#organization" class="hover:text-brand-orange transition">Organization</a>
-                    <a href="#projects" class="hover:text-brand-orange transition">Projects</a>
-                    <a href="#contact" class="hover:text-brand-orange transition">Contact</a>
+                    <!-- DROPDOWN PROJECTS (Otomatis) -->
+                    <div class="relative group">
+                        <a href="#projects" class="hover:text-brand-orange transition flex items-center gap-1 py-2">Projects <i class="fas fa-chevron-down text-[10px]"></i></a>
+                        <!-- Bridge transparan agar hover tidak terputus -->
+                        <div class="absolute left-0 top-full pt-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all z-50 w-48">
+                            <div id="navProjectDropdown" class="bg-brand-light border-2 border-brand-dark shadow-[4px_4px_0px_0px_#1A0050] rounded flex flex-col overflow-hidden">
+                                <!-- Kategori di-inject via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DROPDOWN CONTACT (Statis) -->
+                    <div class="relative group">
+                        <a href="#contact" class="hover:text-brand-orange transition flex items-center gap-1 py-2">Contact <i class="fas fa-chevron-down text-[10px]"></i></a>
+                        <div class="absolute right-0 lg:left-0 top-full pt-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all z-50 w-44">
+                            <div class="bg-brand-light border-2 border-brand-dark shadow-[4px_4px_0px_0px_#1A0050] rounded flex flex-col overflow-hidden">
+                                <a href="mailto:syakiraasyifaa@gmail.com" class="px-4 py-3 hover:bg-brand-orange hover:text-white border-b-2 border-brand-dark transition flex items-center gap-2 text-xs font-black"><i class="fas fa-envelope text-sm w-4 text-center"></i> Email</a>
+                                <a href="https://www.linkedin.com/in/syakiraasyifaa/" target="_blank" class="px-4 py-3 hover:bg-brand-orange hover:text-white border-b-2 border-brand-dark transition flex items-center gap-2 text-xs font-black"><i class="fab fa-linkedin-in text-sm w-4 text-center"></i> LinkedIn</a>
+                                <a href="https://wa.me/6282317069464" target="_blank" class="px-4 py-3 hover:bg-brand-orange hover:text-white transition flex items-center gap-2 text-xs font-black"><i class="fab fa-whatsapp text-sm w-4 text-center"></i> WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="hidden lg:flex items-center z-30 gap-3">
                     <button id="logoutBtn" onclick="exitAdminMode()" class="hidden px-4 py-2 rounded border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white text-xs font-bold uppercase transition shadow-[4px_4px_0px_0px_#ef4444] active:shadow-none active:translate-y-1"><i class="fas fa-sign-out-alt"></i> Exit</button>
-                    <a href="#" id="cvDownloadLink" download="CV_Syifa.pdf" class="px-5 py-2.5 rounded border-2 border-brand-dark bg-brand-orange text-white hover:bg-brand-dark text-sm font-bold uppercase tracking-wider shadow-brutal transition active:shadow-none active:translate-y-1">Get CV</a>
-                    <button onclick="triggerCvUpload()" class="admin-control hidden bg-white border-2 border-brand-dark w-10 h-10 rounded shadow-brutal flex items-center justify-center hover:bg-brand-light transition"><i class="fas fa-file-pdf text-brand-dark"></i></button>
                 </div>
                 <div class="lg:hidden flex items-center z-30"><button id="mobile-menu-btn" class="text-brand-dark border-2 border-brand-dark bg-white rounded w-10 h-10 flex items-center justify-center shadow-brutal"><i class="fas fa-bars"></i></button></div>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden lg:hidden bg-brand-light border-b-4 border-brand-dark absolute w-full shadow-2xl z-40 mt-4 pb-6 pt-4 text-center font-serif font-black text-lg space-y-4">
-            <a href="#home-hero" class="block text-brand-purpleL">HOME</a><a href="#about" class="block text-brand-dark">ABOUT</a><a href="#skills" class="block text-brand-dark">SKILLS</a><a href="#experience" class="block text-brand-dark">EXPERIENCE</a><a href="#projects" class="block text-brand-dark">PROJECTS</a>
+        <div id="mobile-menu" class="hidden lg:hidden bg-brand-light border-b-4 border-brand-dark absolute w-full shadow-2xl z-40 mt-4 pb-6 pt-4 text-center font-serif font-black text-lg flex flex-col space-y-4">
+            <a href="#home-hero" class="block text-brand-purpleL" onclick="document.getElementById('mobile-menu').classList.add('hidden')">HOME</a>
+            <a href="#about" class="block text-brand-dark" onclick="document.getElementById('mobile-menu').classList.add('hidden')">ABOUT</a>
+            <a href="#skills" class="block text-brand-dark" onclick="document.getElementById('mobile-menu').classList.add('hidden')">SKILLS</a>
+            <a href="#experience" class="block text-brand-dark" onclick="document.getElementById('mobile-menu').classList.add('hidden')">EXPERIENCE</a>
+            
+            <!-- Mobile Projects Dynamic Categories -->
+            <div class="border-y-2 border-brand-dark/10 py-3 mx-4">
+                <a href="#projects" class="block text-brand-dark mb-3" onclick="document.getElementById('mobile-menu').classList.add('hidden')">PROJECTS</a>
+                <div id="mobileProjectTabs" class="flex flex-col gap-3 text-sm font-sans">
+                    <!-- Kategori di-inject via JS otomatis -->
+                </div>
+            </div>
+
+            <!-- Mobile Contact Static Links -->
+            <div class="mx-4">
+                <span class="block text-brand-dark mb-3">CONTACT</span>
+                <div class="flex justify-center gap-6 text-sm font-sans font-bold">
+                    <a href="mailto:syakiraasyifaa@gmail.com" class="text-brand-dark hover:text-brand-orange transition flex flex-col items-center gap-1"><i class="fas fa-envelope text-xl"></i> Email</a>
+                    <a href="https://www.linkedin.com/in/syakiraasyifaa/" target="_blank" class="text-brand-dark hover:text-brand-orange transition flex flex-col items-center gap-1"><i class="fab fa-linkedin-in text-xl"></i> LinkedIn</a>
+                    <a href="https://wa.me/6282317069464" target="_blank" class="text-brand-dark hover:text-brand-orange transition flex flex-col items-center gap-1"><i class="fab fa-whatsapp text-xl"></i> WhatsApp</a>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -420,7 +495,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <script>
         // SCRIPT URL UPDATED
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzTQM-Au8oF3VTeujJA5_8pKSBo-SbsY2VrDUK4eYPsedAA-791C6Mm73FYoOesXrLtxw/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzzA9b_CH1mLt0wlHmrjdaAa2CmTAwXuWhlslLpkzLHc0UpAYywWrrD67RstAsxrJVH7Q/exec";
         
         let hasUnsavedChanges = false; let isAdmin = false; let currentModalMode = '';
 
@@ -504,7 +579,6 @@
                 if (isAdmin) tempDiv.querySelectorAll('.admin-control').forEach(el => el.classList.remove('hidden')); else tempDiv.querySelectorAll('.admin-control').forEach(el => el.classList.add('hidden'));
                 document.getElementById('unifiedSoftwareContainer').innerHTML = tempDiv.innerHTML;
             }
-            if (result.globalData.cvHref) document.getElementById('cvDownloadLink').href = result.globalData.cvHref;
             if (result.experiences) experiencesData = result.experiences;
             if (result.projects) projectsData = result.projects;
             if (result.organizations) organizationsData = result.organizations;
@@ -525,7 +599,6 @@
             
             const sfContainer = document.createElement('div'); sfContainer.innerHTML = document.getElementById('unifiedSoftwareContainer').innerHTML;
             sfContainer.querySelectorAll('.admin-control').forEach(el => el.classList.add('hidden')); globalData.unifiedSoftwareContainerHTML = sfContainer.innerHTML;
-            globalData.cvHref = document.getElementById('cvDownloadLink').href;
             globalData.aboutCarouselImages = aboutCarouselData;
 
             const payload = { action: "saveTextData", content: { globalData: globalData, experiences: experiencesData, projects: projectsData, organizations: organizationsData } };
@@ -693,20 +766,37 @@
         // 1. FUNGSI BARU: Merender Tab Kategori Secara Otomatis
         function renderProjectTabs(activeFilter) {
             const tabsContainer = document.getElementById('projectFilterTabs');
-            if (!tabsContainer) return;
+            const navDropdown = document.getElementById('navProjectDropdown'); // Wadah dropdown navigasi
+            const mobileTabs = document.getElementById('mobileProjectTabs');
+if(mobileTabs) mobileTabs.innerHTML = '';
+            if (!tabsContainer && !navDropdown) return;
             
-            // Ambil semua nama kategori yang unik dari data proyek Anda (Otomatis)
+            // Ambil nama kategori unik secara otomatis
             const categories = ['All', ...new Set(projectsData.map(p => p.category || 'Uncategorized'))];
             
-            tabsContainer.innerHTML = '';
+            if(tabsContainer) tabsContainer.innerHTML = '';
+            if(navDropdown) navDropdown.innerHTML = '';
+            
             categories.forEach(cat => {
                 const isActive = cat === activeFilter;
-                // Jika aktif berwarna Ungu, jika tidak aktif warna putih border hitam
-                const activeClass = isActive 
-                    ? "px-4 py-2 border-2 border-brand-dark bg-brand-purpleM text-white text-xs font-black uppercase shadow-[2px_2px_0px_0px_#1A0050] rounded cursor-default"
-                    : "px-4 py-2 border-2 border-brand-dark bg-white text-brand-dark hover:bg-brand-orange hover:text-white text-xs font-black uppercase shadow-[2px_2px_0px_0px_#1A0050] transition hover:-translate-y-0.5 rounded cursor-pointer";
                 
-                tabsContainer.innerHTML += `<button onclick="filterProjects('${cat}')" class="${activeClass}">${cat}</button>`;
+                // 1. Render untuk Tab di bagian utama
+                if(tabsContainer) {
+                    const activeClass = isActive 
+                        ? "px-4 py-2 border-2 border-brand-dark bg-brand-purpleM text-white text-xs font-black uppercase shadow-[2px_2px_0px_0px_#1A0050] rounded cursor-default"
+                        : "px-4 py-2 border-2 border-brand-dark bg-white text-brand-dark hover:bg-brand-orange hover:text-white text-xs font-black uppercase shadow-[2px_2px_0px_0px_#1A0050] transition hover:-translate-y-0.5 rounded cursor-pointer";
+                    tabsContainer.innerHTML += `<button onclick="filterProjects('${cat}')" class="${activeClass}">${cat}</button>`;
+                }
+                
+                // 2. Render untuk Dropdown di Navigasi Atas
+                if(navDropdown) {
+                    navDropdown.innerHTML += `<a href="#projects" onclick="filterProjects('${cat}')" class="px-4 py-2.5 hover:bg-brand-purpleM hover:text-white border-b-2 border-brand-dark last:border-b-0 transition flex items-center justify-between text-xs font-black uppercase group/item">${cat} ${isActive ? '<i class="fas fa-check text-brand-orange group-hover/item:text-white"></i>' : ''}</a>`;
+                }
+                
+                // 3. Render untuk Dropdown Mobile Menu
+                if(mobileTabs) {
+                    mobileTabs.innerHTML += `<a href="#projects" onclick="filterProjects('${cat}'); document.getElementById('mobile-menu').classList.add('hidden');" class="text-gray-600 hover:text-brand-orange uppercase font-bold transition flex items-center justify-center gap-2">${cat} ${isActive ? '<i class="fas fa-check text-brand-orange"></i>' : ''}</a>`;
+                }
             });
         }
 
@@ -889,6 +979,100 @@
 
         function deleteAboutCarouselImage(idx) {
             showConfirmModal("Hapus foto ini dari carousel?", () => { aboutCarouselData.splice(idx, 1); renderAboutCarousel(); markUnsavedChanges(); });
+        }
+       // ==========================================
+        // SISTEM CROPPER & UPLOAD SENTRALISASI (BUG FIXED)
+        // ==========================================
+        let cropperInstance = null; let currentCropCallback = null;
+
+        // 1. Matikan event upload lama secara aman & spesifik
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const inputIds = [
+                    'profileUploadInput', 'wallpaperUploadInput', 'uniLogoUploadInput', 
+                    'tagImageUploadInput', 'expCoverUploadInput', 'orgBgImageUploadInput', 
+                    'projFrontImageUploadInput', 'modalLogoUploadInput', 'expGalleryUploadInput',
+                    'aboutCarouselUploadInput'
+                ];
+                inputIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) {
+                        const clone = el.cloneNode(true);
+                        el.parentNode.replaceChild(clone, el);
+                    }
+                });
+                attachCropperListeners(); 
+            }, 500); 
+        });
+
+        // 2. Tampilkan Layar Pemotong Gambar
+        function processImageWithCropper(file, aspectRatio, callback) {
+            if(!file) return; const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('cropperImage').src = e.target.result; 
+                const m = document.getElementById('cropperModal'); const b = document.getElementById('cropperBox');
+                m.classList.remove('hidden'); setTimeout(() => { m.classList.remove('opacity-0'); b.classList.remove('scale-95'); }, 10);
+                
+                if(cropperInstance) cropperInstance.destroy();
+                cropperInstance = new Cropper(document.getElementById('cropperImage'), { 
+                    aspectRatio: aspectRatio, viewMode: 1, autoCropArea: 0.9, background: false
+                });
+                currentCropCallback = callback;
+            }; reader.readAsDataURL(file);
+        }
+
+        function closeCropperModal() { 
+            const m = document.getElementById('cropperModal'); const b = document.getElementById('cropperBox');
+            m.classList.add('opacity-0'); b.classList.add('scale-95');
+            setTimeout(() => { 
+                m.classList.add('hidden'); 
+                if(cropperInstance) cropperInstance.destroy(); 
+                cropperInstance = null; 
+                currentCropCallback = null; 
+            }, 300);
+        }
+
+        // 3. Eksekusi Hasil Pemotongan & Kirim ke Drive (FIX: Callback diamankan)
+        async function executeCropAndUpload() {
+            if(!cropperInstance || !currentCropCallback) return;
+            // fillColor: '#fff' mencegah foto transparan (PNG) berubah jadi hitam
+            const canvas = cropperInstance.getCroppedCanvas({ maxWidth: 1920, maxHeight: 1920, fillColor: '#fff' });
+            if(!canvas) { closeCropperModal(); return; }
+            
+            // SIMPAN memori tugas sebelum modal ditutup
+            const savedCallback = currentCropCallback; 
+            
+            showLoading("UPLOADING CROP..."); closeCropperModal();
+            const base64Data = canvas.toDataURL('image/jpeg', 0.85); 
+            const simulatedFile = { name: "cropped_image.jpg", type: "image/jpeg" };
+            
+            // Menunggu respon dari Google Drive
+            const url = await uploadImageToDriveAndGetUrl(simulatedFile, base64Data);
+            
+            // Menjalankan memori tugas yang sudah disimpan
+            if(url) { 
+                savedCallback(url); 
+                markUnsavedChanges(); 
+            }
+        }
+
+        // 4. Rute Spesifik untuk Tiap Input Gambar
+        function attachCropperListeners() {
+            const attach = (id, ratio, callback) => {
+                const el = document.getElementById(id);
+                if(el) { el.addEventListener('change', (e) => { const f = e.target.files[0]; if(f) processImageWithCropper(f, ratio, callback); e.target.value=''; }); }
+            };
+
+            attach('profileUploadInput', 3/4, (url) => { document.getElementById('profileImage').src = url; });
+            attach('wallpaperUploadInput', 16/9, (url) => { document.getElementById('home-hero').style.backgroundImage = `url('${url}')`; document.getElementById('home-hero').style.backgroundSize = 'cover'; document.getElementById('home-hero').classList.remove('bg-gradient-to-br'); });
+            attach('uniLogoUploadInput', 1/1, (url) => { document.getElementById('uniLogo').src = url; });
+            attach('tagImageUploadInput', 1/1, (url) => { if(typeof currentTagToEdit !== 'undefined' && currentTagToEdit) currentTagToEdit.src = url; });
+            attach('expCoverUploadInput', NaN, (url) => { const idx = experiencesData.findIndex(ex => ex.id === currentExpIdForCover); if(idx !== -1) { if(!experiencesData[idx].images) experiencesData[idx].images = []; if(experiencesData[idx].images.length===0) experiencesData[idx].images.push(url); else experiencesData[idx].images[0] = url; renderTimeline(); } });
+            attach('orgBgImageUploadInput', NaN, (url) => { const idx = organizationsData.findIndex(o => o.id === currentOrgIdForBg); if(idx !== -1) { organizationsData[idx].bgImage = url; renderOrganizations(); } });
+            attach('projFrontImageUploadInput', NaN, (url) => { const idx = projectsData.findIndex(p => p.id === currentProjIdForFrontImg); if(idx !== -1) { projectsData[idx].coverImage = url; filterProjects('All'); } });
+            attach('modalLogoUploadInput', 1/1, (url) => { let item; if(currentModalMode==='project') item = projectsData.find(p=>p.id===currentOpenId); else if(currentModalMode==='organization') item=organizationsData.find(o=>o.id===currentOpenId); else item=experiencesData.find(ex=>ex.id===currentOpenId); if(item) { item.instLogo = url; document.getElementById('modalLogo').src = url; document.getElementById('modalLogo').classList.remove('hidden'); document.getElementById('modalIcon').classList.add('hidden'); } });
+            attach('expGalleryUploadInput', NaN, (url) => { let item; if(currentModalMode==='project') item = projectsData.find(p=>p.id===currentOpenId); else if(currentModalMode==='organization') item=organizationsData.find(o=>o.id===currentOpenId); else item=experiencesData.find(ex=>ex.id===currentOpenId); if(item) { if(!item.images) item.images=[]; if(!item.captions) item.captions=[]; item.images.push(url); item.captions.push(prompt("Caption Foto:")||''); currentGalleryIndex = item.images.length-1; updateGalleryView(); } });
+            attach('aboutCarouselUploadInput', NaN, (url) => { if(typeof aboutCarouselData !== 'undefined') { aboutCarouselData.push(url); if(typeof renderAboutCarousel === 'function') renderAboutCarousel(); } });
         }
     </script>
 </body>
