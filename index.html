@@ -104,6 +104,7 @@
                     <a href="#home-hero" class="hover:text-brand-orange transition">Home</a>
                     <a href="#about" class="hover:text-brand-orange transition">About</a>
                     <a href="#skills" class="hover:text-brand-orange transition">Skills</a>
+                    <a href="#certificates" class="hover:text-brand-orange transition">Certificates</a>
                     <a href="#experience" class="hover:text-brand-orange transition">Experience</a>
                     <a href="#organization" class="hover:text-brand-orange transition">Organization</a>
                     <div class="relative group">
@@ -133,6 +134,7 @@
             <a href="#home-hero" class="block text-brand-purpleL" onclick="document.getElementById('mobile-menu').classList.add('hidden')">HOME</a>
             <a href="#about" class="block text-brand-dark" onclick="document.getElementById('mobile-menu').classList.add('hidden')">ABOUT</a>
             <a href="#skills" class="block text-brand-dark" onclick="document.getElementById('mobile-menu').classList.add('hidden')">SKILLS</a>
+            <a href="#certificates" class="block text-brand-dark" onclick="document.getElementById('mobile-menu').classList.add('hidden')">CERTIFICATES</a>
             <a href="#experience" class="block text-brand-dark" onclick="document.getElementById('mobile-menu').classList.add('hidden')">EXPERIENCE</a>
             
             <div class="border-y-2 border-brand-dark/10 py-3 mx-4">
@@ -164,6 +166,7 @@
         <input type="file" id="modalLogoUploadInput" accept="image/*">
         <input type="file" id="aboutCarouselUploadInput" accept="image/*">
         <input type="file" id="skillImageUploadInput" accept="image/*">
+        <input type="file" id="certImageUploadInput" accept="image/*">
     </div>
 
     <!-- HOME HERO -->
@@ -285,6 +288,26 @@
         </div>
     </section>
 
+    <!-- CERTIFICATES & TRAINING SECTION -->
+    <section class="py-16 bg-brand-purpleM relative scroll-mt-16 z-10 border-b-4 border-brand-dark flex flex-col" id="certificates">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="flex justify-between items-end mb-8 relative group z-10 border-b-3 border-white/20 pb-6">
+                <div class="text-left relative group">
+                    <h2 class="font-serif text-4xl lg:text-5xl font-black text-brand-light uppercase tracking-tight mb-2" id="certMainTitle">Certificates & Training</h2>
+                    <p class="font-sans text-brand-light/80 font-medium text-base max-w-xl" id="certSubDesc">Sertifikasi profesional, pengembangan diri, dan pelatihan khusus.</p>
+                    <button onclick="editCertHeader()" class="admin-control hidden absolute -right-12 top-0 bg-white border-2 border-brand-dark p-2 rounded shadow-brutal z-20 opacity-0 group-hover:opacity-100 transition"><i class="fas fa-edit text-brand-dark"></i></button>
+                </div>
+                <div>
+                    <button onclick="addCertificateCard()" class="admin-control hidden px-4 py-2 border-2 border-brand-dark bg-brand-orange text-white text-xs font-bold uppercase shadow-[4px_4px_0px_0px_#102C33] hover:translate-y-1 hover:shadow-none transition"><i class="fas fa-plus mr-1"></i> Add Cert</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="certificatesContainer">
+                <!-- Kartu sertifikat akan dirender oleh JavaScript di sini -->
+            </div>
+        </div>
+    </section>
+    
     <!-- EXPERIENCE SECTION -->
     <section class="py-16 bg-brand-light relative scroll-mt-16 z-10 border-b-4 border-brand-dark flex flex-col" id="experience">
         <div class="w-full px-4 sm:px-6 lg:px-8 z-10 mb-8 relative flex flex-col md:flex-row justify-between items-end gap-6 max-w-[1400px] mx-auto">
@@ -424,6 +447,14 @@
         </div>
     </div>
 
+    <!-- Certificate Image Viewer Modal -->
+    <div id="certImageViewer" class="fixed inset-0 z-[10000] hidden flex items-center justify-center bg-brand-dark/90 backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300" onclick="closeCertImageViewer()">
+        <div class="relative w-full max-w-4xl max-h-[90vh] flex items-center justify-center scale-95 transition-transform duration-300 transform" id="certImageContent">
+            <img id="certViewerImage" src="" class="max-w-full max-h-[90vh] object-contain border-4 border-brand-dark shadow-brutal bg-white rounded-xl" onclick="event.stopPropagation()">
+            <button onclick="closeCertImageViewer()" class="absolute -top-4 -right-4 bg-brand-orange border-2 border-brand-light text-white w-10 h-10 rounded shadow-[4px_4px_0px_0px_#FFF8F6] flex items-center justify-center hover:translate-y-1 transition-all z-10"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    
     <!-- SCRIPTS -->
     <script>
         // SCRIPT_URL MENGGUNAKAN DARI INDEX ALGORITMA
@@ -436,6 +467,7 @@
         let organizationsData = [];
         let projectsData = [];
         let aboutCarouselData = []; 
+        let certificatesData = [];
 
         function showConfirmModal(msg, onConfirm) {
             const modal = document.getElementById('customConfirmModal'); const msgEl = document.getElementById('customConfirmMessage');
@@ -480,7 +512,7 @@
         });
 
         function applyDataToDOM(result) {
-            const textElements = ['heroTitleLine1', 'heroTitleLine2', 'heroDescText', 'heroTitleText', 'heroRoleText', 'aboutTitle1', 'aboutTitleHighlight', 'aboutTitle2', 'bioP1', 'bioP2', 'eduUni', 'eduMajor', 'eduGpa', 'eduStatus', 'visionTitle', 'visionDesc', 'skillsMainTitle', 'softwareStackTitle', 'expMainTitle', 'expSubDesc', 'orgMainTitle', 'orgSubDesc', 'projMainTitle', 'projSubDesc', 'contactTitle1', 'contactTitle2', 'contactDesc', 'contactCopyright'];
+            const textElements = ['heroTitleLine1', 'heroTitleLine2', 'heroDescText', 'heroTitleText', 'heroRoleText', 'aboutTitle1', 'aboutTitleHighlight', 'aboutTitle2', 'bioP1', 'bioP2', 'eduUni', 'eduMajor', 'eduGpa', 'eduStatus', 'visionTitle', 'visionDesc', 'skillsMainTitle', 'softwareStackTitle', 'expMainTitle', 'expSubDesc', 'orgMainTitle', 'orgSubDesc', 'projMainTitle', 'projSubDesc', 'contactTitle1', 'contactTitle2', 'contactDesc', 'contactCopyright', 'certMainTitle', 'certSubDesc'];
             const processHighlights = (text) => {
                 if (!text) return "";
                 return text.replace(/\*\*(.*?)\*\*/g, '<span class="text-brand-orange font-bold">$1</span>');
@@ -541,14 +573,15 @@
             if (result.projects) projectsData = result.projects;
             if (result.organizations) organizationsData = result.organizations;
             if (result.globalData.aboutCarouselImages) aboutCarouselData = result.globalData.aboutCarouselImages;
+            if (result.certificates) certificatesData = result.certificates;
             
             renderAboutCarousel();
-            renderTimeline(); renderOrganizations(); filterProjects('All');
+            renderTimeline(); renderOrganizations(); filterProjects('All'); renderCertificates();
         }
 
         async function saveAllDataToDrive() {
             showLoading("SAVING TO DRIVE..."); let globalData = {};
-            const textElements = ['heroTitleLine1', 'heroTitleLine2', 'heroDescText', 'heroTitleText', 'heroRoleText', 'aboutTitle1', 'aboutTitleHighlight', 'aboutTitle2', 'bioP1', 'bioP2', 'eduUni', 'eduMajor', 'eduGpa', 'eduStatus', 'visionTitle', 'visionDesc', 'skillsMainTitle', 'softwareStackTitle', 'expMainTitle', 'expSubDesc', 'orgMainTitle', 'orgSubDesc', 'projMainTitle', 'projSubDesc', 'contactTitle1', 'contactTitle2', 'contactDesc', 'contactCopyright'];
+           const textElements = ['heroTitleLine1', 'heroTitleLine2', 'heroDescText', 'heroTitleText', 'heroRoleText', 'aboutTitle1', 'aboutTitleHighlight', 'aboutTitle2', 'bioP1', 'bioP2', 'eduUni', 'eduMajor', 'eduGpa', 'eduStatus', 'visionTitle', 'visionDesc', 'skillsMainTitle', 'softwareStackTitle', 'expMainTitle', 'expSubDesc', 'orgMainTitle', 'orgSubDesc', 'projMainTitle', 'projSubDesc', 'contactTitle1', 'contactTitle2', 'contactDesc', 'contactCopyright', 'certMainTitle', 'certSubDesc'];
             textElements.forEach(id => { let el = document.getElementById(id); if(el) globalData[id] = el.innerHTML; });
             globalData.profileImage = document.getElementById('profileImage').src; globalData.uniLogo = document.getElementById('uniLogo').src;
             
@@ -560,7 +593,7 @@
             
             globalData.aboutCarouselImages = aboutCarouselData;
 
-            const payload = { action: "saveTextData", content: { globalData: globalData, experiences: experiencesData, projects: projectsData, organizations: organizationsData } };
+            const payload = { action: "saveTextData", content: { globalData: globalData, experiences: experiencesData, projects: projectsData, organizations: organizationsData, certificates: certificatesData } };
             try { await sendDataToBackend(payload); } catch(e) {} hideLoading(); alert("Berhasil Disimpan!");
         }
 
@@ -1046,8 +1079,145 @@
         function deleteAboutCarouselImage(idx) {
             showConfirmModal("Hapus foto ini dari carousel?", () => { aboutCarouselData.splice(idx, 1); renderAboutCarousel(); markUnsavedChanges(); });
         }
+
+        // ---------------------------------------------------------
+        // LOGIKA CERTIFICATES & TRAINING
+        // ---------------------------------------------------------
+        function renderCertificates() {
+            const container = document.getElementById('certificatesContainer');
+            if(!container) return;
+            container.innerHTML = '';
+            
+            if(certificatesData.length === 0) {
+                 certificatesData = [
+                    { id: 1, title: 'Sample Training', institution: 'Sample Institution', date: 'Sept 2026', credentialId: 'ID-001', desc: 'Sample deskripsi.', image: 'https://placehold.co/800x600/102C33/F1EFE8?text=Gambar+Sertifikat' }
+                ];
+            }
+
+            certificatesData.forEach((cert) => {
+                const imgUrl = cert.image || 'https://placehold.co/800x600/102C33/F1EFE8?text=Belum+Ada+Gambar';
+                const credHtml = cert.credentialId ? `<p class="text-gray-500 font-sans text-[10px] font-bold mb-3 uppercase"><i class="fas fa-fingerprint mr-1 text-brand-orange"></i> Credential ID: ${cert.credentialId}</p>` : '<div class="mb-3"></div>';
+                
+                const html = `<div class="bold-card bg-brand-light flex flex-col h-full relative group/cert hover:bg-white transition-colors overflow-hidden">
+                    <div class="admin-control ${isAdmin ? '' : 'hidden'} absolute top-3 right-3 flex gap-2 z-20">
+                        <button onclick="triggerCertImageUpload(event, ${cert.id})" class="bg-brand-purpleM border-2 border-brand-dark p-1.5 rounded shadow-[2px_2px_0px_0px_#102C33] hover:bg-brand-dark hover:text-white transition" title="Upload Sertifikat"><i class="fas fa-camera text-[10px] text-white pointer-events-none"></i></button>
+                        <button onclick="editCertificateCard(event, ${cert.id})" class="bg-white border-2 border-brand-dark p-1.5 rounded shadow-[2px_2px_0px_0px_#102C33] hover:bg-brand-orange hover:text-white transition" title="Edit Info"><i class="fas fa-edit text-[10px] text-brand-dark pointer-events-none"></i></button>
+                        <button onclick="deleteCertificate(event, ${cert.id})" class="bg-white border-2 border-brand-dark p-1.5 rounded shadow-[2px_2px_0px_0px_#102C33] hover:bg-red-500 hover:text-white transition" title="Hapus"><i class="fas fa-trash text-[10px] text-red-500 pointer-events-none"></i></button>
+                    </div>
+                    
+                    <div class="h-48 w-full relative border-b-3 border-brand-dark overflow-hidden bg-brand-dark cursor-pointer group/img shrink-0" onclick="viewCertImage('${imgUrl}')">
+                        <img src="${imgUrl}" class="w-full h-full object-cover opacity-80 group-hover/img:opacity-100 group-hover/img:scale-105 transition duration-500">
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity bg-brand-dark/40">
+                            <span class="bg-brand-orange text-white text-xs font-bold px-3 py-1.5 rounded border-2 border-brand-dark flex items-center gap-2 shadow-[2px_2px_0px_0px_#102C33]"><i class="fas fa-search-plus"></i> LIHAT GAMBAR</span>
+                        </div>
+                    </div>
+
+                    <div class="p-5 flex flex-col flex-grow">
+                        <p class="text-brand-orange text-[10px] font-bold uppercase tracking-widest mb-1"><i class="far fa-calendar-alt"></i> ${cert.date}</p>
+                        <h3 class="font-serif text-xl font-black text-brand-dark uppercase leading-tight mb-1">${cert.title}</h3>
+                        <p class="text-brand-purpleM font-sans text-sm font-bold mb-1">${cert.institution}</p>
+                        ${credHtml}
+                        <p class="text-gray-700 font-sans text-xs flex-grow text-justify whitespace-pre-line">${cert.desc}</p>
+                    </div>
+                </div>`;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        function viewCertImage(url) {
+            const modal = document.getElementById('certImageViewer');
+            const content = document.getElementById('certImageContent');
+            document.getElementById('certViewerImage').src = url;
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); content.classList.remove('scale-95'); }, 10);
+        }
+        
+        function closeCertImageViewer() {
+            const modal = document.getElementById('certImageViewer');
+            const content = document.getElementById('certImageContent');
+            modal.classList.add('opacity-0'); content.classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); document.getElementById('certViewerImage').src = ''; }, 300);
+        }
+
+        let currentCertIdForUpload = null;
+        function triggerCertImageUpload(event, id) { 
+            event.stopPropagation(); currentCertIdForUpload = id; document.getElementById('certImageUploadInput').click(); 
+        }
+        
+        document.getElementById('certImageUploadInput').addEventListener('change', function(e) { 
+            const f = e.target.files[0]; 
+            if (f && currentCertIdForUpload) { 
+                const r = new FileReader(); 
+                r.onload = async ev => { 
+                    const u = await uploadImageToDriveAndGetUrl(f, ev.target.result); 
+                    if(u) { 
+                        const idx = certificatesData.findIndex(c => c.id === currentCertIdForUpload); 
+                        if(idx !== -1) { 
+                            certificatesData[idx].image = u; 
+                            renderCertificates(); markUnsavedChanges(); 
+                        } 
+                    } 
+                }; 
+                r.readAsDataURL(f); 
+            } 
+            e.target.value = ''; 
+        });
+
+        function editCertHeader() { 
+            openCustomEditModal('Edit Title Sertifikat', [
+                {id:'t',label:'Judul',type:'text',value:document.getElementById('certMainTitle').innerText},
+                {id:'d',label:'Deskripsi',type:'textarea',value:document.getElementById('certSubDesc').innerText}
+            ], d => {
+                document.getElementById('certMainTitle').innerText=d.t; document.getElementById('certSubDesc').innerText=d.d; markUnsavedChanges();
+            });
+        }
+
+        function addCertificateCard() {
+            openCustomEditModal('Add Certificate', [
+                {id:'t',label:'Judul Training',type:'text',value:''},
+                {id:'i',label:'Institusi',type:'text',value:''},
+                {id:'d',label:'Tanggal Didapat',type:'text',value:''},
+                {id:'c',label:'Credential ID',type:'text',value:''},
+                {id:'desc',label:'Deskripsi Pelatihan',type:'textarea',value:''}
+            ], d => {
+                if(!d.t) return;
+                certificatesData.push({ 
+                    id: Date.now(), title: d.t, institution: d.i, date: d.d, credentialId: d.c, desc: d.desc, 
+                    image: 'https://placehold.co/800x600/102C33/F1EFE8?text=Upload+Gambar' 
+                });
+                renderCertificates(); markUnsavedChanges();
+            });
+        }
+
+        function editCertificateCard(e, id) {
+            e.stopPropagation();
+            const idx = certificatesData.findIndex(x => x.id === id);
+            if(idx === -1) return;
+            openCustomEditModal('Edit Certificate', [
+                {id:'t',label:'Judul Training',type:'text',value:certificatesData[idx].title},
+                {id:'i',label:'Institusi',type:'text',value:certificatesData[idx].institution},
+                {id:'d',label:'Tanggal Didapat',type:'text',value:certificatesData[idx].date},
+                {id:'c',label:'Credential ID',type:'text',value:certificatesData[idx].credentialId || ''},
+                {id:'desc',label:'Deskripsi Pelatihan',type:'textarea',value:certificatesData[idx].desc}
+            ], d => {
+                certificatesData[idx].title = d.t;
+                certificatesData[idx].institution = d.i;
+                certificatesData[idx].date = d.d;
+                certificatesData[idx].credentialId = d.c;
+                certificatesData[idx].desc = d.desc;
+                renderCertificates(); markUnsavedChanges();
+            });
+        }
+
+        function deleteCertificate(e, id) {
+            e.stopPropagation();
+            showConfirmModal("Hapus Certificate ini?", () => {
+                certificatesData = certificatesData.filter(x => x.id !== id);
+                renderCertificates(); markUnsavedChanges();
+            });
+        }
     </script>
 </body>
 </html>
-```eof
+
 
