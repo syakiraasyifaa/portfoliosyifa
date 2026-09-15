@@ -167,6 +167,7 @@
         <input type="file" id="aboutCarouselUploadInput" accept="image/*">
         <input type="file" id="skillImageUploadInput" accept="image/*">
         <input type="file" id="certImageUploadInput" accept="image/*">
+        <input type="file" id="modalPdfUploadInput" accept="application/pdf">
     </div>
 
     <!-- HOME HERO -->
@@ -421,6 +422,13 @@
                     <div class="text-center sm:text-left">
                         <h2 class="text-2xl sm:text-3xl font-serif font-black text-white mb-1 uppercase" id="modalTitle">Title</h2>
                         <p class="text-brand-orange font-sans font-bold text-sm flex items-center justify-center sm:justify-start gap-2 uppercase tracking-wide"><span id="modalSubtitle">Subtitle</span><span class="text-white/30">|</span><i class="far fa-calendar-alt"></i> <span id="modalDate">Date</span></p>
+                        
+                        <!-- TOMBOL PDF BARU -->
+                        <div id="pdfButtonContainer" class="mt-3 flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                            <a id="viewPdfBtn" href="#" target="_blank" class="hidden bg-brand-orange text-white text-xs font-bold px-3 py-1.5 rounded border-2 border-brand-light shadow-[2px_2px_0px_0px_#FFF8F6] hover:translate-y-1 hover:shadow-none transition-all flex items-center gap-1.5"><i class="fas fa-file-pdf"></i> Report File</a>
+                            <button onclick="triggerModalPdfUpload()" class="admin-control hidden bg-brand-purpleL text-white text-xs font-bold px-3 py-1.5 rounded border-2 border-brand-light shadow-[2px_2px_0px_0px_#FFF8F6] hover:translate-y-1 hover:shadow-none transition-all flex items-center gap-1.5" title="Upload/Update PDF"><i class="fas fa-upload"></i> Upload PDF</button>
+                            <button id="deletePdfBtn" onclick="deleteModalPdf()" class="admin-control hidden bg-red-500 text-white text-xs font-bold px-2 py-1.5 rounded border-2 border-brand-light shadow-[2px_2px_0px_0px_#FFF8F6] hover:translate-y-1 hover:shadow-none transition-all" title="Hapus PDF"><i class="fas fa-trash"></i></button>
+                        </div>
                     </div>
                 </div>
                 <button onclick="closeSharedModal()" class="bg-brand-orange border-2 border-brand-light text-white w-10 h-10 rounded shadow-[4px_4px_0px_0px_#FFF8F6] flex items-center justify-center hover:translate-y-1 transition-all ml-4 shrink-0"><i class="fas fa-times"></i></button>
@@ -885,6 +893,20 @@
             if(item.instLogo) { logo.src = item.instLogo; logo.classList.remove('hidden'); ico.classList.add('hidden'); } 
             else { logo.classList.add('hidden'); ico.classList.remove('hidden'); ico.className = mode === 'project' ? "fas fa-folder-open text-4xl text-brand-orange bg-white/10 p-3 rounded-lg border-2 border-brand-light" : "fas fa-building text-4xl text-brand-orange bg-white/10 p-3 rounded-lg border-2 border-brand-light"; }
             
+            // --- LOGIKA MUNCUL TOMBOL PDF ---
+            const pdfLink = document.getElementById('viewPdfBtn');
+            const delPdf = document.getElementById('deletePdfBtn');
+            if (item.pdfUrl) {
+                pdfLink.href = item.pdfUrl;
+                pdfLink.classList.remove('hidden');
+                if (isAdmin) delPdf.classList.remove('hidden'); else delPdf.classList.add('hidden');
+            } else {
+                pdfLink.href = "#";
+                pdfLink.classList.add('hidden');
+                delPdf.classList.add('hidden');
+            }
+            // ---------------------------------
+
             const achContainer = document.getElementById('modalAchievements'); achContainer.innerHTML = '';
             const listData = (mode === 'project' || mode === 'organization') ? (item.fullDesc || [item.desc || item.shortDesc]) : item.achievements;
             listData.forEach(ach => { 
@@ -1216,8 +1238,70 @@
                 renderCertificates(); markUnsavedChanges();
             });
         }
+        // ---------------------------------------------------------
+        // LOGIKA UPLOAD & DELETE PDF MODAL
+        // ---------------------------------------------------------
+        async function uploadPdfToDriveAndGetUrl(file, base64Data) {
+            showLoading("UPLOADING PDF TO DRIVE...");
+            try {
+                // Tetap menggunakan action "uploadImage" karena GAS menerima jenis file apapun berbasis base64
+                const payload = {
+                    action: "uploadImage", 
+                    filename: file.name || "Laporan_Dokumen.pdf",
+                    mimeType: "application/pdf",
+                    base64Data: base64Data
+                };
+                const response = await sendDataToBackend(payload);
+                hideLoading();
+                if (response && response.id) {
+                    // Membuat format link yang bisa langsung dibuka/di-view di tab baru
+                    return `https://drive.google.com/file/d/${response.id}/view`;
+                }
+                return null;
+            } catch (e) {
+                hideLoading();
+                alert("Upload failed: " + e.message);
+                return null;
+            }
+        }
+
+        function triggerModalPdfUpload() { document.getElementById('modalPdfUploadInput').click(); }
+        document.getElementById('modalPdfUploadInput').addEventListener('change', function(e) {
+            const f = e.target.files[0];
+            if(f && currentOpenId) {
+                const r = new FileReader(); 
+                r.onload = async ev => {
+                    const u = await uploadPdfToDriveAndGetUrl(f, ev.target.result);
+                    if(u) {
+                        let item;
+                        if(currentModalMode === 'project') item = projectsData.find(p=>p.id===currentOpenId);
+                        else if(currentModalMode === 'organization') item = organizationsData.find(o=>o.id===currentOpenId);
+                        else item = experiencesData.find(ex=>ex.id===currentOpenId);
+
+                        if(item) {
+                            item.pdfUrl = u;
+                            openSharedModal(currentOpenId, currentModalMode);
+                            markUnsavedChanges();
+                        }
+                    }
+                }; r.readAsDataURL(f);
+            } e.target.value='';
+        });
+
+        function deleteModalPdf() {
+            showConfirmModal("Hapus file PDF laporan ini?", () => {
+                let item;
+                if(currentModalMode === 'project') item = projectsData.find(p=>p.id===currentOpenId);
+                else if(currentModalMode === 'organization') item = organizationsData.find(o=>o.id===currentOpenId);
+                else item = experiencesData.find(ex=>ex.id===currentOpenId);
+
+                if(item) {
+                    delete item.pdfUrl;
+                    openSharedModal(currentOpenId, currentModalMode);
+                    markUnsavedChanges();
+                }
+            });
+        }
     </script>
 </body>
 </html>
-
-
